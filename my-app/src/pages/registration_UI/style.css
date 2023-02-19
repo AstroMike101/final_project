@@ -1,0 +1,49 @@
+body {
+  
+    background: #bdc3c7;
+    
+ 
+}
+
+.form {
+    background-color: #1D3557;
+    border-radius: 5px;
+    width: 100px;
+    height: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    /* height: 600px; */
+}
+
+.form-body {
+    text-align: left;
+    padding: 20px 10px;
+}
+
+.form-body>* {
+    padding: 40px;
+}
+
+.form__label {
+    width: 40%
+}
+
+.form_input {
+   width:60%;
+    
+}
+
+.footer {
+    text-align: center;
+}
+
+.text { 
+    color: white;
+    text-align: center; 
+}
+
+input { 
+    width:300px;
+    height: 25px;
+    margin-left: 10px;
+}
