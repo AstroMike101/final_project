@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-do
 import './index.js';
 import './index.css';
 
-import Browse from './Browse';
+import EditProfile from "./EditProfile.js";
 
 class App extends Component {
 	constructor(props) {
@@ -13,6 +13,17 @@ class App extends Component {
 			login: true,
 			loginid: 0,
 		};
+		this.handleLoginClick = this.handleLoginClick.bind(this);
+		this.handleLogoutClick = this.handleLogoutClick.bind(this);
+	}
+
+	handleLoginClick = () => {
+		this.setState({login: true})
+		console.log("AAAAAAAAAAAa")
+	}
+	handleLogoutClick = () => {
+		this.setState({login: false})
+		console.log("AAAAAAAAAAAa")
 	}
 
 	truncate = (str) => {
@@ -27,11 +38,13 @@ class App extends Component {
 			<Router>
 				<React.Fragment>
 					<div>
-						<Navbar state={this.state} />
+						<Navbar state={this.state} loginfunc = {this.handleLoginClick} logoutfunc = {this.handleLogoutClick}  />
 					</div>
 
 					<Routes>
-						<Route path="/" element={<Home props={this.props} />} exact>
+						<Route path="/" element={<Home props={this.props}/>} exact>
+						</Route>
+						<Route path="/editprofile" element={<EditProfile />}>
 						</Route>
 					</Routes>
 				</React.Fragment>
@@ -113,20 +126,17 @@ function Navbar(props) {
 	let navbutton2;
 
 	if (props.state.login) {
-		navbutton1 = <div>Edit Profile</div>
-		navbutton2 = <div>Logout</div>
+		navbutton1 = <NavLink to="/editprofile" style={{ textDecoration: 'none' }}><div class = "navbutton">Edit Profile</div></NavLink>
+		navbutton2 = <div onClick = {props.logoutfunc} class = "navbutton">Logout</div>
 	} else {
-		navbutton1 = <div>Login</div>;
-		navbutton2 = <div>Register</div>;
+		navbutton1 = <div class = "navbutton">Register</div>;
+		navbutton2 = <div onClick = {props.loginfunc} class = "navbutton">Login</div>;
 	}
 	
 	return (
 		<div class="navbar">
 			<div class="navbar-sub">
-				<div class="title ">CinE Booking</div>
-				<NavLink to="/browse" style={{ textDecoration: 'none' }}>
-					<div class="navbutton">Browse</div>
-				</NavLink>
+				<NavLink to = "/" style = {{textDecoration: 'none'}}><div class="title">CinE Booking</div></NavLink>
 			</div>
 			<div class="navbar-sub">
 				{navbutton1}
@@ -134,21 +144,6 @@ function Navbar(props) {
 			</div>
 		</div>
 	)
-}
-
-function Dropdown({ open, trigger, menu }) {
-	return (
-		<div className="dropdown">
-			{trigger}
-			{open ? (
-				<ul className="menu">
-					{menu.map((menuItem, index) => (
-						<li key={index} className="menu-item">{menuItem}</li>
-					))}
-				</ul>
-			) : null}
-		</div>
-	);
 }
 
 export default App;
