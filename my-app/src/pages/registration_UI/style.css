@@ -6,22 +6,26 @@ body {
 }
 
 .form {
+    
     background-color: #1D3557;
     border-radius: 5px;
-    width: 100px;
-    height: 1000px;
-    margin: 20px auto;
-    padding: 20px;
+    width: 800px;
+    height: 1500px;
+    margin: 5px auto;
+    padding: 15px;
+    
     /* height: 600px; */
 }
 
+
+
 .form-body {
-    text-align: left;
-    padding: 20px 10px;
+    text-align: center;
+    padding: 5px 10px;
 }
 
 .form-body>* {
-    padding: 40px;
+    padding: 20px;
 }
 
 .form__label {
@@ -43,7 +47,10 @@ body {
 }
 
 input { 
-    width:300px;
+    width:250px;
     height: 25px;
-    margin-left: 10px;
 }
+
+
+
+
