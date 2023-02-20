@@ -10,8 +10,6 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			categoryFilter: "All",
-
 			login: true,
 			loginid: 0,
 		};
@@ -22,14 +20,6 @@ class App extends Component {
 			return str.substring(0, 500) + "...";
 		}
 		return str
-	}
-
-	updateCategory = (tab) => {
-		this.setState(state => {
-			return {
-				categoryFilter: tab
-			}
-		})
 	}
 
 	render() {
@@ -119,73 +109,44 @@ function Home(props) {
 
 // loll?????
 function Navbar(props) {
+	let navbutton1;
+	let navbutton2;
+
 	if (props.state.login) {
-		return (
-			<div class="navbar">
-				<div class="navbar-sub">
-					<div class="title ">CinE Booking</div>
-					{/*<NavLink to="/browse" style={{ textDecoration: 'none' }}>
-						<div class="navbutton">Browse</div>
-					</NavLink>*/}
-					<Dropdown title="Tag" tag={props.tag} updateTab={props.updateCategory} list={["1", "2", "3"]} />
-				</div>
-				<div class="navbar-sub">
-					<div>Edit Profile</div>
-					<div>Logout</div>
-				</div>
-			</div>
-		)
+		navbutton1 = <div>Edit Profile</div>
+		navbutton2 = <div>Logout</div>
 	} else {
-		return (
-			<div class="navbar">
-				<div class="navbar-sub">
-					<div class="title ">CinE Booking</div>
-					<NavLink to="/browse" style={{ textDecoration: 'none' }}>
-						<div class="navbutton">Browse</div>
-					</NavLink>
-				</div>
-				<div class="navbar-sub">
-					<div>Login</div>
-					<div>Register</div>
-				</div>
-			</div>
-		)
+		navbutton1 = <div>Login</div>;
+		navbutton2 = <div>Register</div>;
 	}
+	
+	return (
+		<div class="navbar">
+			<div class="navbar-sub">
+				<div class="title ">CinE Booking</div>
+				<NavLink to="/browse" style={{ textDecoration: 'none' }}>
+					<div class="navbutton">Browse</div>
+				</NavLink>
+			</div>
+			<div class="navbar-sub">
+				{navbutton1}
+				{navbutton2}
+			</div>
+		</div>
+	)
 }
 
-function Dropdown(props) {
-	function tabClicked (title, index, m) {
-		props.filter(title, index);
-		props.updateTab(m)
-	}
-
+function Dropdown({ open, trigger, menu }) {
 	return (
-		<div>
-			<button class="relative w-44 flex flex-row jutify-center items-center bg-white text-gray-600 rounded  shadow group">
-				<p class="px-4 w-2/3 text-left ml-2">{props.tag}</p>
-				<div class="p-2 ">
-					<svg
-						class="w-5 h-5"
-						fill="none"
-						stroke="currentColor"
-						viewBox="0 0 24 24"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-					</svg>
-				</div>
-				<div class="absolute top-full hidden group-focus:block min-w-full w-max bg-white shadow-md mt-1 rounded">
-					<ul class="text-left border rounded">
-						{props.list.map((m, index) => {
-          					return (
-            					<>
-									<li class="px-4 py-1 hover:bg-gray-100 border-b" onClick = {() => tabClicked(props.title, index, m)}>{m}</li>
-								</>
-          					);
-        				})}	
-					</ul>
-				</div>
-			</button>
+		<div className="dropdown">
+			{trigger}
+			{open ? (
+				<ul className="menu">
+					{menu.map((menuItem, index) => (
+						<li key={index} className="menu-item">{menuItem}</li>
+					))}
+				</ul>
+			) : null}
 		</div>
 	);
 }
