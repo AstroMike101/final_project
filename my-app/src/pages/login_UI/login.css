@@ -1,0 +1,52 @@
+body {
+
+    background: linear-gradient(#F5F7FA, #B8C6DB);
+
+
+}
+
+.form {
+
+    background-color: #1D3557;
+    border-radius: 5px;
+    width: 700px;
+    height: 1200px;
+    margin: 5px auto;
+    padding: 15px;
+
+    /* height: 600px; */
+}
+
+
+
+.form-body {
+    text-align: center;
+    padding: 5px 10px;
+}
+
+.form-body>* {
+    padding: 20px;
+}
+
+.form__label {
+    width: 40%
+}
+
+.form_input {
+    width: 60%;
+
+}
+
+.footer {
+    text-align: center;
+}
+
+.text {
+    color: white;
+    text-align: center;
+}
+
+input {
+    width: 250px;
+    height: 25px;
+}
