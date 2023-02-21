@@ -5,11 +5,11 @@ function AdminPortal() {
     return (
         <div className="container">
             <header className="header text">
-                <h1 classname= 'text'>Admin Portal</h1>
+                <h1 classname='text'>Admin Portal</h1>
             </header>
             <div className="content">
                 <div className="left-section">
-                    <h2 className= "text">Manage Movies</h2>
+                    <h2 className="text">Manage Movies</h2>
                     <div className="buttons">
                         <button>Add movie</button>
                         <button>Remove movie</button>

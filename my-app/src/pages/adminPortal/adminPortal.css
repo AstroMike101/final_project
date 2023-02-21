@@ -31,18 +31,19 @@
 }
 
 .buttons {
-        display: flex;
-        flex-direction: column;
-        position:relative;
-        right: 600px;
-        bottom: 200px;
-        gap: 60px;
-        
-        
-}
+   padding: 25px;
+text-decoration: none;
+    
+
+    }
+
+
+
 
 .buttons button {
     width: 100%;
+    background-color: #B2D9DB;
+    padding: 15px;
+    margin: 10px;
+
 }
-
-
