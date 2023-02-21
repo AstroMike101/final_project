@@ -60,10 +60,11 @@ function BookMovie(props) {
 												key={key}
 												style={{
 													display: 'flex',
-													marginBottom: 8,
+													marginBottom: -2,
 												}}
 												align="baseline"
 											>
+												<div>Price: $15</div>
 												<Form.Item
 													{...restField}
 													name={[name, 'first']}
@@ -176,14 +177,23 @@ function BookMovie(props) {
 								</Row>
 
 							</Checkbox.Group>
-
 						</div>
-						<div class="booking-display">
+
+						<div class = "booking-display-smallgap">
+							<div class="section-title-minor">Order summary</div>
+							<div>4x Teenager Ticket: $60</div>
+							<div>Sales Tax: $5</div>
+							<div class = "section-title-but-even-more-minor">Total: $65</div>
+						</div>
+						<div class="booking-display-smallgap">
 							<Form.Item>
 								<Button type="primary" htmlType="submit">
 									Book tickets
 								</Button>
 							</Form.Item>
+							<Button type="dashed" danger>
+								Cancel
+							</Button>
 						</div>
 					</Form>
 
