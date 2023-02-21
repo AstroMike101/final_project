@@ -1,6 +1,6 @@
 body {
 
-    background: linear-gradient(#F5F7FA, #B8C6DB);
+    background: #f1faee
 
 }
 
@@ -12,8 +12,8 @@ color: black;
 
 .container { 
     width: 1400px;
-    height: 1200px;
-    background: linear-gradient(#F5F7FA, #B8C6DB);
+    height: 500px;
+    background: #f1faee;
 }
 
 .text2 { 

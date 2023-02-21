@@ -4,7 +4,7 @@ import './login.css';
 
 function login() {
     return (
-        <div className="form">
+        <div className="poo">
             <h1 class='text'>Sign in</h1>
 
             <div className="form-body">
@@ -16,14 +16,14 @@ function login() {
                     <input type="email" id="password" className="form__input all" placeholder="Password" />
                 </div>
                 <p class='text'>Dont have an account?  Sign up <a href='#'>here</a></p>
-
+              
 
 
             </div>
             <div class="footer">
-                <button type="submit" class="btn">Sign in</button>
+                <button type="submit" class="btn"><a href='#'>Sign in</a></button>
             </div>
-            <p class='footer2'>E Cine™</p>
+          
         </div>
     );
 
