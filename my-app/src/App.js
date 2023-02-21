@@ -6,6 +6,9 @@ import './index.css';
 
 import EditProfile from "./EditProfile.js";
 import BookMovie from "./BookMovie.js";
+import Login from './pages/login_UI/login_UI';
+import Registration from './pages/registration_UI/registration_form';
+import Confirmation from './pages/registrationConfirmation/registrationConfirmation'
 
 class App extends Component {
 	constructor(props) {
@@ -48,6 +51,12 @@ class App extends Component {
 						<Route path="/booking" element={<BookMovie />}>
 						</Route>
 						<Route path="/booking" element={<BookMovie />}>
+						</Route>
+						<Route path="/register" element={<Registration />}>
+						</Route>
+						<Route path="/register/confirmation" element={<Confirmation />}>
+						</Route>
+						<Route path="/login" element={<Login />}>
 						</Route>
 					</Routes>
 				</React.Fragment>

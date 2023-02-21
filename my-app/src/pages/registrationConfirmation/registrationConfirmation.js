@@ -5,7 +5,7 @@ function registrationConfirmation() {
     return (
 
         <div class = 'container'>
-            <h1 class='text'>Registeration Confirmation </h1>
+            <h1 class='text'>Registration Confirmation </h1>
 
             <h2 class= 'text text2'>A confirmation email has been sent to your email!</h2>
 
