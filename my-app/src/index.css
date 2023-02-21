@@ -50,6 +50,20 @@ body {
 	font-weight: 700;
 	font-size: 2em;
 }
+.section-title-minor {
+	font-weight: 500;
+	font-size: 1.5em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.section-title-but-even-more-minor {
+	font-weight: 400;
+	font-size: 1.2em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
 
 .movie-display {
 	display: flex;
@@ -80,10 +94,21 @@ body {
 	font-size: 1.75em;
 }
 
+.movie-details {
+	font-style: italic;
+	font-size: 1em;
+	font-weight: 300;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
 .book-button {
 	padding: 12px;
 	background-color: #B2D9DB;
 	border-radius: 7px;
+	color: #000000;
 }
 
 /* Edit profile */
@@ -91,7 +116,7 @@ body {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 30px;
+	gap: 20px;
 }
 
 .form-row {
@@ -99,4 +124,6 @@ body {
 	flex-direction: row;
 	align-items: center;
 	gap: 10px;
+	justify-content: center;
+	align-content: center;
 }

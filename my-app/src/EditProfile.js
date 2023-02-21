@@ -10,9 +10,11 @@ function EditProfile(props) {
 		console.log('Failed:', errorInfo);
 	};
 
+	/* jesus fucking christ */
 	return (
 		<div class="editprofile">
 			<div class="section-title">Edit Profile</div>
+			<div>Fields marked with an * are required.</div>
 			<Form
 				name="basic"
 				labelCol={{
@@ -22,7 +24,7 @@ function EditProfile(props) {
 					span: 32,
 				}}
 				style={{
-					maxWidth: 1000,
+					maxWidth: 1500,
 				}}
 				initialValues={{
 					remember: true,
@@ -31,6 +33,7 @@ function EditProfile(props) {
 				onFinishFailed={onFinishFailed}
 				autoComplete="off"
 			>
+				<div class="section-title-minor">Personal Information</div>
 				<div class="form-row">
 					<Form.Item
 						name="name"
@@ -41,7 +44,7 @@ function EditProfile(props) {
 							},
 						]}
 					>
-						<Input placeholder="Name" />
+						<Input placeholder="Name*" />
 					</Form.Item>
 
 					<Form.Item
@@ -53,7 +56,7 @@ function EditProfile(props) {
 							},
 						]}
 					>
-						<Input.Password placeholder="Password" />
+						<Input.Password placeholder="Password*" />
 					</Form.Item>
 					<Form.Item
 						name="phone"
@@ -64,8 +67,348 @@ function EditProfile(props) {
 							},
 						]}
 					>
-						<Input placeholder="Phone Number" />
+						<Input placeholder="Phone Number*" />
 					</Form.Item>
+				</div>
+
+				<div class="section-title-minor">Billing Information</div>
+				<div class="form-row">
+					<Form.Item
+						name="addressbilling"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid address!',
+							},
+						]}
+					>
+						<Input placeholder="Address*" />
+					</Form.Item>
+
+					<Form.Item
+						name="citystatebilling"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid city/state!',
+							},
+						]}
+					>
+						<Input placeholder="City/State*" />
+					</Form.Item>
+					<Form.Item
+						name="zipcodebilling"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid zip code!',
+							},
+						]}
+					>
+						<Input placeholder="Zip Code*" />
+					</Form.Item>
+				</div>
+
+				<div class="section-title-minor">Payment Information</div>
+				<div class="section-title-but-more-minor">Card 1</div>
+				<div class="form-row">
+					<Form.Item
+						name="ccn1"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid card number!',
+							},
+						]}
+					>
+						<Input placeholder="CC Number*" />
+					</Form.Item>
+
+					<Form.Item
+						name="cardtype1"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid card type!',
+							},
+						]}
+					>
+						<Input placeholder="Card Type*" />
+					</Form.Item>
+					<Form.Item
+						name="expiration1"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid expiration date!',
+							},
+						]}
+					>
+						<Input placeholder="Expiration Date*" />
+					</Form.Item>
+				</div>
+				<div class="form-row">
+					<Form.Item
+						name="address1"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid address!',
+							},
+						]}
+					>
+						<Input placeholder="Address*" />
+					</Form.Item>
+
+					<Form.Item
+						name="citystate1"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid city/state!',
+							},
+						]}
+					>
+						<Input placeholder="City/State*" />
+					</Form.Item>
+					<Form.Item
+						name="zipcode1"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid zip code!',
+							},
+						]}
+					>
+						<Input placeholder="Zip Code*" />
+					</Form.Item>
+				</div>
+
+				<div class="section-title-but-more-minor">Card 2</div>
+				<div class="form-row">
+					<Form.Item
+						name="ccn2"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid card number!',
+							},
+						]}
+					>
+						<Input placeholder="CC Number" />
+					</Form.Item>
+
+					<Form.Item
+						name="cardtype2"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid card type!',
+							},
+						]}
+					>
+						<Input placeholder="Card Type" />
+					</Form.Item>
+					<Form.Item
+						name="expiration2"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid expiration date!',
+							},
+						]}
+					>
+						<Input placeholder="Expiration Date" />
+					</Form.Item>
+				</div>
+				<div class="form-row">
+					<Form.Item
+						name="address2"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid address!',
+							},
+						]}
+					>
+						<Input placeholder="Address" />
+					</Form.Item>
+
+					<Form.Item
+						name="citystate2"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid city/state!',
+							},
+						]}
+					>
+						<Input placeholder="City/State" />
+					</Form.Item>
+					<Form.Item
+						name="zipcode2"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid zip code!',
+							},
+						]}
+					>
+						<Input placeholder="Zip Code" />
+					</Form.Item>
+				</div>
+
+				<div class="section-title-but-more-minor">Card 3</div>
+				<div class="form-row">
+					<Form.Item
+						name="ccn3"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid card number!',
+							},
+						]}
+					>
+						<Input placeholder="CC Number" />
+					</Form.Item>
+
+					<Form.Item
+						name="cardtype3"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid card type!',
+							},
+						]}
+					>
+						<Input placeholder="Card Type" />
+					</Form.Item>
+					<Form.Item
+						name="expiration3"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid expiration date!',
+							},
+						]}
+					>
+						<Input placeholder="Expiration Date" />
+					</Form.Item>
+				</div>
+				<div class="form-row">
+					<Form.Item
+						name="address3"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid address!',
+							},
+						]}
+					>
+						<Input placeholder="Address" />
+					</Form.Item>
+
+					<Form.Item
+						name="citystate3"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid city/state!',
+							},
+						]}
+					>
+						<Input placeholder="City/State" />
+					</Form.Item>
+					<Form.Item
+						name="zipcode3"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid zip code!',
+							},
+						]}
+					>
+						<Input placeholder="Zip Code" />
+					</Form.Item>
+				</div>
+
+				<div class="section-title-but-more-minor">Card 4</div>
+				<div class="form-row">
+					<Form.Item
+						name="ccn4"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid card number!',
+							},
+						]}
+					>
+						<Input placeholder="CC Number" />
+					</Form.Item>
+
+					<Form.Item
+						name="cardtype4"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid card type!',
+							},
+						]}
+					>
+						<Input placeholder="Card Type" />
+					</Form.Item>
+					<Form.Item
+						name="expiration4"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid expiration date!',
+							},
+						]}
+					>
+						<Input placeholder="Expiration Date" />
+					</Form.Item>
+				</div>
+				<div class="form-row">
+					<Form.Item
+						name="address4"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid address!',
+							},
+						]}
+					>
+						<Input placeholder="Address" />
+					</Form.Item>
+
+					<Form.Item
+						name="citystate4"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid city/state!',
+							},
+						]}
+					>
+						<Input placeholder="City/State" />
+					</Form.Item>
+					<Form.Item
+						name="zipcode4"
+						rules={[
+							{
+								required: true,
+								message: 'Invalid zip code!',
+							},
+						]}
+					>
+						<Input placeholder="Zip Code" />
+					</Form.Item>
+				</div>
+				<div class = "form-row">
+					<Button type="primary" htmlType="submit">
+						Submit
+					</Button>
 				</div>
 			</Form>
 		</div>

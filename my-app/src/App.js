@@ -5,6 +5,7 @@ import './index.js';
 import './index.css';
 
 import EditProfile from "./EditProfile.js";
+import BookMovie from "./BookMovie.js";
 
 class App extends Component {
 	constructor(props) {
@@ -19,11 +20,9 @@ class App extends Component {
 
 	handleLoginClick = () => {
 		this.setState({login: true})
-		console.log("AAAAAAAAAAAa")
 	}
 	handleLogoutClick = () => {
 		this.setState({login: false})
-		console.log("AAAAAAAAAAAa")
 	}
 
 	truncate = (str) => {
@@ -46,6 +45,8 @@ class App extends Component {
 						</Route>
 						<Route path="/editprofile" element={<EditProfile />}>
 						</Route>
+						<Route path="/booking" element={<BookMovie />}>
+						</Route>
 					</Routes>
 				</React.Fragment>
 			</Router>
@@ -63,8 +64,10 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">The Flash</div>
+					<div class = "movie-details">Rated PG-13</div>
+					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<div class="book-button">BOOK NOW</div>
+					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><div class="book-button">BOOK NOW</div></NavLink>
 				</div>
 			</div>
 			<div class="movie">
@@ -73,8 +76,10 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">The Flash</div>
+					<div class = "movie-details">Rated PG-13</div>
+					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<div class="book-button">BOOK NOW</div>
+					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><div class="book-button">BOOK NOW</div></NavLink>
 				</div>
 			</div>
 			<div class="movie">
@@ -83,8 +88,10 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">The Flash</div>
+					<div class = "movie-details">Rated PG-13</div>
+					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<div class="book-button">BOOK NOW</div>
+					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><div class="book-button">BOOK NOW</div></NavLink>
 				</div>
 			</div>
 			<div class="section-title">UPCOMING MOVIES</div>
@@ -94,6 +101,8 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">John Wick: Chapter 4</div>
+					<div class = "movie-details">Rated MA</div>
+					<div class = "movie-details">Showtimes start on 4/20/2023</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 				</div>
 			</div>
@@ -103,6 +112,8 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">John Wick: Chapter 4</div>
+					<div class = "movie-details">Rated MA</div>
+					<div class = "movie-details">Showtimes start on 4/20/2023</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 				</div>
 			</div>
@@ -112,6 +123,8 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">John Wick: Chapter 4</div>
+					<div class = "movie-details">Rated MA</div>
+					<div class = "movie-details">Showtimes start on 4/20/2023</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 				</div>
 			</div>
