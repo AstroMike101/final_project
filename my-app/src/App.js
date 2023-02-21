@@ -88,7 +88,7 @@ function Home(props) {
 			<div class="search-display">
 				<div>Search movies...</div>
 				<Search
-					placeholder="input search text"
+					placeholder="Movie title"
 					allowClear
 					style={{
 						width: 340,
