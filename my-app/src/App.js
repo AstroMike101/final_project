@@ -4,6 +4,10 @@ import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom'
 import './index.js';
 import './index.css';
 
+import Login from './pages/login_UI/login_UI';
+import Registration from './pages/registration_UI/registration_form';
+import Confirmation from './pages/registrationConfirmation/registrationConfirmation'
+
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -15,19 +19,7 @@ class App extends Component {
 
 	render () {
 		return (
-			<div>
-				<div class = "navbar">
-					<div class = "navbar-sub">
-						<div class = "title ">CinE Booking</div>
-						<div>Browse</div>
-						<div>Search</div>
-					</div>
-					<div class = "navbar-sub">
-						<div>Login</div>
-						<div>Register</div>
-					</div>
-				</div>
-			</div>
+		<Confirmation></Confirmation>
 		)
 	}
 }
