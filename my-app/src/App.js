@@ -11,6 +11,8 @@ import Registration from './pages/registration_UI/registration_form';
 import Confirmation from './pages/registrationConfirmation/registrationConfirmation'
 import BookingConfirmation from "./BookingConfirmation.js";
 import AdminPortal from './pages/adminPortal/AdminPortal';
+import PromotionAdd from './PromotionAdd.js';
+import ManageMovies from './ManageMovies.js';
 const { Search } = Input;
 
 
@@ -58,6 +60,11 @@ class App extends Component {
 						<Route path="/admin" element={<AdminPortal />}>
 						</Route>
 						<Route path="/booking" element={<BookMovie />}>
+						</Route>
+
+						<Route path="/PromotionAdd" element={<PromotionAdd />}>
+						</Route>
+						<Route path="/ManageMovies" element={<ManageMovies/>}>
 						</Route>
 						
 						<Route path="/booking/confirmation" element={<BookingConfirmation />}>

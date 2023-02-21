@@ -215,3 +215,146 @@ body {
 			background-color: #B2D9DB;
 		
 }
+
+
+/* for promotion add page */
+.add-promotions-container1 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 100px;
+	/* border: 5px solid white; */
+	border-radius: 5px;
+
+	background-color: #a8dadc;
+}
+
+.add-promotions-header1 {
+	font-size: 24px;
+	margin-bottom: 20px;
+}
+
+.add-promotions-form1 {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 20px;
+}
+
+.add-promotions-label1 {
+	margin-bottom: 10px;
+	font-size: 18px;
+}
+
+.add-promotions-input1 {
+	padding: 5px;
+	font-size: 16px;
+	border-radius: 5px;
+	border: 1px solid gray;
+	margin-left: 10px;
+}
+
+.add-promotions-button1 {
+	padding: 10px;
+	font-size: 20px;
+	border-radius: 5px;
+	border: none;
+	background-color: #e63946;
+	color: white;
+	cursor: pointer;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.add-promotions-button1:hover {
+	background-color: darkblue;
+}
+
+
+
+
+/* css for manage movies */
+
+
+
+.manage-movies-container1 {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 20px;
+}
+
+.manage-movies-header1 {
+	margin: 10px;
+	font-size: 36px;
+
+ 
+}
+
+.add-movie-container1 {
+	width: 100%;
+	margin-bottom: 15px;
+	padding: 20px;
+	border: 3px solid #1d3557;
+	border-radius: 5px;
+}
+
+.add-movie-container1 h2 {
+	margin-top: 0;
+}
+
+.movie-input1 {
+	display: block;
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.add-movie-button1 {
+	display: block;
+	margin: 10px auto 0;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	background-color: #007bff;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.remove-movie-container1 {
+	width: 100%;
+	padding: 20px;
+	border: 3px solid #1d3557;
+	border-radius: 5px;
+}
+
+.remove-movie-container1 h2 {
+	margin-top: 0;
+}
+
+.movie-card1 {
+	padding: 20px;
+	margin-bottom: 10px;
+	border: 3px solid #a8dadc;
+	border-radius: 5px;
+}
+
+.movie-card1 h3 {
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+
+.remove-movie-button1 {
+	display: block;
+	margin: 10px auto 0;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 5px;
+	background-color: #dc3545;
+	color: #fff;
+	font-size: 16px;
+	cursor: pointer;
+}
