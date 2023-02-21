@@ -47,6 +47,8 @@ class App extends Component {
 						</Route>
 						<Route path="/booking" element={<BookMovie />}>
 						</Route>
+						<Route path="/booking" element={<BookMovie />}>
+						</Route>
 					</Routes>
 				</React.Fragment>
 			</Router>
