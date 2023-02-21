@@ -256,7 +256,9 @@ body {
 
 .add-promotions-button1 {
 	padding: 10px;
-	margin: 10px;
+	margin: 5px;
+	position: relative;
+	bottom: 20px;
 	font-size: 20px;
 	border-radius: 5px;
 	border: none;
@@ -268,6 +270,7 @@ body {
 
 .add-promotions-button1:hover {
 	background-color: darkblue;
+	margin: 10px;
 }
 
 
