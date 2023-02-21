@@ -5,7 +5,7 @@
     background-color: #B2D9DB;
     border-radius: 5px;
     width: 700px;
-    height: 1100px;
+    height: 1300px;
     margin: 5px auto;
     padding: 15px;
     
@@ -13,6 +13,9 @@
     /* height: 600px; */
 }
 
+.formtext { 
+    text-align:center;
+}
 
 
 .form-body {

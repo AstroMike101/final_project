@@ -5,26 +5,27 @@ function RegistrationForm() {
     return (
         <div className="form">
             <h1 class='text'>Register an Account </h1>
+            <p class = 'formtext'>Forms marked with an asterisk are required.</p>
 
             <div className="form-body">
                 <div className="username">
-                    <input class="form__input" type="text all" id="Name" placeholder="Name" />
+                    <input class="form__input" type="text all" id="Name" placeholder="*Name" />
                 </div>
 
                 <div className="email">
-                    <input type="email" id="email" className="form__input all" placeholder="Email" />
+                    <input type="email" id="email" className="form__input all" placeholder="*Email" />
                 </div>
                 <div className="password">
 
-                    <input className="form__input all" type="password" id="password" placeholder="Password" />
+                    <input className="form__input all" type="password" id="password" placeholder="*Password" />
                 </div>
                 <div className="confirm-password">
-                    <input className="form__input all" type="password" id="confirmPassword" placeholder="Confirm Password" />
+                    <input className="form__input all" type="password" id="confirmPassword" placeholder="*Confirm Password" />
                 </div>
 
 
                 <div className="phoneNumber">
-                    <input className="form__input all" type="phoneNumber" id="phoneNumber" placeholder="Phone Number" />
+                    <input className="form__input all" type="phoneNumber" id="phoneNumber" placeholder="*Phone Number" />
                 </div>
                 <h1 class='text'>Payment Information</h1>
 
