@@ -10,7 +10,7 @@ import Login from './pages/login_UI/login_UI';
 import Registration from './pages/registration_UI/registration_form';
 import Confirmation from './pages/registrationConfirmation/registrationConfirmation'
 import BookingConfirmation from "./BookingConfirmation.js";
-import adminPortal from './pages/adminPortal/adminPortal';
+import AdminPortal from './pages/adminPortal/AdminPortal';
 const { Search } = Input;
 
 
@@ -55,7 +55,7 @@ class App extends Component {
 						</Route>
 						<Route path="/editprofile" element={<EditProfile />}>
 						</Route>
-						<Route path="/adminPortal" element={<adminPortal />}>
+						<Route path="/admin" element={<AdminPortal />}>
 						</Route>
 						<Route path="/booking" element={<BookMovie />}>
 						</Route>
@@ -187,7 +187,7 @@ function Home(props) {
 			</div>
 		{/* <button class='adminBtn'>Login as admin</button>
 		 */}
-			<NavLink to="/adminPortal" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
+			<NavLink to="/admin" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
 		</div>
 	)
 }

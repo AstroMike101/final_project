@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './adminPortal.css'
 import { Button, Space } from 'antd';
-function adminPortal() {
+function AdminPortal() {
     return (
         <div className="container">
             <header className="header text">
@@ -32,4 +32,4 @@ function adminPortal() {
 
 }
 
-export default adminPortal;
+export default AdminPortal;
