@@ -207,3 +207,11 @@ body {
 .movie-banner {
 	max-width: 300px;
 }
+
+.adminBtn { 
+	
+			padding: 10px 24px;
+			text-decoration: none;
+			background-color: #B2D9DB;
+		
+}
