@@ -1,7 +1,13 @@
+/* Website wide */
 * {
 	font-family: 'Rubik', sans-serif;
 }
 
+body {
+	background-color: #F3FAEF;
+}
+
+/* Navbar */
 .navbar {
 	display: flex;
 	flex-direction: row;
@@ -23,4 +29,101 @@
 .title {
 	font-weight: 800;
 	font-size: 1.5em;
+	color: #D5494C;
+}
+
+.navbutton,
+.navbutton:visited {
+	color: #000000;
+	padding-left: 3px;
+	padding-right: 3px;
+}
+
+.navbutton:hover {
+	color: #B2D9DB;
+	cursor: pointer;
+}
+
+
+/* Front page movie display */
+.section-title {
+	font-weight: 700;
+	font-size: 2em;
+}
+.section-title-minor {
+	font-weight: 500;
+	font-size: 1.5em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.section-title-but-even-more-minor {
+	font-weight: 400;
+	font-size: 1.2em;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.movie-display {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 30px;
+}
+
+.movie {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	gap: 50px;
+	max-width: 80%;
+}
+
+.movie-description {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 15px;
+	flex-wrap: wrap;
+}
+
+.movie-title {
+	font-weight: 700;
+	font-size: 1.75em;
+}
+
+.movie-details {
+	font-style: italic;
+	font-size: 1em;
+	font-weight: 300;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+
+.book-button {
+	padding: 12px;
+	background-color: #B2D9DB;
+	border-radius: 7px;
+	color: #000000;
+}
+
+/* Edit profile */
+.editprofile {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+}
+
+.form-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+	justify-content: center;
+	align-content: center;
 }
