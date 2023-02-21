@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
 import './registrationConfirmation.css'
 import { Button, Space } from 'antd';
 function registrationConfirmation() {
@@ -14,7 +15,7 @@ function registrationConfirmation() {
 
 
  
-            <button><a href= '#'>Return to homepage</a></button>              
+            <NavLink to="/" style={{ textDecoration: 'none' }}><button><a href= '#'>Return to homepage</a></button>     </NavLink>         
            
             
 
