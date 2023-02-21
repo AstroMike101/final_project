@@ -1,8 +1,10 @@
-import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-router-dom';
-import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col } from 'antd';
-import { FieldTimeOutlined, DownOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
+import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, Radio, Divider } from 'antd';
+import { FieldTimeOutlined, DownOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import React, { Component, useState, useEffect } from "react";
 
 import './index.css';
+import BookingConfirmation from "./BookingConfirmation.js";
 
 import flashimg from "./images/flash.jpg"
 const onFinish = (values) => {
@@ -10,11 +12,16 @@ const onFinish = (values) => {
 };
 
 function BookMovie(props) {
+	const [value, setValue] = useState(1);
+	const onChange = (e) => {
+		setValue(e.target.value);
+	};
 	return (
 		<div class="booking-display">
 			<div class="section-title">Book your tickets</div>
+			<div class = "spacing"></div>
 			<div class="booking-container">
-				<div class="booking-display">
+				<div class="booking-form">
 					<div class="movie-title">The Flash</div>
 					<div class="movie-details">PG-13</div>
 					<img src={flashimg} class="movie-banner" />
@@ -179,21 +186,38 @@ function BookMovie(props) {
 							</Checkbox.Group>
 						</div>
 
-						<div class = "booking-display-smallgap">
+						<div class="booking-display-smallgap">
 							<div class="section-title-minor">Order summary</div>
 							<div>4x Teenager Ticket: $60</div>
 							<div>Sales Tax: $5</div>
-							<div class = "section-title-but-even-more-minor">Total: $65</div>
+							<div class="section-title-but-even-more-minor">Total: $65</div>
 						</div>
+
+						<div class="booking-display">
+							<div class="section-title-minor">Pay with saved card</div>
+							<Radio.Group value={value} onChange={onChange}>
+								<Space direction="vertical">
+									<Radio value={1}>Card 1</Radio>
+									<Radio value={2}>Card 2</Radio>
+									<Radio value={3}>Card 3</Radio>
+									<Radio value={4}>Card 4</Radio>
+								</Space>
+							</Radio.Group>
+						</div>
+						<Divider orientation="left"></Divider>
 						<div class="booking-display-smallgap">
 							<Form.Item>
-								<Button type="primary" htmlType="submit">
-									Book tickets
-								</Button>
+								<NavLink to="/booking/confirmation" style={{ textDecoration: 'none' }}>
+									<Button type="primary" htmlType="submit">
+										Book tickets
+									</Button>
+								</NavLink>
 							</Form.Item>
-							<Button type="dashed" danger>
-								Cancel
-							</Button>
+							<NavLink to="/" style={{ textDecoration: 'none' }}>
+								<Button type="dashed" danger>
+									Cancel
+								</Button>
+							</NavLink>
 						</div>
 					</Form>
 

@@ -7,6 +7,10 @@ body {
 	background-color: #F3FAEF;
 }
 
+.spacing {
+	margin: 10px;
+}
+
 /* Navbar */
 .navbar {
 	display: flex;
@@ -105,7 +109,7 @@ body {
 }
 
 .book-button {
-	padding: 12px;
+	padding: 10px;
 	background-color: #B2D9DB;
 	border-radius: 7px;
 	color: #000000;
@@ -113,6 +117,13 @@ body {
 .book-button:hover {
 	background-color: #B2D9DB;
 	filter: drop-shadow(0 0 0.2rem rgba(0, 0, 0, 0.2));
+}
+
+.text-bg {
+    background-color: #1D3557;
+	color: #FFFFFF;
+	padding: 8px;
+	border-radius: 7px;
 }
 
 /* Edit profile */
@@ -134,11 +145,12 @@ body {
 
 /* Book tickets */
 /* oh my god i should have just used tailwind */
+/* why did i make these all seperate classes. oh no */
 .booking-display {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 10px;
+	gap: 5px;
 }
 
 .booking-addtickets {

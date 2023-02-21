@@ -21,7 +21,7 @@ body {
 }
 
 
-button {
+.btn {
     background-color: #1D3557;
     /* Green */
     border: none;

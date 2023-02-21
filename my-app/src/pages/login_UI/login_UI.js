@@ -23,7 +23,7 @@ function login(props) {
 
             </div>
             <div class="footer">
-                <NavLink to = "/" style = {{textDecoration: 'none'}}><button type="submit" class="btn"><a href='#'>Sign in</a></button></NavLink>
+                <NavLink to = "/" style = {{textDecoration: 'none'}}><button type="submit" class="btn" onClick = {props.handleLoginClick}><a href='#'>Sign in</a></button></NavLink>
             </div>
           
         </div>

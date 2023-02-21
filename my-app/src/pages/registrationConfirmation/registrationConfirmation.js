@@ -15,7 +15,7 @@ function registrationConfirmation() {
 
 
  
-            <NavLink to="/" style={{ textDecoration: 'none' }}><button><a href= '#'>Return to homepage</a></button>     </NavLink>         
+            <NavLink to="/" style={{ textDecoration: 'none' }}><button class = "btn"><a href= '#'>Return to homepage</a></button>     </NavLink>         
            
             
 

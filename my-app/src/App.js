@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from "react";
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
+import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col } from 'antd';
 import './index.js';
 import './index.css';
 
@@ -9,12 +10,13 @@ import BookMovie from "./BookMovie.js";
 import Login from './pages/login_UI/login_UI';
 import Registration from './pages/registration_UI/registration_form';
 import Confirmation from './pages/registrationConfirmation/registrationConfirmation'
+import BookingConfirmation from "./BookingConfirmation.js";
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			login: true,
+			login: false,
 			loginid: 0,
 		};
 		this.handleLoginClick = this.handleLoginClick.bind(this);
@@ -27,6 +29,7 @@ class App extends Component {
 	handleLogoutClick = () => {
 		this.setState({login: false})
 	}
+
 
 	truncate = (str) => {
 		if (str.length >= 500) {
@@ -49,6 +52,8 @@ class App extends Component {
 						<Route path="/editprofile" element={<EditProfile />}>
 						</Route>
 						<Route path="/booking" element={<BookMovie />}>
+						</Route>
+						<Route path="/booking/confirmation" element={<BookingConfirmation />}>
 						</Route>
 						<Route path="/register" element={<Registration />}>
 						</Route>
@@ -76,7 +81,7 @@ function Home(props) {
 					<div class = "movie-details">Rated PG-13</div>
 					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><div class="book-button">BOOK NOW</div></NavLink>
+					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><Button type="primary">Book tickets now</Button></NavLink>
 				</div>
 			</div>
 			<div class="movie">
@@ -88,7 +93,7 @@ function Home(props) {
 					<div class = "movie-details">Rated PG-13</div>
 					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><div class="book-button">BOOK NOW</div></NavLink>
+					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><Button type="primary">Book tickets now</Button></NavLink>
 				</div>
 			</div>
 			<div class="movie">
@@ -100,7 +105,7 @@ function Home(props) {
 					<div class = "movie-details">Rated PG-13</div>
 					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><div class="book-button">BOOK NOW</div></NavLink>
+					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><Button type="primary">Book tickets now</Button></NavLink>
 				</div>
 			</div>
 			<div class="section-title">UPCOMING MOVIES</div>
