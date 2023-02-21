@@ -19,6 +19,7 @@ function ManageMovies() {
 
     return (
         <div className="manage-movies-container1">
+            <NavLink to="/admin"><button className="add-promotions-button1" type="submit">Return to Admin Panel</button></NavLink>
             <h1 className="manage-movies-header1">Manage movies</h1>
             <div className="add-movie-container1">
                 <h2>Add movie</h2>
