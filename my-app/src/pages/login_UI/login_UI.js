@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './login.css'
+import './login.css';
 
 
 function login() {
@@ -23,6 +23,7 @@ function login() {
             <div class="footer">
                 <button type="submit" class="btn">Sign in</button>
             </div>
+            <p class='footer2'>E Cine™</p>
         </div>
     );
 

@@ -10,7 +10,7 @@ body {
     background-color: #1D3557;
     border-radius: 5px;
     width: 700px;
-    height: 1200px;
+    height: 500px;
     margin: 5px auto;
     padding: 15px;
 
@@ -24,10 +24,6 @@ body {
     padding: 5px 10px;
 }
 
-.form-body>* {
-    padding: 20px;
-}
-
 .form__label {
     width: 40%
 }
@@ -37,8 +33,14 @@ body {
 
 }
 
-.footer {
-    text-align: center;
+
+
+.footer2 { 
+    position:relative;
+   top: 270px;
+   left: 330px;
+   color: black;
+    
 }
 
 .text {
