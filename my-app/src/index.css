@@ -127,3 +127,53 @@ body {
 	justify-content: center;
 	align-content: center;
 }
+
+/* Book tickets */
+/* oh my god i should have just used tailwind */
+.booking-display {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.booking-addtickets {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1px;
+}
+
+.booking-container {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 80px;
+}
+
+.booking-inner-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 30px;
+}
+
+.booking-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	align-self: first baseline;
+	gap: 10px;
+	flex: 0 0 auto;
+}
+
+.booking-seats {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+}
+
+.movie-banner {
+	max-width: 300px;
+}
