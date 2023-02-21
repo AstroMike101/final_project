@@ -1,17 +1,20 @@
+import './index.js';
+import './index.css';
 import React, { Component, useState, useEffect } from "react";
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
 import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col } from 'antd';
-const { Search } = Input;
-import './index.js';
-import './index.css';
-
 import EditProfile from "./EditProfile.js";
 import BookMovie from "./BookMovie.js";
 import Login from './pages/login_UI/login_UI';
 import Registration from './pages/registration_UI/registration_form';
 import Confirmation from './pages/registrationConfirmation/registrationConfirmation'
 import BookingConfirmation from "./BookingConfirmation.js";
+import adminPortal from './pages/adminPortal/adminPortal';
+const { Search } = Input;
+
+
+
 
 class App extends Component {
 	constructor(props) {
@@ -52,8 +55,11 @@ class App extends Component {
 						</Route>
 						<Route path="/editprofile" element={<EditProfile />}>
 						</Route>
+						<Route path="/adminPortal" element={<adminPortal />}>
+						</Route>
 						<Route path="/booking" element={<BookMovie />}>
 						</Route>
+						
 						<Route path="/booking/confirmation" element={<BookingConfirmation />}>
 						</Route>
 						<Route path="/register" element={<Registration />}>
@@ -177,7 +183,11 @@ function Home(props) {
 					<div class="movie-details">Showtimes start on 4/20/2023</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 				</div>
+					
 			</div>
+		{/* <button class='adminBtn'>Login as admin</button>
+		 */}
+			<NavLink to="/adminPortal" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
 		</div>
 	)
 }
