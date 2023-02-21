@@ -19,7 +19,7 @@ function BookMovie(props) {
 	return (
 		<div class="booking-display">
 			<div class="section-title">Book your tickets</div>
-			<div class = "spacing"></div>
+			<div class="spacing"></div>
 			<div class="booking-container">
 				<div class="booking-form">
 					<div class="movie-title">The Flash</div>
@@ -67,23 +67,31 @@ function BookMovie(props) {
 												key={key}
 												style={{
 													display: 'flex',
-													marginBottom: -2,
+													marginBottom: 5,
 												}}
 												align="baseline"
 											>
 												<div>Price: $15</div>
-												<Form.Item
-													{...restField}
-													name={[name, 'first']}
-													rules={[
+												<Select
+													defaultValue={'Select age category'}
+													style={{
+														width: 200,
+													}}
+													options={[
 														{
-															required: true,
-															message: 'Missing viewer\'s age',
+															value: 'Child',
+															label: 'Child (0-11)',
+														},
+														{
+															value: 'Teen',
+															label: 'Teen (12-17)',
+														},
+														{
+															value: 'Adult',
+															label: 'Adult (18+)',
 														},
 													]}
-												>
-													<Input placeholder="Viewer's Age" />
-												</Form.Item>
+												/>
 												<MinusCircleOutlined onClick={() => remove(name)} />
 											</Space>
 										))}

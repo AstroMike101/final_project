@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
 import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col } from 'antd';
+const { Search } = Input;
 import './index.js';
 import './index.css';
 
@@ -24,10 +25,10 @@ class App extends Component {
 	}
 
 	handleLoginClick = () => {
-		this.setState({login: true})
+		this.setState({ login: true })
 	}
 	handleLogoutClick = () => {
-		this.setState({login: false})
+		this.setState({ login: false })
 	}
 
 
@@ -43,11 +44,11 @@ class App extends Component {
 			<Router>
 				<React.Fragment>
 					<div>
-						<Navbar state={this.state} loginfunc = {this.handleLoginClick} logoutfunc = {this.handleLogoutClick}  />
+						<Navbar state={this.state} loginfunc={this.handleLoginClick} logoutfunc={this.handleLogoutClick} />
 					</div>
 
 					<Routes>
-						<Route path="/" element={<Home props={this.props}/>} exact>
+						<Route path="/" element={<Home props={this.props} />} exact>
 						</Route>
 						<Route path="/editprofile" element={<EditProfile />}>
 						</Route>
@@ -59,7 +60,7 @@ class App extends Component {
 						</Route>
 						<Route path="/register/confirmation" element={<Confirmation />}>
 						</Route>
-						<Route path="/login" element={<Login handleLoginClick = {this.handleLoginClick} props = {this.props}/>}>
+						<Route path="/login" element={<Login handleLoginClick={this.handleLoginClick} props={this.props} />}>
 						</Route>
 					</Routes>
 				</React.Fragment>
@@ -71,6 +72,41 @@ function Home(props) {
 	{/* todo make this not scuffed with a Movies component*/ }
 	return (
 		<div class="movie-display">
+			<div class="search-display">
+				<div>Search movies...</div>
+				<Search
+					placeholder="input search text"
+					allowClear
+					style={{
+						width: 340,
+					}}
+				/>
+				<Select
+					defaultValue={'All ages'}
+					style={{
+						width: 120,
+					}}
+					options={[
+						{
+							value: 'All ages',
+							label: 'All ages',
+						},
+						{
+							value: 'Children',
+							label: 'Children',
+						},
+						{
+							value: 'Teens',
+							label: 'Teens',
+						},
+						{
+							value: 'Adults',
+							label: 'Adults',
+						},
+					]}
+				/>
+				<DatePicker />
+			</div>
 			<div class="section-title">NOW SHOWING</div>
 			<div class="movie">
 				<div>
@@ -78,10 +114,10 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">The Flash</div>
-					<div class = "movie-details">Rated PG-13</div>
-					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
+					<div class="movie-details">Rated PG-13</div>
+					<div class="movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><Button type="primary">Book tickets now</Button></NavLink>
+					<NavLink to="/booking" style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
 				</div>
 			</div>
 			<div class="movie">
@@ -90,10 +126,10 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">The Flash</div>
-					<div class = "movie-details">Rated PG-13</div>
-					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
+					<div class="movie-details">Rated PG-13</div>
+					<div class="movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><Button type="primary">Book tickets now</Button></NavLink>
+					<NavLink to="/booking" style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
 				</div>
 			</div>
 			<div class="movie">
@@ -102,10 +138,10 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">The Flash</div>
-					<div class = "movie-details">Rated PG-13</div>
-					<div class = "movie-details">Next showtime at 8:00 PM EST</div>
+					<div class="movie-details">Rated PG-13</div>
+					<div class="movie-details">Next showtime at 8:00 PM EST</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
-					<NavLink to = "/booking" style = {{textDecoration: 'none'}}><Button type="primary">Book tickets now</Button></NavLink>
+					<NavLink to="/booking" style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
 				</div>
 			</div>
 			<div class="section-title">UPCOMING MOVIES</div>
@@ -115,8 +151,8 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">John Wick: Chapter 4</div>
-					<div class = "movie-details">Rated MA</div>
-					<div class = "movie-details">Showtimes start on 4/20/2023</div>
+					<div class="movie-details">Rated MA</div>
+					<div class="movie-details">Showtimes start on 4/20/2023</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 				</div>
 			</div>
@@ -126,8 +162,8 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">John Wick: Chapter 4</div>
-					<div class = "movie-details">Rated MA</div>
-					<div class = "movie-details">Showtimes start on 4/20/2023</div>
+					<div class="movie-details">Rated MA</div>
+					<div class="movie-details">Showtimes start on 4/20/2023</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 				</div>
 			</div>
@@ -137,8 +173,8 @@ function Home(props) {
 				</div>
 				<div class="movie-description">
 					<div class="movie-title">John Wick: Chapter 4</div>
-					<div class = "movie-details">Rated MA</div>
-					<div class = "movie-details">Showtimes start on 4/20/2023</div>
+					<div class="movie-details">Rated MA</div>
+					<div class="movie-details">Showtimes start on 4/20/2023</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 				</div>
 			</div>
@@ -153,17 +189,17 @@ function Navbar(props) {
 	let navbutton2;
 
 	if (props.state.login) {
-		navbutton1 = <NavLink to="/editprofile" style={{ textDecoration: 'none' }}><div class = "navbutton">Edit Profile</div></NavLink>
-		navbutton2 = <div onClick = {props.logoutfunc} class = "navbutton">Logout</div>
+		navbutton1 = <NavLink to="/editprofile" style={{ textDecoration: 'none' }}><div class="navbutton">Edit Profile</div></NavLink>
+		navbutton2 = <div onClick={props.logoutfunc} class="navbutton">Logout</div>
 	} else {
-		navbutton1 = <NavLink to="/register" style={{ textDecoration: 'none' }}><div class = "navbutton">Register</div></NavLink>;
-		navbutton2 = <NavLink to="/login" style={{ textDecoration: 'none' }}><div class = "navbutton">Login</div></NavLink>;
+		navbutton1 = <NavLink to="/register" style={{ textDecoration: 'none' }}><div class="navbutton">Register</div></NavLink>;
+		navbutton2 = <NavLink to="/login" style={{ textDecoration: 'none' }}><div class="navbutton">Login</div></NavLink>;
 	}
-	
+
 	return (
 		<div class="navbar">
 			<div class="navbar-sub">
-				<NavLink to = "/" style = {{textDecoration: 'none'}}><div class="title">CinE Booking</div></NavLink>
+				<NavLink to="/" style={{ textDecoration: 'none' }}><div class="title">CinE Booking</div></NavLink>
 			</div>
 			<div class="navbar-sub">
 				{navbutton1}
