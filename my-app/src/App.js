@@ -50,13 +50,11 @@ class App extends Component {
 						</Route>
 						<Route path="/booking" element={<BookMovie />}>
 						</Route>
-						<Route path="/booking" element={<BookMovie />}>
-						</Route>
 						<Route path="/register" element={<Registration />}>
 						</Route>
 						<Route path="/register/confirmation" element={<Confirmation />}>
 						</Route>
-						<Route path="/login" element={<Login />}>
+						<Route path="/login" element={<Login handleLoginClick = {this.handleLoginClick} props = {this.props}/>}>
 						</Route>
 					</Routes>
 				</React.Fragment>
@@ -153,8 +151,8 @@ function Navbar(props) {
 		navbutton1 = <NavLink to="/editprofile" style={{ textDecoration: 'none' }}><div class = "navbutton">Edit Profile</div></NavLink>
 		navbutton2 = <div onClick = {props.logoutfunc} class = "navbutton">Logout</div>
 	} else {
-		navbutton1 = <div class = "navbutton">Register</div>;
-		navbutton2 = <div onClick = {props.loginfunc} class = "navbutton">Login</div>;
+		navbutton1 = <NavLink to="/register" style={{ textDecoration: 'none' }}><div class = "navbutton">Register</div></NavLink>;
+		navbutton2 = <NavLink to="/login" style={{ textDecoration: 'none' }}><div class = "navbutton">Login</div></NavLink>;
 	}
 	
 	return (

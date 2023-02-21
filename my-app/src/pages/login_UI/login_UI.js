@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
 import './login.css';
+import App from '../../App';
 
 
-function login() {
+function login(props) {
     return (
         <div className="poo">
             <h1 class='text'>Sign in</h1>
@@ -21,7 +23,7 @@ function login() {
 
             </div>
             <div class="footer">
-                <button type="submit" class="btn"><a href='#'>Sign in</a></button>
+                <NavLink to = "/" style = {{textDecoration: 'none'}}><button type="submit" class="btn"><a href='#'>Sign in</a></button></NavLink>
             </div>
           
         </div>
