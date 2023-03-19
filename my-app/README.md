@@ -68,3 +68,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+### Setting up the database
+Now that you have the source code, it is now time to set up the database. Begin by booting up the Apache Web Server and MySQL database within XAMPP. Then, procede to localhost/phpmyadmin. From there, open a SQL script and copy the commands found in the data.sql file under src/resources.
