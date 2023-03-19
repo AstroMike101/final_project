@@ -2,7 +2,7 @@ import './index.css';
 import ReactDOM from 'react-dom/client';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
-import adminPortal from './pages/adminPortal/AdminPortal'
+import adminPortal from './pages/adminPortal/adminPortal'
 
 
 

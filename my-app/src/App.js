@@ -10,7 +10,7 @@ import Login from './pages/login_UI/login_UI';
 import Registration from './pages/registration_UI/registration_form';
 import Confirmation from './pages/registrationConfirmation/registrationConfirmation'
 import BookingConfirmation from "./BookingConfirmation.js";
-import AdminPortal from './pages/adminPortal/AdminPortal';
+import AdminPortal from './pages/adminPortal/adminPortal';
 import PromotionAdd from './PromotionAdd.js';
 import ManageMovies from './ManageMovies.js';
 const { Search } = Input;
@@ -30,7 +30,7 @@ class App extends Component {
 	}
 
 	handleLoginClick = () => {
-		this.setState({ login: true })
+		this.setState({ login: false })
 	}
 	handleLogoutClick = () => {
 		this.setState({ login: false })

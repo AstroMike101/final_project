@@ -11,7 +11,7 @@ function login(props) {
 
             <div className="form-body">
                 <div className="username">
-                    <input class="form__input" type="text all" id="username" placeholder="Username" />
+                    <input class="form__input" type="text all" id="email" placeholder="Email Address" />
                 </div>
 
                 <div className="password">
