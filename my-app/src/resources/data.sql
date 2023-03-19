@@ -34,7 +34,7 @@ CREATE TABLE `booking` (
   `showID` int NOT NULL,
   `paymentID` int NOT NULL,
   `total` double NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -47,7 +47,7 @@ CREATE TABLE `movie` (
   `movieID` int NOT NULL,
   `movieTitle` varchar(255) NOT NULL,
   `trailerLink` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -62,7 +62,7 @@ CREATE TABLE `payment` (
   `cardNumber` varchar(255) NOT NULL,
   `cardType` varchar(255) NOT NULL,
   `expDate` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -77,7 +77,7 @@ CREATE TABLE `show` (
   `date` varchar(255) NOT NULL,
   `time` varchar(255) NOT NULL,
   `roomID` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='	';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,7 @@ CREATE TABLE `showroom` (
   `showID` int NOT NULL,
   `roomName` varchar(255) NOT NULL,
   `numSeats` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -104,7 +104,7 @@ CREATE TABLE `ticket` (
   `bookingID` int NOT NULL,
   `ticketType` varchar(255) NOT NULL,
   `seatNumber` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS `tickettype`;
 CREATE TABLE `tickettype` (
   `ttypeID` int NOT NULL,
   `type` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -132,7 +132,7 @@ CREATE TABLE `user` (
   `userType` int NOT NULL DEFAULT '1',
   `userEmail` varchar(255) NOT NULL,
   `userPW` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Need to find which datatype is best for secure password. Default value set for userType = 1. Not verified yet.';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci; 
 
 --
 -- Dumping data for table `user`
@@ -151,7 +151,7 @@ DROP TABLE IF EXISTS `usertype`;
 CREATE TABLE `usertype` (
   `typeID` int NOT NULL,
   `type` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
