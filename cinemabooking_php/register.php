@@ -4,6 +4,7 @@
 <html>
 <head>
     <title> Registration form</title>
+    <link rel="stylesheet" href="style/styles.css">
 </head>
 <body>
     
@@ -11,25 +12,25 @@
         <div class ="header">
             <h2>Register</h2>
         </div>
-        <form action = "connection.php" method ="POST">
+        <form action = "register.php" method ="POST">
             <?php include('errors.php') ?>
             <div>
-                <label for ="username">Username</label>
+                <label for ="username">Email*</label>
                 <input type="text" name="username" required>
             </div>
             
             <div>
-                <label for ="name">Name</label>
+                <label for ="name">*</label>
                 <input type="text" name="name" required>
             </div>
             
             <div>
-                <label for ="password">password</label>
+                <label for ="password">password*</label>
                 <input type = "password" name = "password_1" required>
             </div>
 
             <div>
-                <label for ="password">Confirm Password</label>
+                <label for ="password">Confirm Password*</label>
                 <input type = "password" name = "password_2" required>
             </div>
             

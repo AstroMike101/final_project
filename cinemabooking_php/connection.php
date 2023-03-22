@@ -8,7 +8,7 @@ $password_2 = "";
 
 $errors= array();
 
-$host = "localhost:3307"; /* Host name */
+$host = "localhost:3306"; /* Host name */
 $user = "root"; /* User */
 $password = ""; /* Password */
 $dbname = "cinema_db"; /* Database name */

@@ -33,6 +33,7 @@ if(isset($_POST['login'])) {
 <html>
 <head>
     <title> Login form</title>
+    <link rel="stylesheet" href="style/styles.css">
 </head>
 <body>
     <div class ="container">
