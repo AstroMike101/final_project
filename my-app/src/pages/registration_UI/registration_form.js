@@ -59,8 +59,11 @@ function RegistrationForm() {
                 <div className="zipCode">
                     <input className="form__input all" type="zipCode" id="zipCode" placeholder="Zip Code" />
                 </div>
-
-
+                
+                <div>
+                    <div>Register for Promotions</div>
+                    <input type="checkbox" id="promotionreg" name="promotionreg" value="register" />
+                </div>
 
 
 

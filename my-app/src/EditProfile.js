@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-router-dom';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, Checkbox } from 'antd';
 import './index.css';
 
 function EditProfile(props) {
@@ -403,6 +403,11 @@ function EditProfile(props) {
 						]}
 					>
 						<Input placeholder="Zip Code" />
+					</Form.Item>
+				</div>
+				<div class="form-row">
+					<Form.Item name="subscribepromo" valuePropName="checked">
+						<Checkbox>Subscribe to promotions</Checkbox>
 					</Form.Item>
 				</div>
 				<div class = "form-row">

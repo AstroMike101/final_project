@@ -13,6 +13,7 @@ import BookingConfirmation from "./BookingConfirmation.js";
 import AdminPortal from './pages/adminPortal/adminPortal';
 import PromotionAdd from './PromotionAdd.js';
 import ManageMovies from './ManageMovies.js';
+import ForgotPassword from './ForgotPassword.js';
 const { Search } = Input;
 
 
@@ -22,7 +23,7 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			login: false,
+			login: true,
 			loginid: 0,
 		};
 		this.handleLoginClick = this.handleLoginClick.bind(this);
@@ -74,6 +75,9 @@ class App extends Component {
 						<Route path="/register/confirmation" element={<Confirmation />}>
 						</Route>
 						<Route path="/login" element={<Login handleLoginClick={this.handleLoginClick} props={this.props} />}>
+						</Route>
+
+						<Route path="/login/forgotpassword" element={<ForgotPassword />}>
 						</Route>
 					</Routes>
 				</React.Fragment>

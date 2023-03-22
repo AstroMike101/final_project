@@ -17,8 +17,10 @@ function login(props) {
                 <div className="password">
                     <input type="email" id="password" className="form__input all" placeholder="Password" />
                 </div>
-                <p class='text'>Dont have an account?  Sign up <a href='#'>here</a></p>
-              
+                <div>
+                    <p class='text'>Dont have an account?  Sign up <a href='/register'>here</a></p>
+                    <p class='text'><a href='/login/forgotpassword'>Forgot your password?</a></p>
+                </div>
 
 
             </div>
