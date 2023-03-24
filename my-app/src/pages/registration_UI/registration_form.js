@@ -1,79 +1,81 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
-import './style.css'
+import React, {useState,setState} from 'react';
+import {database} from '../../firebase_setup/firebase.js'
+import {ref,push,child,update} from "firebase/database";
+import './style.css';
 function RegistrationForm() {
-    return (
-        <div className="form">
-            <h1 class='text'>Register an Account </h1>
-            <p class = 'formtext'>Forms marked with an asterisk are required.</p>
+    
+    const [firstName, setFirstName] = useState(null);
+    const [lastName, setLastName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [password,setPassword] = useState(null);
+    const [confirmPassword,setConfirmPassword] = useState(null);
 
+    const handleInputChange = (e) => {
+        const {id , value} = e.target;
+        if(id === "firstName"){
+            setFirstName(value);
+        }
+        if(id === "lastName"){
+            setLastName(value);
+        }
+        if(id === "email"){
+            setEmail(value);
+        }
+        if(id === "password"){
+            setPassword(value);
+        }
+        if(id === "confirmPassword"){
+            setConfirmPassword(value);
+        }
+
+    }
+
+    const handleSubmit  = () => {
+      let obj = {
+        firstName : firstName,
+        lastName:lastName,
+        email:email,
+        password:password,
+        confirmPassword:confirmPassword,
+      }       
+      debugger;
+      const newPostKey = push(child(ref(database), 'posts')).key;
+      const updates = {};
+      updates['/' + newPostKey] = obj;
+      return update(ref(database), updates);
+      //console.log(firstName,lastName,email,password,confirmPassword);
+    }
+
+    return(
+        <div className="form">
             <div className="form-body">
                 <div className="username">
-                    <input class="form__input" type="text all" id="Name" placeholder="*Name" />
+                    <label className="form__label" for="firstName">First Name </label>
+                    <input className="form__input" type="text" value={firstName} onChange = {(e) => handleInputChange(e)} id="firstName" placeholder="First Name"/>
                 </div>
-
+                <div className="lastname">
+                    <label className="form__label" for="lastName">Last Name </label>
+                    <input  type="text" name="" id="lastName" value={lastName}  className="form__input" onChange = {(e) => handleInputChange(e)} placeholder="LastName"/>
+                </div>
                 <div className="email">
-                    <input type="email" id="email" className="form__input all" placeholder="*Email" />
+                    <label className="form__label" for="email">Email </label>
+                    <input  type="email" id="email" className="form__input" value={email} onChange = {(e) => handleInputChange(e)} placeholder="Email"/>
                 </div>
                 <div className="password">
-
-                    <input className="form__input all" type="password" id="password" placeholder="*Password" />
+                    <label className="form__label" for="password">Password </label>
+                    <input className="form__input" type="password"  id="password" value={password} onChange = {(e) => handleInputChange(e)} placeholder="Password"/>
                 </div>
                 <div className="confirm-password">
-                    <input className="form__input all" type="password" id="confirmPassword" placeholder="*Confirm Password" />
+                    <label className="form__label" for="confirmPassword">Confirm Password </label>
+                    <input className="form__input" type="password" id="confirmPassword" value={confirmPassword} onChange = {(e) => handleInputChange(e)} placeholder="Confirm Password"/>
                 </div>
-
-
-                <div className="phoneNumber">
-                    <input className="form__input all" type="phoneNumber" id="phoneNumber" placeholder="*Phone Number" />
-                </div>
-                <h1 class='text'>Payment Information</h1>
-
-
-                <div className="cardType">
-                    <input className="form__input all" type="cardType" id="cardType" placeholder="Card Type" />
-                </div>
-
-                <div className="cardNumber">
-                    <input className="form__input all" type="cardNumber" id="cardNumber" placeholder="Card #" />
-                </div>
-
-
-                <div className="experationDate">
-                    <input className="form__input all" type="experationDate" id="experationDate" placeholder="Expiration Date" />
-                </div>
-
-
-
-                <h1 class='text'>Billing Information</h1>
-
-                <div className="username">
-                    <input class="form__input" type="text all" id="Name" placeholder="Name" />
-                </div>
-
-                <div className="address">
-                    <input className="form__input all" type="address" id="address" placeholder="Address" />
-                </div>
-
-
-                <div className="zipCode">
-                    <input className="form__input all" type="zipCode" id="zipCode" placeholder="Zip Code" />
-                </div>
-                
-                <div>
-                    <div>Register for Promotions</div>
-                    <input type="checkbox" id="promotionreg" name="promotionreg" value="register" />
-                </div>
-
-
-
-
-
             </div>
             <div class="footer">
-                <NavLink to="/register/confirmation" style={{ textDecoration: 'none' }}><button type="submit" class="btn">Register</button></NavLink>
+                <button onClick={()=>handleSubmit()} type="submit" class="btn">Register</button>
             </div>
         </div>
-    )
+       
+    )       
 }
-export default RegistrationForm;
+
+export default RegistrationForm

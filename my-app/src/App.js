@@ -14,6 +14,7 @@ import AdminPortal from './pages/adminPortal/adminPortal';
 import PromotionAdd from './PromotionAdd.js';
 import ManageMovies from './ManageMovies.js';
 import ForgotPassword from './ForgotPassword.js';
+import Header from './header.js';
 const { Search } = Input;
 
 
@@ -85,6 +86,15 @@ class App extends Component {
 		)
 	}
 }
+function register(){
+  return (
+    <div className="App">
+      <Header/>
+      <Registration/>
+    </div>
+  );
+}
+
 function Home(props) {
 	{/* todo make this not scuffed with a Movies component*/ }
 	return (

@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
+import React from 'react';
+import{ BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
 import { Button, Form, Input, Select } from 'antd';
 import './index.css';
 
