@@ -1,81 +1,106 @@
-import React, {useState,setState} from 'react';
-import {database} from '../../firebase_setup/firebase.js'
-import {ref,push,child,update} from "firebase/database";
+import React, { useState, setState } from 'react';
+import { database } from '../../firebase_setup/firebase.js'
+import { ref, push, child, update } from "firebase/database";
+import { message } from 'antd';
 import './style.css';
 function RegistrationForm() {
-    
+
     const [firstName, setFirstName] = useState(null);
     const [lastName, setLastName] = useState(null);
     const [email, setEmail] = useState(null);
-    const [password,setPassword] = useState(null);
-    const [confirmPassword,setConfirmPassword] = useState(null);
+    const [password, setPassword] = useState(null);
+    const [confirmPassword, setConfirmPassword] = useState(null);
 
     const handleInputChange = (e) => {
-        const {id , value} = e.target;
-        if(id === "firstName"){
+        const { id, value } = e.target;
+        if (id === "firstName") {
             setFirstName(value);
         }
-        if(id === "lastName"){
+        if (id === "lastName") {
             setLastName(value);
         }
-        if(id === "email"){
+        if (id === "email") {
             setEmail(value);
         }
-        if(id === "password"){
+        if (id === "password") {
             setPassword(value);
         }
-        if(id === "confirmPassword"){
+        if (id === "confirmPassword") {
             setConfirmPassword(value);
         }
 
     }
 
-    const handleSubmit  = () => {
-      let obj = {
-        firstName : firstName,
-        lastName:lastName,
-        email:email,
-        password:password,
-        confirmPassword:confirmPassword,
-      }       
-      debugger;
-      const newPostKey = push(child(ref(database), 'posts')).key;
-      const updates = {};
-      updates['/' + newPostKey] = obj;
-      return update(ref(database), updates);
-      //console.log(firstName,lastName,email,password,confirmPassword);
+    const handleSubmit = () => {
+        // Input verification
+        var hasErrors = false;
+        if (!firstName) {
+            message.error("First name is required")
+            hasErrors = true;
+        }
+        if (!lastName) {
+            message.error("Last name is required")
+            hasErrors = true;
+        }
+        if (!email) {
+            message.error("Email is required")
+            hasErrors = true;
+        }
+        if (!password) {
+            message.error("Password is required")
+            hasErrors = true;
+        }
+        if (password != confirmPassword) {
+            message.error("Passwords do not match")
+            hasErrors = true;
+        }
+        if (hasErrors) return;
+
+        let obj = {
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password,
+        }
+        debugger;
+        const newPostKey = push(child(ref(database), 'posts')).key;
+        const updates = {};
+        updates['/users/' + newPostKey] = obj;
+        message.success("Success! A confirmation email has been sent to your email address.")
+        return update(ref(database), updates);
+        //console.log(firstName,lastName,email,password,confirmPassword);
     }
 
-    return(
+    return (
         <div className="form">
             <div className="form-body">
                 <div className="username">
                     <label className="form__label" for="firstName">First Name </label>
-                    <input className="form__input" type="text" value={firstName} onChange = {(e) => handleInputChange(e)} id="firstName" placeholder="First Name"/>
+                    <input className="form__input" type="text" value={firstName} onChange={(e) => handleInputChange(e)} id="firstName" placeholder="First Name" />
                 </div>
                 <div className="lastname">
                     <label className="form__label" for="lastName">Last Name </label>
-                    <input  type="text" name="" id="lastName" value={lastName}  className="form__input" onChange = {(e) => handleInputChange(e)} placeholder="LastName"/>
+                    <input type="text" name="" id="lastName" value={lastName} className="form__input" onChange={(e) => handleInputChange(e)} placeholder="Last Name" />
                 </div>
                 <div className="email">
                     <label className="form__label" for="email">Email </label>
-                    <input  type="email" id="email" className="form__input" value={email} onChange = {(e) => handleInputChange(e)} placeholder="Email"/>
+                    <input type="email" id="email" className="form__input" value={email} onChange={(e) => handleInputChange(e)} placeholder="Email" />
                 </div>
                 <div className="password">
                     <label className="form__label" for="password">Password </label>
-                    <input className="form__input" type="password"  id="password" value={password} onChange = {(e) => handleInputChange(e)} placeholder="Password"/>
+                    <input className="form__input" type="password" id="password" value={password} onChange={(e) => handleInputChange(e)} placeholder="Password" />
                 </div>
                 <div className="confirm-password">
                     <label className="form__label" for="confirmPassword">Confirm Password </label>
-                    <input className="form__input" type="password" id="confirmPassword" value={confirmPassword} onChange = {(e) => handleInputChange(e)} placeholder="Confirm Password"/>
+                    <input className="form__input" type="password" id="confirmPassword" value={confirmPassword} onChange={(e) => handleInputChange(e)} placeholder="Confirm Password" />
                 </div>
             </div>
             <div class="footer">
-                <button onClick={()=>handleSubmit()} type="submit" class="btn">Register</button>
+                <button onClick={() => handleSubmit()} type="submit" class="btn">Register</button>
             </div>
         </div>
-       
-    )       
+
+    )
 }
 
 export default RegistrationForm
