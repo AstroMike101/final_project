@@ -7,7 +7,7 @@ import { Form, Input, Button, Typography } from 'antd';
 
 const { Title } = Typography;
 
-const adminLoginPage = () => {
+const AdminLoginPage = () => {
     const [error, setError] = useState(null);
 
     const handleFinish = (values) => {
@@ -43,4 +43,4 @@ const adminLoginPage = () => {
     );
 };
 
-export default adminLoginPage;
+export default AdminLoginPage;

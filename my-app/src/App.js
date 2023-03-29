@@ -14,7 +14,7 @@ import AdminPortal from './pages/adminPortal/adminPortal';
 import PromotionAdd from './PromotionAdd.js';
 import ManageMovies from './ManageMovies.js';
 import ForgotPassword from './ForgotPassword.js';
-import adminLoginPage from './adminLoginPage.js';
+import AdminLoginPage from './AdminLoginPage.js';
 import Header from './header.js';
 const { Search } = Input;
 
@@ -62,8 +62,8 @@ class App extends Component {
 						</Route>
 						<Route path="/admin" element={<AdminPortal />}>
 						</Route>
-						<Route path="/adminPage" element={<adminLoginPage />}>
-						</Route>g
+						<Route path="/adminPage" element={<AdminLoginPage />}>
+						</Route>
 					
 					
 						
@@ -218,8 +218,7 @@ function Home(props) {
 				</div>
 					
 			</div>
-		{/* <button class='adminBtn'>Login as admin</button>
-		 */}
+		
 			<NavLink to="/adminPage" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
 		</div>
 	)
