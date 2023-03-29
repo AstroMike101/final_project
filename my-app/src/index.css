@@ -362,3 +362,40 @@ body {
 	font-size: 16px;
 	cursor: pointer;
 }
+
+
+
+
+/* admin page login */
+
+.admin-login-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.admin-login-box {
+	width: 400px;
+	padding: 24px;
+	background-color: #f0f2f5;
+	border-radius: 8px;
+}
+
+.admin-login-title {
+	text-align: center;
+	margin-bottom: 24px;
+}
+
+.admin-login-input {
+	width: 100%;
+}
+
+.admin-login-button {
+	width: 100%;
+}
+
+.admin-login-error {
+	margin-bottom: 24px;
+	color: red;
+}

@@ -14,6 +14,7 @@ import AdminPortal from './pages/adminPortal/adminPortal';
 import PromotionAdd from './PromotionAdd.js';
 import ManageMovies from './ManageMovies.js';
 import ForgotPassword from './ForgotPassword.js';
+import adminLoginPage from './adminLoginPage.js';
 import Header from './header.js';
 const { Search } = Input;
 
@@ -63,9 +64,12 @@ class App extends Component {
 						</Route>
 						<Route path="/booking" element={<BookMovie />}>
 						</Route>
-
 						<Route path="/PromotionAdd" element={<PromotionAdd />}>
 						</Route>
+
+						{/* <Route>
+							<Route path="/adminLogin" element={<adminLogin />}></Route>
+						</Route> */}
 						<Route path="/ManageMovies" element={<ManageMovies/>}>
 						</Route>
 						
