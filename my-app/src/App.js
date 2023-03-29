@@ -62,6 +62,12 @@ class App extends Component {
 						</Route>
 						<Route path="/admin" element={<AdminPortal />}>
 						</Route>
+						<Route path="/adminPage" element={<adminLoginPage />}>
+						</Route>g
+					
+					
+						
+						
 						<Route path="/booking" element={<BookMovie />}>
 						</Route>
 						<Route path="/PromotionAdd" element={<PromotionAdd />}>
@@ -84,6 +90,8 @@ class App extends Component {
 
 						<Route path="/login/forgotpassword" element={<ForgotPassword />}>
 						</Route>
+
+					
 					</Routes>
 				</React.Fragment>
 			</Router>
@@ -212,7 +220,7 @@ function Home(props) {
 			</div>
 		{/* <button class='adminBtn'>Login as admin</button>
 		 */}
-			<NavLink to="/admin" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
+			<NavLink to="/adminPage" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
 		</div>
 	)
 }
