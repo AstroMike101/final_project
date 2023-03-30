@@ -1,6 +1,8 @@
 import { initializeApp } from 'firebase/app'
 import { getDatabase } from 'firebase/database';
 
+
+
 const firebaseConfig = {
   apiKey: "AIzaSyDDX4D9DiN0mq46K799tfpeokaBh5Ld-40",
   authDomain: "cs4050-final.firebaseapp.com",
@@ -15,3 +17,7 @@ const firebaseConfig = {
 // Initialize Firebase and Firebase Authentication
 const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
+
+
+
+export default firebaseConfig
