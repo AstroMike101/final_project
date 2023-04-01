@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink, useNa
 import './login.css';
 import App from '../../App';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
+import { database } from '../../firebase_setup/firebase.js'
 import { auth } from '../../firebase_setup/firebase';
 
 const Login = () => {
@@ -16,15 +17,14 @@ const Login = () => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            navigate("/home")
+            navigate("/")
             console.log(user);
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-            alert(errorMessage)
-                    
+            alert(errorMessage)          
         });
        
     }

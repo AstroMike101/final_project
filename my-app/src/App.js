@@ -33,7 +33,7 @@ class App extends Component {
 	}
 
 	handleLoginClick = () => {
-		this.setState({ login: false })
+		this.setState({ login: true})
 	}
 	handleLogoutClick = () => {
 		this.setState({ login: false })
