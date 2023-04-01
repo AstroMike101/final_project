@@ -4,19 +4,25 @@ import './login.css';
 import App from '../../App';
 import {  signInWithEmailAndPassword   } from 'firebase/auth';
 import { database } from '../../firebase_setup/firebase.js'
+import { ref, push, child, update } from "firebase/database";
 import { auth } from '../../firebase_setup/firebase';
+
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-       
+
     const onLogin = (e) => {
         e.preventDefault();
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
+            var lgDate = new Date();
+            update(ref(database, 'users/' + user.uid), {
+                last_login: lgDate,
+            })
             navigate("/")
             console.log(user);
         })
@@ -24,7 +30,7 @@ const Login = () => {
             const errorCode = error.code;
             const errorMessage = error.message;
             console.log(errorCode, errorMessage)
-            alert(errorMessage)          
+            alert("Invalid Credentials. Try again.");
         });
        
     }
