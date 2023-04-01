@@ -1,14 +1,11 @@
 
 
 body {
-
     background: linear-gradient(#F5F7FA, #B8C6DB);
-
-
 }
 
 .poo {
-
+    text-align: center;
     background-color: #B2D9DB;
     border-radius: 5px;
     width: 700px;
@@ -30,15 +27,19 @@ body {
 }
 
 .form__label {
+    margin-right: 10px;
     width: 40%
+}
+
+.footer {
+    text-align: center;
+    margin: 0;
 }
 
 .form_input {
     width: 60%;
-
+    margin-left: 15px;
 }
-
-
 
 
 .text {

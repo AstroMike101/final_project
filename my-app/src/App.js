@@ -14,7 +14,7 @@ import AdminPortal from './pages/adminPortal/adminPortal';
 import PromotionAdd from './PromotionAdd.js';
 import ManageMovies from './ManageMovies.js';
 import ForgotPassword from './ForgotPassword.js';
-import AdminLoginPage from './AdminLoginPage.js';
+import AdminLoginPage from './adminLoginPage.js';
 import Header from './header.js';
 const { Search } = Input;
 
