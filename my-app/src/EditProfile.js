@@ -34,8 +34,8 @@ function EditProfile(props) {
 				onFinishFailed={onFinishFailed}
 				autoComplete="off"
 			>
-				<div class="section-title-minor">Personal Information</div>
-				<div class="form-row">
+				<div className="section-title-minor">Personal Information</div>
+				<div className="form-row">
 					<Form.Item
 						name="name"
 						rules={[
@@ -59,6 +59,7 @@ function EditProfile(props) {
 					>
 						<Input.Password placeholder="Password*" />
 					</Form.Item>
+
 					<Form.Item
 						name="phone"
 						rules={[
