@@ -77,7 +77,7 @@ function RegistrationForm() {
                     })
                     .catch((error) => {
                         //message.error("We could not send the verification email - contact an admin")
-                        message.error(error)
+                        message.error(error.message)
                     });
             })
             .catch((error) => {
