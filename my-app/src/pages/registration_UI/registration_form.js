@@ -1,6 +1,7 @@
 import React, { useState, setState } from 'react';
 import { database } from '../../firebase_setup/firebase.js'
 import { ref, push, child, update } from "firebase/database";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { message } from 'antd';
 import './style.css';
 function RegistrationForm() {
@@ -65,8 +66,17 @@ function RegistrationForm() {
         debugger;
         const newPostKey = push(child(ref(database), 'posts')).key;
         const updates = {};
+        const auth = getAuth();
+        createUserWithEmailAndPassword(auth, obj["email"], obj["password"])
+            .then((userCredential) => {
+                const user = userCredential.user;
+                message.success("Success! A confirmation email has been sent to your email address.")
+            })
+            .catch((error) => {
+                message.error(error.message)
+            })
+
         updates['/users/' + newPostKey] = obj;
-        message.success("Success! A confirmation email has been sent to your email address.")
         return update(ref(database), updates);
         //console.log(firstName,lastName,email,password,confirmPassword);
     }
