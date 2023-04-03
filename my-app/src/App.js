@@ -3,7 +3,14 @@ import './index.css';
 import React, { Component, useState, useEffect } from "react";
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
-import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col } from 'antd';
+
+import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, message } from 'antd';
+
+import { database } from './firebase_setup/firebase.js'
+import { ref, push, child, update } from "firebase/database";
+import { getAuth, signOut } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+
 import EditProfile from "./EditProfile.js";
 import BookMovie from "./BookMovie.js";
 import Login from './pages/login_UI/login_UI';
@@ -18,25 +25,51 @@ import AdminLoginPage from './adminLoginPage.js';
 import Header from './header.js';
 const { Search } = Input;
 
-
-
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth();
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			login: true,
+			login: false,
 			loginid: 0,
 		};
-		this.handleLoginClick = this.handleLoginClick.bind(this);
+		//this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleLogoutClick = this.handleLogoutClick.bind(this);
+		this.changeLoginState = this.changeLoginState.bind(this);
 	}
 
-	handleLoginClick = () => {
-		this.setState({ login: false})
-	}
+	onAuthStateChanged = (auth, (user) => {
+		if (user) {
+			// User is signed in, see docs for a list of available properties
+			// https://firebase.google.com/docs/reference/js/firebase.User
+			this.setState({ loginid: user.uid, login: true })
+		} else {
+			// User is signed out
+			// ...
+		}
+	});
+
+	/*handleLoginClick = () => {
+		this.setState({ login: false })
+	}*/
 	handleLogoutClick = () => {
 		this.setState({ login: false })
+		signOut(auth).then(() => {
+			message.success("Signed out")
+		}).catch((error) => {
+			message.error(error.message)
+		});
+	}
+
+	changeLoginState = (status, uid) => {
+		this.setState(state => {
+			return {
+				login: status,
+				loginid: uid,
+			}
+		})
 	}
 
 
@@ -64,10 +97,10 @@ class App extends Component {
 						</Route>
 						<Route path="/adminPage" element={<AdminLoginPage />}>
 						</Route>
-					
-					
-						
-						
+
+
+
+
 						<Route path="/booking" element={<BookMovie />}>
 						</Route>
 						<Route path="/PromotionAdd" element={<PromotionAdd />}>
@@ -76,35 +109,35 @@ class App extends Component {
 						{/* <Route>
 							<Route path="/adminLogin" element={<adminLogin />}></Route>
 						</Route> */}
-						<Route path="/ManageMovies" element={<ManageMovies/>}>
+						<Route path="/ManageMovies" element={<ManageMovies />}>
 						</Route>
-						
+
 						<Route path="/booking/confirmation" element={<BookingConfirmation />}>
 						</Route>
 						<Route path="/register" element={<Registration />}>
 						</Route>
 						<Route path="/register/confirmation" element={<Confirmation />}>
 						</Route>
-						<Route path="/login" element={<Login handleLoginClick={this.handleLoginClick} props={this.props} />}>
+						<Route path="/login" element={<Login handleLoginClick={this.handleLoginClick} props={this.props} changeLoginState = {this.changeLoginState} />}>
 						</Route>
 
 						<Route path="/login/forgotpassword" element={<ForgotPassword />}>
 						</Route>
 
-					
+
 					</Routes>
 				</React.Fragment>
 			</Router>
 		)
 	}
 }
-function register(){
-  return (
-    <div className="App">
-      <Header/>
-      <Registration/>
-    </div>
-  );
+function register() {
+	return (
+		<div className="App">
+			<Header />
+			<Registration />
+		</div>
+	);
 }
 
 function Home(props) {
@@ -216,9 +249,9 @@ function Home(props) {
 					<div class="movie-details">Showtimes start on 4/20/2023</div>
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 				</div>
-					
+
 			</div>
-		
+
 			<NavLink to="/adminPage" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
 		</div>
 	)

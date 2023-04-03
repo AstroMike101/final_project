@@ -1,8 +1,8 @@
 import React, { useState, setState } from 'react';
 import { database } from '../../firebase_setup/firebase.js'
 import { ref, push, child, update } from "firebase/database";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { message } from 'antd';
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { message, Form } from 'antd';
 import './style.css';
 function RegistrationForm() {
 
@@ -70,7 +70,15 @@ function RegistrationForm() {
         createUserWithEmailAndPassword(auth, obj["email"], obj["password"])
             .then((userCredential) => {
                 const user = userCredential.user;
-                message.success("Success! A confirmation email has been sent to your email address.")
+                message.success("Registration success!")
+                sendEmailVerification(user)
+                    .then(() => {
+                        message.success("A confirmation email has been sent to your email address.")
+                    })
+                    .catch((error) => {
+                        //message.error("We could not send the verification email - contact an admin")
+                        message.error(error)
+                    });
             })
             .catch((error) => {
                 message.error(error.message)

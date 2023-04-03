@@ -7,8 +7,10 @@ import { database } from '../../firebase_setup/firebase.js'
 import { ref, push, child, update } from "firebase/database";
 import { auth } from '../../firebase_setup/firebase';
 
+import { message } from 'antd';
 
-const Login = () => {
+
+const Login = (props) => {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -19,18 +21,21 @@ const Login = () => {
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
-            var lgDate = new Date();
+            /*var lgDate = new Date();
             update(ref(database, 'users/' + user.uid), {
                 last_login: lgDate,
-            })
+            })*/
             navigate("/")
             console.log(user);
+            //console.log(props.state)
+			props.changeLoginState(true, user.uid)
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage)
-            alert("Invalid Credentials. Try again.");
+            message.error(errorMessage)
+            console.log(errorCode, errorMessage);
+            message.error("Invalid email or password!");
         });
        
     }
