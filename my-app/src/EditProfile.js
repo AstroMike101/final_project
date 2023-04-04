@@ -1,15 +1,102 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-router-dom';
 import { Button, Form, Input, Select, Checkbox } from 'antd';
 import './index.css';
+import swal from 'sweetalert';
+import bcrypt from 'bcryptjs'
+
 
 function EditProfile(props) {
+	const salt = bcrypt.genSaltSync(10);
 	const onFinish = (values) => {
 		console.log('Success:', values);
 	};
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo);
 	};
+	
+	const [editProfile,setEditProfile]=useState({
+		basic_name:"",
+		basic_password:"",
+		basic_phone:"",
+		basic_addressbilling:"",
+		basic_citystatebilling:"",
+		basic_zipcodebilling:"",
+		basic_ccn1:"",
+		basic_cardtype1:"",
+		basic_expiration1:"",
+		basic_address1:"",
+		basic_citystate1:"",
+		basic_zipcode1:""
+	});
+
+   let name , value;
+	const getEditProfileData=(event)=>{
+		// event.persist();
+		console.log("We are here to solve");
+		console.log(event.target);
+         name=event.target.id;
+		 console.log(event.target.getAttribute('id'));
+	     value=event.target.value;
+		 if(name=="basic_password"){
+			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		 }
+		 console.log(event.target.getAttribute('value'));
+
+	   setEditProfile({...editProfile, [name]: value});
+	}
+
+	const postEditProfile= async(e)=>{
+        e.preventDefault();
+		
+
+		const {
+			basic_name,
+			basic_password,
+			basic_phone,
+			basic_addressbilling,
+			basic_citystatebilling,
+			basic_zipcodebilling,
+			basic_ccn1,
+			basic_cardtype1,
+			basic_expiration1,
+			basic_address1,
+			basic_citystate1,
+			basic_zipcode1
+	                      }=editProfile;
+
+		const res=await fetch("https://cs4050-final-default-rtdb.firebaseio.com/users.json",
+		{
+			method:"POST",
+			headers:{
+				"Content-Type":"application/json"
+			},
+			body:JSON.stringify(
+				{
+					basic_name,
+					basic_password,
+					basic_phone,
+					basic_addressbilling,
+					basic_citystatebilling,
+					basic_zipcodebilling,
+					basic_ccn1,
+					basic_cardtype1,
+					basic_expiration1,
+					basic_address1,
+					basic_citystate1,
+					basic_zipcode1
+				}
+			)
+		}
+		);
+
+		console.log(res);
+	if(res){
+
+		swal("Saved!", "You successfully Upadated your profile", "success");
+	}
+
+	}
 
 	/* jesus fucking christ */
 	return (
@@ -33,11 +120,14 @@ function EditProfile(props) {
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 				autoComplete="off"
+				method='POST'
 			>
 				<div className="section-title-minor">Personal Information</div>
 				<div className="form-row">
 					<Form.Item
 						name="name"
+						value={editProfile.basic_name}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -47,9 +137,11 @@ function EditProfile(props) {
 					>
 						<Input placeholder="Name*" />
 					</Form.Item>
-
+ 
 					<Form.Item
 						name="password"
+						value={editProfile.basic_password}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -62,6 +154,8 @@ function EditProfile(props) {
 
 					<Form.Item
 						name="phone"
+						value={editProfile.basic_phone}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -77,6 +171,8 @@ function EditProfile(props) {
 				<div class="form-row">
 					<Form.Item
 						name="addressbilling"
+						value={editProfile.basic_addressbilling}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -89,6 +185,8 @@ function EditProfile(props) {
 
 					<Form.Item
 						name="citystatebilling"
+						value={editProfile.basic_citystatebilling}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -100,6 +198,8 @@ function EditProfile(props) {
 					</Form.Item>
 					<Form.Item
 						name="zipcodebilling"
+						value={editProfile.basic_zipcodebilling}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -116,6 +216,8 @@ function EditProfile(props) {
 				<div class="form-row">
 					<Form.Item
 						name="ccn1"
+						value={editProfile.basic_ccn1}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -128,6 +230,8 @@ function EditProfile(props) {
 
 					<Form.Item
 						name="cardtype1"
+						value={editProfile.basic_cardtype1}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -139,6 +243,8 @@ function EditProfile(props) {
 					</Form.Item>
 					<Form.Item
 						name="expiration1"
+						value={editProfile.basic_expiration1}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -152,6 +258,8 @@ function EditProfile(props) {
 				<div class="form-row">
 					<Form.Item
 						name="address1"
+						value={editProfile.basic_address1}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -164,6 +272,8 @@ function EditProfile(props) {
 
 					<Form.Item
 						name="citystate1"
+						value={editProfile.basic_citystate1}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -175,6 +285,8 @@ function EditProfile(props) {
 					</Form.Item>
 					<Form.Item
 						name="zipcode1"
+						value={editProfile.basic_zipcode1}
+						onChange={getEditProfileData}
 						rules={[
 							{
 								required: true,
@@ -186,7 +298,7 @@ function EditProfile(props) {
 					</Form.Item>
 				</div>
 
-				<div class="section-title-but-more-minor">Card 2</div>
+				{/* <div class="section-title-but-more-minor">Card 2</div>
 				<div class="form-row">
 					<Form.Item
 						name="ccn2"
@@ -411,9 +523,9 @@ function EditProfile(props) {
 					<Form.Item name="subscribepromo" valuePropName="checked">
 						<Checkbox>Subscribe to promotions</Checkbox>
 					</Form.Item>
-				</div>
+				</div> */}
 				<div class = "form-row">
-					<Button type="primary" htmlType="submit">
+					<Button type="primary" htmlType="submit" onClick={postEditProfile}>
 						Submit
 					</Button>
 				</div>
