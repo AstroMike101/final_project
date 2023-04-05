@@ -58,10 +58,14 @@ function RegistrationForm() {
         if (hasErrors) return;
 
         let obj = {
+            uid: 0,
             firstName: firstName,
             lastName: lastName,
             email: email,
             password: password,
+
+            isAdmin: false,
+            isSubscribedToPromotions: false,
         }
         debugger;
         const newPostKey = push(child(ref(database), 'posts')).key;
@@ -71,6 +75,7 @@ function RegistrationForm() {
             .then((userCredential) => {
                 const user = userCredential.user;
                 message.success("Registration success!")
+                obj["uid"] = user.uid;
                 sendEmailVerification(user)
                     .then(() => {
                         message.success("A confirmation email has been sent to your email address.")
@@ -83,7 +88,6 @@ function RegistrationForm() {
             .catch((error) => {
                 message.error(error.message)
             })
-
         updates['/users/' + newPostKey] = obj;
         return update(ref(database), updates);
         //console.log(firstName,lastName,email,password,confirmPassword);
