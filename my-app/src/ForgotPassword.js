@@ -13,8 +13,9 @@ function ForgotPassword() {
 	const auth = getAuth();
 
 	const triggerResetEmail = async () => {
+		console.log(email);
 		await sendPasswordResetEmail(auth, email);
-		console.log("Password reset email sent")
+		console.log("Password reset email sent"); 
 	}
 
 
@@ -32,8 +33,7 @@ function ForgotPassword() {
 						<form onSubmit={sendPasswordResetEmail}>
 
 							<label>Email</label> <br />
-							<input className="resetEmailInput" placeholder="Email" type="email" required /> <br />
-
+							<input className="resetEmailInput" placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required /> 
 	
 
 						</form>
