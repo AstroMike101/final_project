@@ -257,7 +257,7 @@ function Home(props) {
 
 			</div>
 
-			<NavLink to="/adminPage" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
+			<NavLink to="/admin" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
 		</div>
 	)
 }

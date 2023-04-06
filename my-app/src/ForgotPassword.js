@@ -1,34 +1,55 @@
-import React, { Component }  from 'react';
+import React, { Component, useState, useEffect }  from 'react';
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-router-dom';
 import { Button, Form, Input, Select } from 'antd';
 import './index.css';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+
+
 
 function ForgotPassword() {
-	const onFinish = (e) => {
-		console.log(e)
+
+	const [email, setEmail] = useState('')
+	const auth = getAuth();
+
+	const triggerResetEmail = async () => {
+		await sendPasswordResetEmail(auth, email);
+		console.log("Password reset email sent")
 	}
+
+
+
+	
+
 	return (
-		<div class="editprofile">
-			<div class="section-title">Forgot Password?</div>
-			<div class="section-title-but-more-minor">Forgot your password? Enter your email here and we'll reset your password.</div>
-			<Form onFinish = {onFinish}>
-				<Form.Item
-					name="forgotpasswordemail"
-					rules={[
-						{
-							required: true,
-							message: 'Invalid email!',
-						},
-					]}
-				>
-					<Input placeholder="Email Address" />
-				</Form.Item>
-				<Form.Item>
-					<Button type="primary" htmlType="submit">Submit</Button>
-				</Form.Item>
-			</Form>
+		<div className="resetPassword-main">
+
+
+			<div className="resetPassword-main">
+				<div className="resetPassword-container">
+					<h2>Reset Password </h2>
+					<div className="resetPassword-form">
+						<form onSubmit={sendPasswordResetEmail}>
+
+							<label>Email</label> <br />
+							<input className="resetEmailInput" placeholder="Email" type="email" required /> <br />
+
+	
+
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<button className="resetBtn" type="button" onClick={triggerResetEmail}>Reset password</button>
+
 		</div>
-	);
+	)
 }
 
-export default ForgotPassword
+
+
+export default ForgotPassword;
