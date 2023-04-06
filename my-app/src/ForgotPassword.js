@@ -7,6 +7,8 @@ import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 
 
+
+
 function ForgotPassword() {
 
 	const [email, setEmail] = useState('')
@@ -28,11 +30,11 @@ function ForgotPassword() {
 
 			<div className="resetPassword-main">
 				<div className="resetPassword-container">
-					<h2>Reset Password </h2>
+					<h2 className= "text">Reset Password </h2>
 					<div className="resetPassword-form">
 						<form onSubmit={sendPasswordResetEmail}>
 
-							<label>Email</label> <br />
+						
 							<input className="resetEmailInput" placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required /> 
 	
 
@@ -41,10 +43,12 @@ function ForgotPassword() {
 				</div>
 			</div>
 
+			
 
 
 
-			<button className="resetBtn" type="button" onClick={triggerResetEmail}>Reset password</button>
+
+			<Button  class = "resetBtn" type="primary" onClick={triggerResetEmail}>Reset password</Button>
 
 		</div>
 	)
