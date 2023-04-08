@@ -46,7 +46,7 @@ function RegistrationForm() {
                 sendEmailVerification(user)
                     .then(() => {
                         message.success("A confirmation email has been sent to your email address.")
-                        updates['/users/' + newPostKey] = obj;
+                        updates['/users/' + obj["uid"]] = obj;
                         return update(ref(database), updates);
                     })
                     .catch((error) => {
