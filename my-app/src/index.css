@@ -148,7 +148,13 @@ body {
 	gap: 10px;
 	justify-content: center;
 	align-content: center;
-} 
+}
+.form-section {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	align-content: center;
+}
 
 /* Book tickets */
 /* oh my god i should have just used tailwind */

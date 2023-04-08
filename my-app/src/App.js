@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, message } from 'antd';
 
 import { database } from './firebase_setup/firebase.js'
-import { ref, push, child, update } from "firebase/database";
+import { ref, push, child, update, getDatabase, onValue } from "firebase/database";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
@@ -29,6 +29,10 @@ const { Search } = Input;
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth();
+const curUser = auth.currentUser;
+
+const db = getDatabase();
+const userRef = ref(db, 'users');
 
 class App extends Component {
 	constructor(props) {
@@ -270,6 +274,18 @@ function Home(props) {
 function Navbar(props) {
 	let navbutton1;
 	let navbutton2;
+	let navbutton3 = <></>;
+
+	// Uncomment when schema is actually complete
+	/*onValue(userRef, (snapshot) => {
+		const data = snapshot.val();
+		console.log(data);
+		Object.values(data).forEach((val) => {
+			if (curUser.uid == val['uid'] && val['isAdmin'] == true){
+				navbutton3 = <NavLink to="/admin" style={{ textDecoration: 'none' }}><div class="navbutton">Admin Dashboard</div></NavLink>;
+			}
+		});
+	});*/
 
 	if (props.state.login) {
 		navbutton1 = <NavLink to="/editprofile" style={{ textDecoration: 'none' }}><div class="navbutton">Edit Profile</div></NavLink>
@@ -285,6 +301,7 @@ function Navbar(props) {
 				<NavLink to="/" style={{ textDecoration: 'none' }}><div class="title">CinE Booking</div></NavLink>
 			</div>
 			<div class="navbar-sub">
+				{navbutton3}
 				{navbutton1}
 				{navbutton2}
 			</div>
