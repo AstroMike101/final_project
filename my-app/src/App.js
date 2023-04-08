@@ -12,6 +12,7 @@ import { ref, push, child, update } from "firebase/database";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
+import addmovies from "./pages/adminPortal/addmovies.js";
 import EditProfile from "./EditProfile.js";
 import BookMovie from "./BookMovie.js";
 import Login from './pages/login_UI/login_UI';
@@ -97,6 +98,8 @@ class App extends Component {
 						<Route path="/" element={<Home props={this.props} />} exact>
 						</Route>
 						<Route path="/editprofile" element={<EditProfile />}>
+						</Route>
+						<Route path="/addmovies" element={<addmovies />}>
 						</Route>
 						<Route path="/admin" element={<AdminPortal />}>
 						</Route>
