@@ -21,8 +21,9 @@ function RegistrationForm() {
             ccn1: values.ccn,
             ccn1type: values.cardtype,
             ccn1expdate: values.expdate,
-            ccn1citystate1: values.billingcitystate,
-            ccn1zip: values.billingzipcode,
+            ccn1address: values.cardaddress,
+            ccn1citystate1: values.cardcitystate,
+            ccn1zip: values.cardzipcode,
 
             isAdmin: false,
             isSubscribedToPromotions: values.subpromo,
@@ -37,7 +38,7 @@ function RegistrationForm() {
         const newPostKey = push(child(ref(database), 'posts')).key;
         const updates = {};
         const auth = getAuth();
-        createUserWithEmailAndPassword(auth, obj["email"], obj["password"])
+        createUserWithEmailAndPassword(auth, obj["email"], values["password"])
             .then((userCredential) => {
                 const user = userCredential.user;
                 message.success("Registration success!")
@@ -69,7 +70,18 @@ function RegistrationForm() {
                     maxWidth: 700,
                 }}
                 initialValues={{
-                    remember: true,
+                    billingaddress: '',
+                    billingcitystate: '',
+                    billingzipcode: '',
+
+                    ccn: '',
+                    cardtype: '',
+                    expdate: '',
+                    cardaddress: '',
+                    cardcitystate: '',
+                    cardzipcode: '',
+
+                    isSubscribedToPromotions: false,
                 }}
                 onFinish={handleSubmit}
                 autoComplete="off"
@@ -250,7 +262,6 @@ function RegistrationForm() {
                         <Form.Item
                             name="subpromo"
                             valuePropName="checked"
-                            defaultChecked = {false}
                         >
                             <Checkbox>
                                 Subscribe to promotions
