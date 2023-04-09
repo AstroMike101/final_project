@@ -28,7 +28,7 @@ const Login = (props) => {
                 const user = userCredential.user;
                 if (user.emailVerified) {
                     navigate("/")
-                    console.log(user);
+                    //console.log(user);
                     //console.log(props.state)
                     props.changeLoginState(true, user.uid)
                     message.success("Signed in as " + user.email)

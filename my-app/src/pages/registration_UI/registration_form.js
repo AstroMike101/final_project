@@ -31,11 +31,11 @@ function RegistrationForm() {
 
         // worst line of code i've ever written in my life
         if (obj["isSubscribedToPromotions"] != true) obj["isSubscribedToPromotions"] = false
-        console.log(values)
-        console.log(obj)
+        //console.log(values)
+        //console.log(obj)
 
         debugger;
-        const newPostKey = push(child(ref(database), 'posts')).key;
+        //const newPostKey = push(child(ref(database), 'posts')).key;
         const updates = {};
         const auth = getAuth();
         createUserWithEmailAndPassword(auth, obj["email"], values["password"])

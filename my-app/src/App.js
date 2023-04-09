@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, message } from 'antd';
 
 import { database } from './firebase_setup/firebase.js'
-import { ref, push, child, update, getDatabase, onValue } from "firebase/database";
+import { ref, push, child, update, getDatabase, onValue, get } from "firebase/database";
 import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
@@ -40,6 +40,7 @@ class App extends Component {
 		this.state = {
 			login: false,
 			loginid: 0,
+			userIsAdmin: false,
 		};
 		//this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleLogoutClick = this.handleLogoutClick.bind(this);
@@ -56,9 +57,34 @@ class App extends Component {
 				// https://firebase.google.com/docs/reference/js/firebase.User
 				const uemail = user.email;
 				const uid = user.uid;
-				this.setState({ loginid: uid, login: true })
+				let isAdmin = false;
+
+				const dbRef = ref(getDatabase());
+				get(child(dbRef, `users/${uid}`)).then((snapshot) => {
+					if (snapshot.exists()) {
+						this.setState((state) => {
+							return {
+								userIsAdmin: snapshot.val().isAdmin
+							}
+						})
+					}
+				}).catch((error) => {
+					console.error(error);
+				});
+				this.setState((state) => { 
+					return {
+						loginid: uid, 
+						login: true
+					}
+				})
+				//message.success("Signed in as " + uemail)
 			} else {
-				this.setState({ loginid: 0, login: false })
+				this.setState((state) => { 
+					return {
+						loginid: 0, 
+						login: false
+					}
+				})
 				//message.error("DEBUG: Not signed in")
 			}
 		});
@@ -274,8 +300,7 @@ function Home(props) {
 function Navbar(props) {
 	let navbutton1;
 	let navbutton2;
-	let navbutton3 = <></>;
-
+	let navbutton3 = <></>
 	// Uncomment when schema is actually complete
 	/*onValue(userRef, (snapshot) => {
 		const data = snapshot.val();
@@ -287,12 +312,19 @@ function Navbar(props) {
 		});
 	});*/
 
+	//const userId = props.state.loginid;
+
+
 	if (props.state.login) {
 		navbutton1 = <NavLink to="/editprofile" style={{ textDecoration: 'none' }}><div class="navbutton">Edit Profile</div></NavLink>
 		navbutton2 = <NavLink to="/" style={{ textDecoration: 'none' }}><div onClick={props.logoutfunc} class="navbutton">Logout</div></NavLink>
 	} else {
 		navbutton1 = <NavLink to="/register" style={{ textDecoration: 'none' }}><div class="navbutton">Register</div></NavLink>;
 		navbutton2 = <NavLink to="/login" style={{ textDecoration: 'none' }}><div class="navbutton">Login</div></NavLink>;
+	}
+
+	if (props.state.userIsAdmin) {
+		navbutton3 = <NavLink to="/admin" style={{ textDecoration: 'none' }}><div class="navbutton">Admin Dashboard</div></NavLink>;
 	}
 
 	return (
