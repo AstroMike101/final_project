@@ -8,24 +8,6 @@ import adminPortal from './pages/adminPortal/adminPortal'
 
 // import './index.css';
 
-
-const sendMailFunc = firebase.functions().httpsCallable('sendMail')
-// If there are multiple arguments when executing Functions, pass them as objects.
-sendMailFunc({
-    targetAdress: '[michaelchendhs@gmail.com]',
-})
-    .then(res => {
-        console.log(res)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-
-console.log("Email Sent!");
-
-
-
-
 function PromotionAdd() {
     const [promotionName, setPromotionName] = useState('');
     const [expirationDate, setExpirationDate] = useState('');
@@ -74,7 +56,7 @@ function PromotionAdd() {
                     />
                 </label>
                 <br />
-                <button onClick = {sendMailFunc} className="add-promotions-button1" type="submit">Submit</button>
+                <button className="add-promotions-button1" type="submit">Submit</button>
                 {/* <button className="add-promotions-button1" type="submit">Return to Admin Panel</button> */}
                 {/* <NavLink to="/admin"><button className="add-promotions-button1" type="submit">Return to Admin Panel</button></NavLink> */}
             </form>
