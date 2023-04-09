@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
 import adminPortal from './pages/adminPortal/adminPortal'
+import { database } from './firebase_setup/firebase.js'
 
 
 
