@@ -13,6 +13,7 @@ function AddMovies() {
 		const newPostKey = push(child(ref(database), 'posts')).key;
 		const db = getDatabase();
 		set(ref(db, 'movies/' + newPostKey), {
+			movieid: newPostKey,
 			movie_name: values.name,
 			movie_category: values.category,
 			movie_cast: values.cast,

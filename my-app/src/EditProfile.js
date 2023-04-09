@@ -10,6 +10,7 @@ function EditProfile(props) {
 	const salt = bcrypt.genSaltSync(10);
 	const onFinish = (values) => {
 		console.log('Success:', values);
+		console.log(props.state)
 	};
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo);
@@ -33,10 +34,10 @@ function EditProfile(props) {
    let name , value;
 	const getEditProfileData=(event)=>{
 		// event.persist();
-		console.log("We are here to solve");
-		console.log(event.target);
+		//console.log("We are here to solve");
+		//console.log(event.target);
          name=event.target.id;
-		 console.log(event.target.getAttribute('id'));
+		 //console.log(event.target.getAttribute('id'));
 	     value=event.target.value;
 		 if(name=="basic_password"){
 			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
@@ -47,12 +48,13 @@ function EditProfile(props) {
 		 if(name=="basic_expiration1"){
 			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
 		 }
-		 console.log(event.target.getAttribute('value'));
+		 //console.log(event.target.getAttribute('value'));
 
 	   setEditProfile({...editProfile, [name]: value});
 	}
 
 	const postEditProfile= async(e)=>{
+		console.log(props.state)
         e.preventDefault();
 		
 

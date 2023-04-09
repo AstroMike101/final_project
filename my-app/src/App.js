@@ -41,6 +41,8 @@ class App extends Component {
 			login: false,
 			loginid: 0,
 			userIsAdmin: false,
+
+			movies: [],
 		};
 		//this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleLogoutClick = this.handleLogoutClick.bind(this);
@@ -71,23 +73,43 @@ class App extends Component {
 				}).catch((error) => {
 					console.error(error);
 				});
-				this.setState((state) => { 
+				this.setState((state) => {
 					return {
-						loginid: uid, 
+						loginid: uid,
 						login: true
 					}
 				})
 				//message.success("Signed in as " + uemail)
 			} else {
-				this.setState((state) => { 
+				this.setState((state) => {
 					return {
-						loginid: 0, 
+						loginid: 0,
 						login: false
 					}
 				})
 				//message.error("DEBUG: Not signed in")
 			}
 		});
+
+		onValue(ref(db, 'movies'), (snapshot) => {
+			/*this.setState((state) => {
+				return {
+					movies: [],
+				}
+			})*/
+			const data = snapshot.val();
+			var moviestemp = [];
+			//console.log(data);
+			Object.values(data).forEach((val) => {
+				console.log(val)
+				moviestemp = [...moviestemp, val]
+				this.setState({
+					movies: moviestemp,
+				})
+			});
+			//console.log(moviestemp)
+		});
+		//console.log(this.state)
 	}
 
 	handleLogoutClick = () => {
@@ -125,9 +147,9 @@ class App extends Component {
 					</div>
 
 					<Routes>
-						<Route path="/" element={<Home props={this.props} />} exact>
+						<Route path="/" element={<Home props={this.props} state={this.state} />} exact>
 						</Route>
-						<Route path="/editprofile" element={<EditProfile props = {this.props} />}>
+						<Route path="/editprofile" element={<EditProfile state={this.state} />}>
 						</Route>
 						<Route path="/admin/addmovies" element={<AddMovies />}>
 						</Route>
@@ -180,6 +202,7 @@ function register() {
 
 function Home(props) {
 	{/* todo make this not scuffed with a Movies component*/ }
+	const moviesList = props.state.movies
 	return (
 		<div class="movie-display">
 			<div class="search-display">
@@ -218,6 +241,21 @@ function Home(props) {
 				<DatePicker />
 			</div>
 			<div class="section-title">NOW SHOWING</div>
+			{moviesList.map((movie) => {
+				return <div class="movie">
+					<div>
+						<iframe width="560" height="315" src={"https://www.youtube.com/embed/" + movie.movie_trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+					</div>
+					<div class="movie-description">
+						<div class="movie-title">{movie.movie_name}</div>
+						<div class="movie-details">Rated {movie.movie_rating_code}</div>
+						<div class="movie-details">Next showtime at {movie.movie_dates}</div>
+						<div>{movie.movie_synopsis}</div>
+						<NavLink to={"/booking/" + movie.movieid} style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
+					</div>
+				</div>
+			})}
+
 			<div class="movie">
 				<div>
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/hebWYacbdvc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -313,6 +351,8 @@ function Navbar(props) {
 	});*/
 
 	//const userId = props.state.loginid;
+
+	//console.log(props.state)
 
 
 	if (props.state.login) {
