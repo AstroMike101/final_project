@@ -127,7 +127,7 @@ class App extends Component {
 					<Routes>
 						<Route path="/" element={<Home props={this.props} />} exact>
 						</Route>
-						<Route path="/editprofile" element={<EditProfile />}>
+						<Route path="/editprofile" element={<EditProfile props = {this.props} />}>
 						</Route>
 						<Route path="/admin/addmovies" element={<AddMovies />}>
 						</Route>
