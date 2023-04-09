@@ -3,16 +3,14 @@ import './index.css';
 import React, { Component, useState, useEffect } from "react";
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
-import { useNavigate } from 'react-router-dom';
 
 import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, message } from 'antd';
 
 import { database } from './firebase_setup/firebase.js'
-import { ref, push, child, update, getDatabase, onValue, get } from "firebase/database";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { ref, push, child, update } from "firebase/database";
+import { getAuth, signOut } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-
-import addmovies from "./pages/adminPortal/addmovies.js";
+import AddMovies from './addmovies.js';
 import EditProfile from "./EditProfile.js";
 import BookMovie from "./BookMovie.js";
 import Login from './pages/login_UI/login_UI';
@@ -29,10 +27,6 @@ const { Search } = Input;
 
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth();
-const curUser = auth.currentUser;
-
-const db = getDatabase();
-const userRef = ref(db, 'users');
 
 class App extends Component {
 	constructor(props) {
@@ -40,56 +34,26 @@ class App extends Component {
 		this.state = {
 			login: false,
 			loginid: 0,
-			userIsAdmin: false,
 		};
 		//this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleLogoutClick = this.handleLogoutClick.bind(this);
 		this.changeLoginState = this.changeLoginState.bind(this);
 	}
 
+	onAuthStateChanged = (auth, (user) => {
+		if (user) {
+			// User is signed in, see docs for a list of available properties
+			// https://firebase.google.com/docs/reference/js/firebase.User
+			this.setState({ loginid: user.uid, login: true })
+		} else {
+			// User is signed out
+			// ...
+		}
+	});
+
 	/*handleLoginClick = () => {
 		this.setState({ login: false })
 	}*/
-	componentDidMount() {
-		onAuthStateChanged(auth, (user) => {
-			if (user) {
-				// User is signed in, see docs for a list of available properties
-				// https://firebase.google.com/docs/reference/js/firebase.User
-				const uemail = user.email;
-				const uid = user.uid;
-				let isAdmin = false;
-
-				const dbRef = ref(getDatabase());
-				get(child(dbRef, `users/${uid}`)).then((snapshot) => {
-					if (snapshot.exists()) {
-						this.setState((state) => {
-							return {
-								userIsAdmin: snapshot.val().isAdmin
-							}
-						})
-					}
-				}).catch((error) => {
-					console.error(error);
-				});
-				this.setState((state) => { 
-					return {
-						loginid: uid, 
-						login: true
-					}
-				})
-				//message.success("Signed in as " + uemail)
-			} else {
-				this.setState((state) => { 
-					return {
-						loginid: 0, 
-						login: false
-					}
-				})
-				//message.error("DEBUG: Not signed in")
-			}
-		});
-	}
-
 	handleLogoutClick = () => {
 		this.setState({ login: false })
 		signOut(auth).then(() => {
@@ -129,8 +93,6 @@ class App extends Component {
 						</Route>
 						<Route path="/editprofile" element={<EditProfile />}>
 						</Route>
-						<Route path="/addmovies" element={<addmovies />}>
-						</Route>
 						<Route path="/admin" element={<AdminPortal />}>
 						</Route>
 						<Route path="/adminPage" element={<AdminLoginPage />}>
@@ -156,7 +118,7 @@ class App extends Component {
 						</Route>
 						<Route path="/register/confirmation" element={<Confirmation />}>
 						</Route>
-						<Route path="/login" element={<Login handleLoginClick={this.handleLoginClick} props={this.props} changeLoginState={this.changeLoginState} />}>
+						<Route path="/login" element={<Login handleLoginClick={this.handleLoginClick} props={this.props} changeLoginState = {this.changeLoginState} />}>
 						</Route>
 
 						<Route path="/login/forgotpassword" element={<ForgotPassword />}>
@@ -290,7 +252,7 @@ function Home(props) {
 
 			</div>
 
-			<NavLink to="/admin" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
+			<NavLink to="/adminPage" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
 		</div>
 	)
 }
@@ -300,31 +262,13 @@ function Home(props) {
 function Navbar(props) {
 	let navbutton1;
 	let navbutton2;
-	let navbutton3 = <></>
-	// Uncomment when schema is actually complete
-	/*onValue(userRef, (snapshot) => {
-		const data = snapshot.val();
-		console.log(data);
-		Object.values(data).forEach((val) => {
-			if (curUser.uid == val['uid'] && val['isAdmin'] == true){
-				navbutton3 = <NavLink to="/admin" style={{ textDecoration: 'none' }}><div class="navbutton">Admin Dashboard</div></NavLink>;
-			}
-		});
-	});*/
-
-	//const userId = props.state.loginid;
-
 
 	if (props.state.login) {
 		navbutton1 = <NavLink to="/editprofile" style={{ textDecoration: 'none' }}><div class="navbutton">Edit Profile</div></NavLink>
-		navbutton2 = <NavLink to="/" style={{ textDecoration: 'none' }}><div onClick={props.logoutfunc} class="navbutton">Logout</div></NavLink>
+		navbutton2 = <div onClick={props.logoutfunc} class="navbutton">Logout</div>
 	} else {
 		navbutton1 = <NavLink to="/register" style={{ textDecoration: 'none' }}><div class="navbutton">Register</div></NavLink>;
 		navbutton2 = <NavLink to="/login" style={{ textDecoration: 'none' }}><div class="navbutton">Login</div></NavLink>;
-	}
-
-	if (props.state.userIsAdmin) {
-		navbutton3 = <NavLink to="/admin" style={{ textDecoration: 'none' }}><div class="navbutton">Admin Dashboard</div></NavLink>;
 	}
 
 	return (
@@ -333,7 +277,6 @@ function Navbar(props) {
 				<NavLink to="/" style={{ textDecoration: 'none' }}><div class="title">CinE Booking</div></NavLink>
 			</div>
 			<div class="navbar-sub">
-				{navbutton3}
 				{navbutton1}
 				{navbutton2}
 			</div>
