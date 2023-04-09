@@ -41,6 +41,12 @@ function EditProfile(props) {
 		 if(name=="basic_password"){
 			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
 		 }
+		 if(name=="basic_cc1"){
+			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		 }
+		 if(name=="basic_expiration1"){
+			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		 }
 		 console.log(event.target.getAttribute('value'));
 
 	   setEditProfile({...editProfile, [name]: value});
