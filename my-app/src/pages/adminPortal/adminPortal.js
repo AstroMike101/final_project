@@ -4,6 +4,7 @@ import { Button, Space } from 'antd';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
 import promotionAdd from '../../PromotionAdd';
 import ManageMovies from '../../ManageMovies';
+import AddMovies from '../../addmovies';
 
 function AdminPortal() {
     return (
@@ -17,7 +18,7 @@ function AdminPortal() {
                     <h2 className="text">Manage Movies</h2>
                     <div className="buttons">
                         {/* <button>Add/Remove Movies</button> */}
-                        <NavLink to="/ManageMovies" ><button type="primary">Add & Remove Movies </button></NavLink>
+                        <NavLink to="/admin/addmovies" ><button type="primary">Add & Remove Movies </button></NavLink>
                         <button>Edit Movie Scheduling</button>
                     </div>
                 </div>

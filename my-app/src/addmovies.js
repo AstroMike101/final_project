@@ -1,59 +1,218 @@
 import React, { useState } from 'react';
-import {dataref} from './firebase';
+import { database } from './firebase_setup/firebase.js'
+import { ref, push, child, update, set, getDatabase } from "firebase/database";
+import { message, Form, Input, Checkbox, Button } from 'antd';
+import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
+import './index.css';
+import './pages/registration_UI/style.css'
 
-function AddMovies()
-{
-	const [movie_name,setMovie_Name]=useState('')
-	const [movie_category,setMovie_Category]=useState('')
-	const [movie_cast,setMovie_Cast]=useState('')
-	const [movie_director,setMovie_Director]=useState('')
-	const [movie_producer,setMovie_Producer]=useState('')
-	const [movie_synopsis,setMovie_Synopsis]=useState('')
-	const [movie_score,setMovie_Score]=useState('')
-	const [movie_rating_code,setMovie_Rating_Code]=useState('')
-	const [movie_dates,setMovie_Dates]=useState('')
-	const [movie_times,setMovie_Times]=useState('')
+function AddMovies() {
 
-	const handleAdd=() => {
-		dataref.ref("movies").set({
-			movie_name: movie_name,
-			movie_category: movie_category,
-			movie_cast: movie_cast,
-			movie_director: movie_director,
-			movie_producer: movie_producer,
-			movie_synopsis: movie_synopsis,
-			movie_score: movie_score,
-			movie_rating_code: movie_rating_code,
-			movie_dates: movie_dates,
-			movie_times: movie_times,
-		}).catch(alert);
+	const handleSubmit = (values) => {
+		console.log(values)
+		const newPostKey = push(child(ref(database), 'posts')).key;
+		const db = getDatabase();
+		set(ref(db, 'movies/' + newPostKey), {
+			movie_name: values.name,
+			movie_category: values.category,
+			movie_cast: values.cast,
+			movie_director: values.director,
+			movie_producer: values.producer,
+			movie_synopsis: values.synopsis,
+			movie_score: values.score,
+			movie_rating_code: values.ratingcode,
+			movie_dates: values.dates,
+			movie_times: values.times,
+			movie_trailer: values.trailerlink,
+			movie_image: values.image,
+		})
+		.then(() => {
+			message.success("Added new movie " + values.name)
+		})
+		.catch((error) => {
+			message.error(error.message)
+		})
 	}
-	return(
-		<div>
-			<input value={movie_name} onChange{...(e) => {setMovie_Name(e.target.value)}}></input>
-			<br/>
-			<input value={movie_category} onChange{...(e) => {setMovie_Category(e.target.value)}}></input>
-			<br/>
-			<input value={movie_cast} onChange{...(e) => {setMovie_Cast(e.target.value)}}></input>
-			<br/>
-			<input value={movie_director} onChange{...(e) => {setMovie_Director(e.target.value)}}></input>
-			<br/>
-			<input value={movie_producer} onChange{...(e) => {setMovie_Producer(e.target.value)}}></input>
-			<br/>
-			<input value={movie_synopsis} onChange{...(e) => {setMovie_Synopsis(e.target.value)}}></input>
-			<br/>
-			<input value={movie_score} onChange{...(e) => {setMovie_Score(e.target.value)}}></input>
-			<br/>
-			<input value={movie_rating_code} onChange{...(e) => {setMovie_Rating_Code(e.target.value)}}></input>
-			<br/>
-			<input value={movie_dates} onChange{...(e) => {setMovie_Dates(e.target.value)}}></input>
-			<br/>
-			<input value={movie_times} onChange{...(e) => {setMovie_Times(e.target.value)}}></input>
-			<br/>
-			<button onClick={handleAdd}>Add Movies</button>
+	return (
+		<div className="form">
+			<NavLink to="/admin"><button className="add-promotions-button1" type="submit">Return to Admin Panel</button></NavLink>
+			<div className="section-title">Add Movies</div>
+			<Form
+				name="registration"
+				style={{
+					maxWidth: 700,
+				}}
+				initialValues={{
+					name: '',
+					category: '',
+					cast: '',
+					director: '',
+					productor: '',
+					synopsis: '',
+					score: '',
+					ratingcode: '',
+					dates: '',
+					times: '',
+					trailerlink: '',
+					image: '',
+				}}
+				onFinish={handleSubmit}
+				autoComplete="off"
+				method='POST'
+				scrollToFirstError
+			>
+				<div className="section-title-minor">Movie Information</div>
+				<div>All fields are required.</div>
+				<div className="form-row">
+
+					<Form.Item
+						name="name"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie name!',
+							},
+						]}
+					>
+						<Input placeholder="Name" />
+					</Form.Item>
+
+					<Form.Item
+						name="category"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie category!',
+							},
+						]}
+					>
+						<Input placeholder="Category" />
+					</Form.Item>
+
+					<Form.Item
+						name="cast"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie cast!',
+							},
+						]}
+					>
+						<Input placeholder="Cast" />
+					</Form.Item>
+
+					<Form.Item
+						name="director"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie director!',
+							},
+						]}
+					>
+						<Input placeholder="Director" />
+					</Form.Item>
+
+					<Form.Item
+						name="producer"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie producer!',
+							},
+						]}
+					>
+						<Input placeholder="Producer" />
+					</Form.Item>
+
+					<Form.Item
+						name="synopsis"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie synopsis!',
+							},
+						]}
+					>
+						<Input placeholder="Synopsis" />
+					</Form.Item>
+
+					<Form.Item
+						name="score"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie score!',
+							},
+						]}
+					>
+						<Input placeholder="Score" />
+					</Form.Item>
+
+					<Form.Item
+						name="ratingcode"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie rating code!',
+							},
+						]}
+					>
+						<Input placeholder="Rating code" />
+					</Form.Item>
+
+					<Form.Item
+						name="dates"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie dates!',
+							},
+						]}
+					>
+						<Input placeholder="Dates" />
+					</Form.Item>
+
+					<Form.Item
+						name="times"
+						rules={[
+							{
+								required: true,
+								message: 'Please input movie times!',
+							},
+						]}
+					>
+						<Input placeholder="Times" />
+					</Form.Item>
+					<Form.Item
+						name="trailerlink"
+						rules={[
+							{
+								required: true,
+								message: 'Please input a trailer link',
+							},
+						]}
+					>
+						<Input placeholder="Trailer (YouTube video ID)" />
+					</Form.Item>
+					<Form.Item
+						name="image"
+						rules={[
+							{
+								required: true,
+								message: 'Please input a promotional image',
+							},
+						]}
+					>
+						<Input placeholder="Promotional image link" />
+					</Form.Item>
+					<Button type="primary" htmlType="submit">
+						Add Movie
+					</Button>
+				</div>
+			</Form>
 		</div>
 	)
 }
 export default AddMovies
 
-                    

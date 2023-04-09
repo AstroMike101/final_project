@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs'
 import { database } from '../../firebase_setup/firebase.js'
 import { ref, push, child, update } from "firebase/database";
 
-function addmovies(props) 
+function AddMovies(props) 
 {
 	const salt = bcrypt.genSaltSync(10);
 	const onFinish = (values) => {
@@ -99,7 +99,7 @@ function addmovies(props)
 	}
 
 	return (
-		<div class="addmovie">
+		<div class="form-section">
 			<div class="section-title">Add Movies</div>
 			<Form
 				name=""
@@ -272,6 +272,5 @@ function addmovies(props)
 	)
 }
 
-export default addmovies;
-		
+export default AddMovies;
                     
