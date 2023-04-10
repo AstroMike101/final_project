@@ -19,7 +19,7 @@ function AdminPortal() {
                     <div className="buttons">
                         {/* <button>Add/Remove Movies</button> */}
                         <NavLink to="/admin/addmovies" ><button type="primary">Add & Remove Movies </button></NavLink>
-                        <button>Edit Movie Scheduling</button>
+                        <NavLink to="/admin/scheduleshowtimes" ><button type = "primary">Manage movie showtimes</button></NavLink>
                     </div>
                 </div>
                 <div className="divider"></div>
@@ -27,7 +27,7 @@ function AdminPortal() {
                     <h2 className="text">Manage Promotions</h2>
                     <div className="buttons">
 
-                        <NavLink to="/promotionAdd" ><button type="primary">Make new Promotion </button></NavLink>
+                        <NavLink to="/admin/PromotionAdd" ><button type="primary">Create promotional codes</button></NavLink>
 
                         <button>Remove existing promotions</button>
                         <button>View current promotions</button>

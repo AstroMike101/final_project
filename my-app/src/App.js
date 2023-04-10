@@ -24,6 +24,7 @@ import PromotionAdd from './PromotionAdd.js';
 import ManageMovies from './ManageMovies.js';
 import ForgotPassword from './ForgotPassword.js';
 import AdminLoginPage from './adminLoginPage.js';
+import ScheduleShowtimes from './ScheduleShowtimes.js';
 import Header from './header.js';
 const { Search } = Input;
 
@@ -152,6 +153,8 @@ class App extends Component {
 						</Route>
 						<Route path="/admin/addmovies" element={<AddMovies />}>
 						</Route>
+						<Route path="/admin/scheduleshowtimes" element={<ScheduleShowtimes state = {this.state} />}>
+						</Route>
 						<Route path="/admin" element={<AdminPortal />}>
 						</Route>
 						<Route path="/adminPage" element={<AdminLoginPage />}>
@@ -162,7 +165,7 @@ class App extends Component {
 
 						<Route path="/booking/:id" element={<BookMovie state={this.state} />}>
 						</Route>
-						<Route path="/PromotionAdd" element={<PromotionAdd />}>
+						<Route path="/admin/PromotionAdd" element={<PromotionAdd />}>
 						</Route>
 
 						{/* <Route>
@@ -299,7 +302,7 @@ function Home(props) {
 				</div>
 			})}
 
-			<div class="movie">
+			{/*<div class="movie">
 				<div>
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/hebWYacbdvc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 				</div>
@@ -334,7 +337,7 @@ function Home(props) {
 					<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam vitae finibus enim, at tempus arcu. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Donec ac turpis non augue accumsan varius. Nunc laoreet risus pellentesque nisi lacinia tempor. Donec ut nisi eget nunc sodales tincidunt. Pellentesque bibendum dapibus ligula nec consectetur. Donec eu dui tortor. Suspendisse rhoncus sagittis est, at commodo turpis tincidunt id.</div>
 					<NavLink to="/booking" style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
 				</div>
-			</div>
+		</div>*/}
 			<div class="section-title">UPCOMING MOVIES</div>
 			<div class="movie">
 				<div>
