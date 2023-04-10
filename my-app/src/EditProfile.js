@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forceUpdate } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-router-dom';
-import { Button, Form, Input, Select, Checkbox } from 'antd';
+import { Button, Form, Input, Select, Checkbox, useForm } from 'antd';
 import { database } from './firebase_setup/firebase.js'
 import { ref, push, child, update, getDatabase, onValue, get } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -12,9 +12,8 @@ const auth = getAuth();
 const user = auth.currentUser;
 
 function EditProfile(props) {
-
-
-	/*const [editProfile, setEditProfile] = useState({
+	const [form] = Form.useForm()
+	const [editProfile, setEditProfile] = useState({
 		uid: '',
 		name: '',
 		phone: '',
@@ -34,11 +33,11 @@ function EditProfile(props) {
 
 		isAdmin: false,
 		isSubscribedToPromotions: false,
-	})*/
-	var [editProfile, setEditProfile] = useState({})
+	})
+	//console.log(editProfile)
 	var obj = {
 		uid: '',
-		name: 'asdasda',
+		name: '',
 		phone: '',
 		email: '',
 		//password: values.password,
@@ -60,7 +59,7 @@ function EditProfile(props) {
 
 	const userRef = ref(database, 'users');
 	useEffect(() => {
-		console.log("FUCK!!!")
+		//console.log("FUCK!!!")
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
 				// User is signed in, see docs for a list of available properties
@@ -70,49 +69,51 @@ function EditProfile(props) {
 				const dbRef = ref(getDatabase());
 				get(child(dbRef, `users/${uid}`)).then((snapshot) => {
 					if (snapshot.exists()) {
-						console.log(snapshot.val())
 						setEditProfile({
 							uid: uid,
 							name: snapshot.val().name,
 							phone: snapshot.val().phone,
 							email: snapshot.val().email,
 							//password: values.password,
-					
+
 							billingaddress: snapshot.val().billingaddress,
 							billingcitystate: snapshot.val().billingcitystate,
 							billingzip: snapshot.val().billingzip,
-					
+
 							ccn1: snapshot.val().ccn1,
 							ccn1type: snapshot.val().ccn1type,
 							ccn1expdate: snapshot.val().ccn1expdate,
 							ccn1address: snapshot.val().ccn1address,
 							ccn1citystate: snapshot.val().ccn1citystate,
 							ccn1zip: snapshot.val().ccn1zip,
-					
+
 							isAdmin: snapshot.val().isAdmin,
 							isSubscribedToPromotions: snapshot.val().isSubscribedToPromotions,
+						})
+						form.setFieldsValue({
+							name: snapshot.val().name,
+							phone: snapshot.val().phone,
+							email: snapshot.val().email,
+		
+							billingaddress: snapshot.val().billingaddress,
+							billingcitystate: snapshot.val().billingcitystate,
+							billingzip: snapshot.val().billingzip,
+		
+							ccn1: snapshot.val().ccn1,
+							ccn1type: snapshot.val().ccn1type,
+							ccn1expdate: snapshot.val().ccn1expdate,
+							ccn1address: snapshot.val().ccn1address,
+							ccn1citystate: snapshot.val().ccn1citystate,
+							ccn1zip: snapshot.val().ccn1zip,
+		
+							subpromo: snapshot.val().isSubscribedToPromotions,
 						})
 					}
 				}).catch((error) => {
 					console.error(error);
 				});
 			}
-			this.forceUpdate()
 		});
-		/*onValue(userRef, (snapshot) => {
-			console.log(user)
-			const data = snapshot.val();
-			Object.values(data).forEach((val) => {
-				console.log("SHIT!!!")
-				console.log(val['uid'])
-				console.log(props.state.loginid)
-				if (user.uid == val['uid']) {
-					setEditProfile(val)
-					console.log("BITCH!!!")
-					console.log(val)
-				}
-			});
-		});*/
 	}, [])
 
 
@@ -203,9 +204,11 @@ function EditProfile(props) {
 	/* jesus fucking christ */
 	return (
 		<div class="editprofile">
+			<div class="section-title">{editProfile.uid}</div>
 			<div class="section-title">Edit Profile</div>
 			<div>Fields marked with an * are required.</div>
 			<Form
+				form={form}
 				name="basic"
 				labelCol={{
 					span: 10,
@@ -217,7 +220,22 @@ function EditProfile(props) {
 					maxWidth: 1500,
 				}}
 				initialValues={{
-					remember: true,
+					name: editProfile.name,
+					phone: editProfile.phone,
+					email: editProfile.email,
+
+					billingaddress: editProfile.billingaddress,
+					billingcitystate: editProfile.billingcitystate,
+					billingzip: editProfile.billingzip,
+
+					ccn1: editProfile.ccn1,
+					ccn1type: editProfile.ccn1type,
+					ccn1expdate: editProfile.ccn1expdate,
+					ccn1address: editProfile.ccn1address,
+					ccn1citystate: editProfile.ccn1citystate,
+					ccn1zip: editProfile.ccn1zip,
+
+					subpromo: editProfile.isSubscribedToPromotions,
 				}}
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
@@ -228,7 +246,7 @@ function EditProfile(props) {
 				<div className="form-row">
 					<Form.Item
 						name="name"
-						value={editProfile.name}
+						defaultValue={editProfile.name}
 						rules={[
 							{
 								required: true,
@@ -248,7 +266,7 @@ function EditProfile(props) {
 
 					<Form.Item
 						name="phone"
-						value={editProfile.phone}
+						defaultValue={editProfile.phone}
 						rules={[
 							{
 								required: true,
