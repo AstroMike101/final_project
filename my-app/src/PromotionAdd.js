@@ -12,7 +12,7 @@ import { getFirestore } from 'firebase/firestore';
 
 
 import 'firebase/functions';
-import firebase from 'firebase/app';
+//import firebase from 'firebase/app';
 
 
 
@@ -32,7 +32,7 @@ import firebase from 'firebase/app';
 //         console.log(err)
 //     })
 
-firebase.initializeApp({
+/*firebase.initializeApp({
     apiKey: "AIzaSyDDX4D9DiN0mq46K799tfpeokaBh5Ld-40",
     authDomain: "cs4050-final.firebaseapp.com",
     databaseURL: "https://cs4050-final-default-rtdb.firebaseio.com",
@@ -44,15 +44,15 @@ firebase.initializeApp({
 });
 
 const sendPromoEmail = firebase.functions().httpsCallable('sendPromotionalEmail');
-
+*/
 function sendPromotionalEmail() {
-    sendPromoEmail().then(function (result) {
+    /*sendPromoEmail().then(function (result) {
         console.log(result);
         alert('Promotional email sent successfully');
     }).catch(function (error) {
         console.error(error);
         alert('Error sending promotional email');
-    });
+    });*/
 }
 
 

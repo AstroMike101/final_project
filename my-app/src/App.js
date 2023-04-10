@@ -101,7 +101,7 @@ class App extends Component {
 			var moviestemp = [];
 			//console.log(data);
 			Object.values(data).forEach((val) => {
-				console.log(val)
+				//console.log(val)
 				moviestemp = [...moviestemp, val]
 				this.setState({
 					movies: moviestemp,

@@ -1,12 +1,121 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, forceUpdate } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-router-dom';
 import { Button, Form, Input, Select, Checkbox } from 'antd';
+import { database } from './firebase_setup/firebase.js'
+import { ref, push, child, update, getDatabase, onValue, get } from "firebase/database";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import './index.css';
 import swal from 'sweetalert';
 import bcrypt from 'bcryptjs'
 
+const auth = getAuth();
+const user = auth.currentUser;
 
 function EditProfile(props) {
+
+
+	/*const [editProfile, setEditProfile] = useState({
+		uid: '',
+		name: '',
+		phone: '',
+		email: '',
+		//password: values.password,
+
+		billingaddress: '',
+		billingcitystate: '',
+		billingzip: '',
+
+		ccn1: '',
+		ccn1type: '',
+		ccn1expdate: '',
+		ccn1address: '',
+		ccn1citystate: '',
+		ccn1zip: '',
+
+		isAdmin: false,
+		isSubscribedToPromotions: false,
+	})*/
+	var [editProfile, setEditProfile] = useState({})
+	var obj = {
+		uid: '',
+		name: 'asdasda',
+		phone: '',
+		email: '',
+		//password: values.password,
+
+		billingaddress: '',
+		billingcitystate: '',
+		billingzip: '',
+
+		ccn1: '',
+		ccn1type: '',
+		ccn1expdate: '',
+		ccn1address: '',
+		ccn1citystate: '',
+		ccn1zip: '',
+
+		isAdmin: false,
+		isSubscribedToPromotions: false,
+	}
+
+	const userRef = ref(database, 'users');
+	useEffect(() => {
+		console.log("FUCK!!!")
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				// User is signed in, see docs for a list of available properties
+				// https://firebase.google.com/docs/reference/js/firebase.User
+				const uid = user.uid;
+
+				const dbRef = ref(getDatabase());
+				get(child(dbRef, `users/${uid}`)).then((snapshot) => {
+					if (snapshot.exists()) {
+						console.log(snapshot.val())
+						setEditProfile({
+							uid: uid,
+							name: snapshot.val().name,
+							phone: snapshot.val().phone,
+							email: snapshot.val().email,
+							//password: values.password,
+					
+							billingaddress: snapshot.val().billingaddress,
+							billingcitystate: snapshot.val().billingcitystate,
+							billingzip: snapshot.val().billingzip,
+					
+							ccn1: snapshot.val().ccn1,
+							ccn1type: snapshot.val().ccn1type,
+							ccn1expdate: snapshot.val().ccn1expdate,
+							ccn1address: snapshot.val().ccn1address,
+							ccn1citystate: snapshot.val().ccn1citystate,
+							ccn1zip: snapshot.val().ccn1zip,
+					
+							isAdmin: snapshot.val().isAdmin,
+							isSubscribedToPromotions: snapshot.val().isSubscribedToPromotions,
+						})
+					}
+				}).catch((error) => {
+					console.error(error);
+				});
+			}
+			this.forceUpdate()
+		});
+		/*onValue(userRef, (snapshot) => {
+			console.log(user)
+			const data = snapshot.val();
+			Object.values(data).forEach((val) => {
+				console.log("SHIT!!!")
+				console.log(val['uid'])
+				console.log(props.state.loginid)
+				if (user.uid == val['uid']) {
+					setEditProfile(val)
+					console.log("BITCH!!!")
+					console.log(val)
+				}
+			});
+		});*/
+	}, [])
+
+
 	const salt = bcrypt.genSaltSync(10);
 	const onFinish = (values) => {
 		console.log('Success:', values);
@@ -15,48 +124,33 @@ function EditProfile(props) {
 	const onFinishFailed = (errorInfo) => {
 		console.log('Failed:', errorInfo);
 	};
-	
-	const [editProfile,setEditProfile]=useState({
-		basic_name:"",
-		basic_password:"",
-		basic_phone:"",
-		basic_addressbilling:"",
-		basic_citystatebilling:"",
-		basic_zipcodebilling:"",
-		basic_ccn1:"",
-		basic_cardtype1:"",
-		basic_expiration1:"",
-		basic_address1:"",
-		basic_citystate1:"",
-		basic_zipcode1:""
-	});
 
-   let name , value;
-	const getEditProfileData=(event)=>{
+	let name, value;
+	const getEditProfileData = (event) => {
 		// event.persist();
 		//console.log("We are here to solve");
 		//console.log(event.target);
-         name=event.target.id;
-		 //console.log(event.target.getAttribute('id'));
-	     value=event.target.value;
-		 if(name=="basic_password"){
-			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		 }
-		 if(name=="basic_cc1"){
-			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		 }
-		 if(name=="basic_expiration1"){
-			value=bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		 }
-		 //console.log(event.target.getAttribute('value'));
+		name = event.target.id;
+		//console.log(event.target.getAttribute('id'));
+		value = event.target.value;
+		if (name == "basic_password") {
+			value = bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		}
+		if (name == "basic_cc1") {
+			value = bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		}
+		if (name == "basic_expiration1") {
+			value = bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		}
+		//console.log(event.target.getAttribute('value'));
 
-	   setEditProfile({...editProfile, [name]: value});
+		//setEditProfile({ ...editProfile, [name]: value });
 	}
 
-	const postEditProfile= async(e)=>{
+	/*const postEditProfile = async (e) => {
 		console.log(props.state)
-        e.preventDefault();
-		
+		e.preventDefault();
+
 
 		const {
 			basic_name,
@@ -71,40 +165,40 @@ function EditProfile(props) {
 			basic_address1,
 			basic_citystate1,
 			basic_zipcode1
-	                      }=editProfile;
+		} = editProfile;
 
-		const res=await fetch("https://cs4050-final-default-rtdb.firebaseio.com/users.json",
-		{
-			method:"POST",
-			headers:{
-				"Content-Type":"application/json"
-			},
-			body:JSON.stringify(
-				{
-					basic_name,
-					basic_password,
-					basic_phone,
-					basic_addressbilling,
-					basic_citystatebilling,
-					basic_zipcodebilling,
-					basic_ccn1,
-					basic_cardtype1,
-					basic_expiration1,
-					basic_address1,
-					basic_citystate1,
-					basic_zipcode1
-				}
-			)
-		}
+		const res = await fetch("https://cs4050-final-default-rtdb.firebaseio.com/users.json",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(
+					{
+						basic_name,
+						basic_password,
+						basic_phone,
+						basic_addressbilling,
+						basic_citystatebilling,
+						basic_zipcodebilling,
+						basic_ccn1,
+						basic_cardtype1,
+						basic_expiration1,
+						basic_address1,
+						basic_citystate1,
+						basic_zipcode1
+					}
+				)
+			}
 		);
 
 		console.log(res);
-	if(res){
+		if (res) {
 
-		swal("Saved!", "You successfully Upadated your profile", "success");
-	}
+			swal("Saved!", "You successfully Upadated your profile", "success");
+		}
 
-	}
+	}*/
 
 	/* jesus fucking christ */
 	return (
@@ -134,8 +228,7 @@ function EditProfile(props) {
 				<div className="form-row">
 					<Form.Item
 						name="name"
-						value={editProfile.basic_name}
-						onChange={getEditProfileData}
+						value={editProfile.name}
 						rules={[
 							{
 								required: true,
@@ -145,25 +238,17 @@ function EditProfile(props) {
 					>
 						<Input placeholder="Name*" />
 					</Form.Item>
- 
+
 					<Form.Item
 						name="password"
-						value={editProfile.basic_password}
-						onChange={getEditProfileData}
-						rules={[
-							{
-								required: true,
-								message: 'Please input your password!',
-							},
-						]}
+						value={''}
 					>
-						<Input.Password placeholder="Password*" />
+						<Input.Password placeholder="Change Password" />
 					</Form.Item>
 
 					<Form.Item
 						name="phone"
-						value={editProfile.basic_phone}
-						onChange={getEditProfileData}
+						value={editProfile.phone}
 						rules={[
 							{
 								required: true,
@@ -178,9 +263,8 @@ function EditProfile(props) {
 				<div class="section-title-minor">Billing Information</div>
 				<div class="form-row">
 					<Form.Item
-						name="addressbilling"
-						value={editProfile.basic_addressbilling}
-						onChange={getEditProfileData}
+						name="billingaddress"
+						value={editProfile.billingaddress}
 						rules={[
 							{
 								required: true,
@@ -192,9 +276,8 @@ function EditProfile(props) {
 					</Form.Item>
 
 					<Form.Item
-						name="citystatebilling"
-						value={editProfile.basic_citystatebilling}
-						onChange={getEditProfileData}
+						name="billingcitystate"
+						value={editProfile.billingcitystate}
 						rules={[
 							{
 								required: true,
@@ -205,9 +288,8 @@ function EditProfile(props) {
 						<Input placeholder="City/State*" />
 					</Form.Item>
 					<Form.Item
-						name="zipcodebilling"
-						value={editProfile.basic_zipcodebilling}
-						onChange={getEditProfileData}
+						name="billingzip"
+						value={editProfile.billingzip}
 						rules={[
 							{
 								required: true,
@@ -224,85 +306,53 @@ function EditProfile(props) {
 				<div class="form-row">
 					<Form.Item
 						name="ccn1"
-						value={editProfile.basic_ccn1}
-						onChange={getEditProfileData}
-						rules={[
-							{
-								required: true,
-								message: 'Invalid card number!',
-							},
-						]}
+						value={editProfile.ccn1}
 					>
-						<Input placeholder="CC Number*" />
+						<Input placeholder="CC Number" />
 					</Form.Item>
 
 					<Form.Item
-						name="cardtype1"
-						value={editProfile.basic_cardtype1}
-						onChange={getEditProfileData}
-						rules={[
-							{
-								required: true,
-								message: 'Invalid card type!',
-							},
-						]}
+						name="ccn1type"
+						value={editProfile.ccn1type}
 					>
-						<Input placeholder="Card Type*" />
+						<Input placeholder="Card Type" />
 					</Form.Item>
 					<Form.Item
-						name="expiration1"
-						value={editProfile.basic_expiration1}
-						onChange={getEditProfileData}
-						rules={[
-							{
-								required: true,
-								message: 'Invalid expiration date!',
-							},
-						]}
+						name="ccn1expdate"
+						value={editProfile.ccn1expdate}
 					>
-						<Input placeholder="Expiration Date*" />
+						<Input placeholder="Expiration Date" />
 					</Form.Item>
 				</div>
 				<div class="form-row">
 					<Form.Item
-						name="address1"
-						value={editProfile.basic_address1}
-						onChange={getEditProfileData}
-						rules={[
-							{
-								required: true,
-								message: 'Invalid address!',
-							},
-						]}
+						name="ccn1address"
+						value={editProfile.ccn1address}
 					>
-						<Input placeholder="Address*" />
+						<Input placeholder="Address" />
 					</Form.Item>
 
 					<Form.Item
-						name="citystate1"
-						value={editProfile.basic_citystate1}
-						onChange={getEditProfileData}
-						rules={[
-							{
-								required: true,
-								message: 'Invalid city/state!',
-							},
-						]}
+						name="ccn1citystate"
+						value={editProfile.ccn1citystate}
 					>
-						<Input placeholder="City/State*" />
+						<Input placeholder="City/State" />
 					</Form.Item>
 					<Form.Item
-						name="zipcode1"
-						value={editProfile.basic_zipcode1}
-						onChange={getEditProfileData}
-						rules={[
-							{
-								required: true,
-								message: 'Invalid zip code!',
-							},
-						]}
+						name="ccn1zip"
+						value={editProfile.ccn1zip}
 					>
-						<Input placeholder="Zip Code*" />
+						<Input placeholder="Zip Code" />
+					</Form.Item>
+				</div>
+				<div class="form-row">
+					<Form.Item
+						name="subpromo"
+						valuePropName="checked"
+					>
+						<Checkbox>
+							Subscribe to promotions
+						</Checkbox>
 					</Form.Item>
 				</div>
 
@@ -526,14 +576,9 @@ function EditProfile(props) {
 					>
 						<Input placeholder="Zip Code" />
 					</Form.Item>
-				</div>
+				</div>*/}
 				<div class="form-row">
-					<Form.Item name="subscribepromo" valuePropName="checked">
-						<Checkbox>Subscribe to promotions</Checkbox>
-					</Form.Item>
-				</div> */}
-				<div class = "form-row">
-					<Button type="primary" htmlType="submit" onClick={postEditProfile}>
+					<Button type="primary" htmlType="submit">
 						Submit
 					</Button>
 				</div>

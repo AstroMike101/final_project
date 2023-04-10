@@ -22,7 +22,7 @@ function RegistrationForm() {
             ccn1type: values.cardtype,
             ccn1expdate: values.expdate,
             ccn1address: values.cardaddress,
-            ccn1citystate1: values.cardcitystate,
+            ccn1citystate: values.cardcitystate,
             ccn1zip: values.cardzipcode,
 
             isAdmin: false,
