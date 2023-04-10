@@ -4,6 +4,15 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
 import adminPortal from './pages/adminPortal/adminPortal'
 import { database } from './firebase_setup/firebase.js'
+import { initializeApp } from 'firebase/app';
+
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+
+
+
+import 'firebase/functions';
+import firebase from 'firebase/app';
 
 
 
@@ -11,19 +20,42 @@ import { database } from './firebase_setup/firebase.js'
 
 
 
-const sendMailFunc = firebase.functions().httpsCallable('sendMail')
-// If there are multiple arguments when executing Functions, pass them as objects.
-sendMailFunc({
-    targetAdress: '[astromike101@gmail.com]',
-})
-    .then(res => {
-        console.log(res)
-    })
-    .catch(err => {
-        console.log(err)
-    })
+// const sendMailFunc = firebase.functions().httpsCallable('sendMail')
+// // If there are multiple arguments when executing Functions, pass them as objects.
+// sendMailFunc({
+//     targetAdress: '[astromike101@gmail.com]',
+// })
+//     .then(res => {
+//         console.log(res)
+//     })
+//     .catch(err => {
+//         console.log(err)
+//     })
 
-console.log("Email Sent!");
+firebase.initializeApp({
+    apiKey: "AIzaSyDDX4D9DiN0mq46K799tfpeokaBh5Ld-40",
+    authDomain: "cs4050-final.firebaseapp.com",
+    databaseURL: "https://cs4050-final-default-rtdb.firebaseio.com",
+    projectId: "cs4050-final",
+    storageBucket: "cs4050-final.appspot.com",
+    messagingSenderId: "162578543244",
+    appId: "1:162578543244:web:a5d0cb96ce42aee23481a9",
+    measurementId: "G-7EBQ16Y8PJ"
+});
+
+const sendPromoEmail = firebase.functions().httpsCallable('sendPromotionalEmail');
+
+function sendPromotionalEmail() {
+    sendPromoEmail().then(function (result) {
+        console.log(result);
+        alert('Promotional email sent successfully');
+    }).catch(function (error) {
+        console.error(error);
+        alert('Error sending promotional email');
+    });
+}
+
+
 
 function PromotionAdd() {
     const [promotionName, setPromotionName] = useState('');
@@ -73,7 +105,7 @@ function PromotionAdd() {
                     />
                 </label>
                 <br />
-                <button onClick={sendMailFunc} className="add-promotions-button1" type="submit">Submit</button>
+                <button onclick={sendPromotionalEmail} sendclassName="add-promotions-button1" type="submit">Submit</button>
                 {/* <button className="add-promotions-button1" type="submit">Return to Admin Panel</button> */}
                 {/* <NavLink to="/admin"><button className="add-promotions-button1" type="submit">Return to Admin Panel</button></NavLink> */}
             </form>
