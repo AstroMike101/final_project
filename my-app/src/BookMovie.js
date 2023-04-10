@@ -31,6 +31,7 @@ function BookMovie(props) {
 								<div class="booking-form">
 									<div class="movie-title">{movie.movie_name}</div>
 									<div class="movie-details">{"Rated " + movie.movie_rating_code}</div>
+									<div class="movie-details">{movie.movie_category}</div>
 									<div class="movie-details">{"Review score: " + movie.movie_score}</div>
 									<img src={movie.movie_image} class="movie-banner" />
 									<div class="movie-synopsis">{movie.movie_synopsis}</div>

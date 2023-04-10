@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { database } from './firebase_setup/firebase.js'
 import { ref, push, child, update, set, getDatabase } from "firebase/database";
-import { message, Form, Input, Checkbox, Button } from 'antd';
+import { message, Form, Input, Checkbox, Button, Select } from 'antd';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom';
 import './index.css';
 import './pages/registration_UI/style.css'
+
+const { Option } = Select;
 
 function AddMovies() {
 
@@ -27,12 +29,12 @@ function AddMovies() {
 			movie_trailer: values.trailerlink,
 			movie_image: values.image,
 		})
-		.then(() => {
-			message.success("Added new movie " + values.name)
-		})
-		.catch((error) => {
-			message.error(error.message)
-		})
+			.then(() => {
+				message.success("Added new movie " + values.name)
+			})
+			.catch((error) => {
+				message.error(error.message)
+			})
 	}
 	return (
 		<div className="form">
@@ -45,7 +47,6 @@ function AddMovies() {
 				}}
 				initialValues={{
 					name: '',
-					category: '',
 					cast: '',
 					director: '',
 					productor: '',
@@ -83,11 +84,23 @@ function AddMovies() {
 						rules={[
 							{
 								required: true,
-								message: 'Please input movie category!',
+								message: 'Please input movie category!'
 							},
 						]}
 					>
-						<Input placeholder="Category" />
+						<Select
+							placeholder="Category"
+							allowClear
+						>
+							<Option value="Action">Action</Option>
+							<Option value="Adventure">Adventure</Option>
+							<Option value="Comedy">Comedy</Option>
+							<Option value="Drama">Drama</Option>
+							<Option value="Horror">Horror</Option>
+							<Option value="Nonfiction">Nonfiction</Option>
+							<Option value="Romance">Romance</Option>
+							<Option value="Other">Other</Option>
+						</Select>
 					</Form.Item>
 
 					<Form.Item

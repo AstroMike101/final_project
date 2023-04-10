@@ -8,7 +8,7 @@ import AddMovies from '../../addmovies';
 
 function AdminPortal() {
     return (
-        
+
         <div className="container">
             <header className="header text">
                 <h1 classname='text'>Admin Portal</h1>
@@ -28,9 +28,12 @@ function AdminPortal() {
                     <div className="buttons">
 
                         <NavLink to="/promotionAdd" ><button type="primary">Make new Promotion </button></NavLink>
-                        
+
                         <button>Remove existing promotions</button>
                         <button>View current promotions</button>
+                    </div>
+                    <h2 className="text">Manage Users</h2><div className="buttons">
+                        <button>Manage user account status</button>
                     </div>
                 </div>
             </div>

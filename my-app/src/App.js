@@ -113,7 +113,7 @@ class App extends Component {
 	}
 
 	handleLogoutClick = () => {
-		this.setState({ login: false })
+		this.setState({ login: false, loginid: 0, userIsAdmin: false })
 		signOut(auth).then(() => {
 			message.success("Signed out")
 		}).catch((error) => {
@@ -202,13 +202,19 @@ function register() {
 function Home(props) {
 	{/* todo make this not scuffed with a Movies component*/ }
 	const [query, setQuery] = useState("")
+	const [filter, setFilter] = useState("All genres")
 	const moviesList = props.state.movies
-	let newQuery = ''
+	//let newQuery = ''
 
 	const onSearch = (value) => {
-		newQuery = value.toLowerCase();
-		console.log("newQuery in onSearch: " + newQuery)
+		const newQuery = value.toLowerCase();
+		//console.log("newQuery in onSearch: " + newQuery)
 		setQuery(newQuery)
+	}
+
+	const onFilterChange = (value) => {
+		setFilter(value)
+		console.log(value)
 	}
 
 	return (
@@ -224,55 +230,74 @@ function Home(props) {
 					}}
 				/>
 				<Select
-					defaultValue={'All ages'}
+					defaultValue={'All genres'}
+					onChange={onFilterChange}
 					style={{
-						width: 120,
+						width: 150,
 					}}
 					options={[
 						{
-							value: 'All ages',
-							label: 'All ages',
+							value: 'All genres',
+							label: 'All genres',
 						},
 						{
-							value: 'Children',
-							label: 'Children',
+							value: 'Action',
+							label: 'Action',
 						},
 						{
-							value: 'Teens',
-							label: 'Teens',
+							value: 'Adventure',
+							label: 'Adventure',
 						},
 						{
-							value: 'Adults',
-							label: 'Adults',
+							value: 'Comedy',
+							label: 'Comedy',
+						},
+						{
+							value: 'Drama',
+							label: 'Drama',
+						},
+						{
+							value: 'Horror',
+							label: 'Horror',
+						},
+						{
+							value: 'Nonfiction',
+							label: 'Nonfiction',
+						},
+						{
+							value: 'Romance',
+							label: 'Romance',
+						},
+						{
+							value: 'Other',
+							label: 'Other',
 						},
 					]}
 				/>
-				<DatePicker />
+				{/*<DatePicker />*/}
 			</div>
 			<div class="section-title">NOW SHOWING</div>
 			{moviesList.filter((movie) => {
+				// there's probably a better way to write this logic but my presentation is in 4 hours and i don't care anymore
 				if (query === '') {
-					console.log("LOL " + query)
-					console.log(query)
-					return movie;
+					if (filter === 'All genres' || filter === movie.movie_category) return movie;
 				} else if (movie.movie_name.toLowerCase().includes(query)) {
-					console.log("WTF " + query)
-					return movie;
+					if (filter === 'All genres' || filter === movie.movie_category) return movie;
 				}
 			}).map((movie) => {
-					return <div class="movie">
-						<div>
-							<iframe width="560" height="315" src={"https://www.youtube.com/embed/" + movie.movie_trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-						</div>
-						<div class="movie-description">
-							<div class="movie-title">{movie.movie_name}</div>
-							<div class="movie-details">Rated {movie.movie_rating_code}</div>
-							<div class="movie-details">Next showtime at {movie.movie_dates}</div>
-							<div>{movie.movie_synopsis}</div>
-							<NavLink to={"/booking/" + movie.movieid} style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
-						</div>
+				return <div class="movie">
+					<div>
+						<iframe width="560" height="315" src={"https://www.youtube.com/embed/" + movie.movie_trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 					</div>
-				})}
+					<div class="movie-description">
+						<div class="movie-title">{movie.movie_name}</div>
+						<div class="movie-details">Rated {movie.movie_rating_code}</div>
+						<div class="movie-details">Next showtime at {movie.movie_dates}</div>
+						<div>{movie.movie_synopsis}</div>
+						<NavLink to={"/booking/" + movie.movieid} style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
+					</div>
+				</div>
+			})}
 
 			<div class="movie">
 				<div>
@@ -346,7 +371,7 @@ function Home(props) {
 
 			</div>
 
-			<NavLink to="/admin" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>
+			{/*<NavLink to="/admin" style={{ textDecoration: 'none' }}><Button type="primary">Login as admin</Button></NavLink>*/}
 		</div>
 	)
 }
@@ -383,6 +408,8 @@ function Navbar(props) {
 
 	if (props.state.userIsAdmin) {
 		navbutton3 = <NavLink to="/admin" style={{ textDecoration: 'none' }}><div class="navbutton">Admin Dashboard</div></NavLink>;
+	} else {
+		navbutton3 = <></>
 	}
 
 	return (

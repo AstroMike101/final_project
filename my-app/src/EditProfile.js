@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-r
 import { Button, Form, Input, Select, Checkbox, useForm, message } from 'antd';
 import { database } from './firebase_setup/firebase.js'
 import { ref, push, child, update, getDatabase, onValue, get } from "firebase/database";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, updatePassword } from "firebase/auth";
 import './index.css';
 import swal from 'sweetalert';
 import bcrypt from 'bcryptjs'
@@ -97,14 +97,27 @@ function EditProfile(props) {
 
 	const salt = bcrypt.genSaltSync(10);
 	const onFinish = (values) => {
+
 		let obj = values;
 		obj.uid = editProfile.uid
 		obj.isAdmin = editProfile.isAdmin
 		obj.email = editProfile.email
 		obj.isSubscribedToPromotions = values.subpromo
+
+		const newPassword = obj.password;
+
 		delete obj.password
 		delete obj.subpromo
 
+		onAuthStateChanged(auth, (user) => {
+			if (user) {
+				updatePassword(user, newPassword).then(() => {
+					console.log("password updated")
+				}).catch((error) => {
+					message.error(error.message)
+				});
+			}
+		})
 		const updates = {};
 		updates['/users/' + obj.uid] = obj;
 		message.success("Profile successfully updated!")
