@@ -130,7 +130,6 @@ class App extends Component {
 		})
 	}
 
-
 	truncate = (str) => {
 		if (str.length >= 500) {
 			return str.substring(0, 500) + "...";
@@ -147,7 +146,7 @@ class App extends Component {
 					</div>
 
 					<Routes>
-						<Route path="/" element={<Home props={this.props} state={this.state} />} exact>
+						<Route path="/" element={<Home props={this.props} state={this.state} changeQuery={this.changeQuery} />} exact>
 						</Route>
 						<Route path="/editprofile" element={<EditProfile state={this.state} />}>
 						</Route>
@@ -161,7 +160,7 @@ class App extends Component {
 
 
 
-						<Route path="/booking" element={<BookMovie />}>
+						<Route path="/booking/:id" element={<BookMovie state={this.state} />}>
 						</Route>
 						<Route path="/PromotionAdd" element={<PromotionAdd />}>
 						</Route>
@@ -202,13 +201,23 @@ function register() {
 
 function Home(props) {
 	{/* todo make this not scuffed with a Movies component*/ }
+	const [query, setQuery] = useState("")
 	const moviesList = props.state.movies
+	let newQuery = ''
+
+	const onSearch = (value) => {
+		newQuery = value.toLowerCase();
+		console.log("newQuery in onSearch: " + newQuery)
+		setQuery(newQuery)
+	}
+
 	return (
 		<div class="movie-display">
 			<div class="search-display">
 				<div>Search movies...</div>
 				<Search
 					placeholder="Movie title"
+					onSearch={onSearch}
 					allowClear
 					style={{
 						width: 340,
@@ -241,20 +250,29 @@ function Home(props) {
 				<DatePicker />
 			</div>
 			<div class="section-title">NOW SHOWING</div>
-			{moviesList.map((movie) => {
-				return <div class="movie">
-					<div>
-						<iframe width="560" height="315" src={"https://www.youtube.com/embed/" + movie.movie_trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+			{moviesList.filter((movie) => {
+				if (query === '') {
+					console.log("LOL " + query)
+					console.log(query)
+					return movie;
+				} else if (movie.movie_name.toLowerCase().includes(query)) {
+					console.log("WTF " + query)
+					return movie;
+				}
+			}).map((movie) => {
+					return <div class="movie">
+						<div>
+							<iframe width="560" height="315" src={"https://www.youtube.com/embed/" + movie.movie_trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+						</div>
+						<div class="movie-description">
+							<div class="movie-title">{movie.movie_name}</div>
+							<div class="movie-details">Rated {movie.movie_rating_code}</div>
+							<div class="movie-details">Next showtime at {movie.movie_dates}</div>
+							<div>{movie.movie_synopsis}</div>
+							<NavLink to={"/booking/" + movie.movieid} style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
+						</div>
 					</div>
-					<div class="movie-description">
-						<div class="movie-title">{movie.movie_name}</div>
-						<div class="movie-details">Rated {movie.movie_rating_code}</div>
-						<div class="movie-details">Next showtime at {movie.movie_dates}</div>
-						<div>{movie.movie_synopsis}</div>
-						<NavLink to={"/booking/" + movie.movieid} style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
-					</div>
-				</div>
-			})}
+				})}
 
 			<div class="movie">
 				<div>

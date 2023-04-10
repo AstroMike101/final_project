@@ -105,9 +105,26 @@ body {
 	font-size: 1.75em;
 }
 
+.movie-synopsis {
+	font-size: 1.2em;
+	font-weight: 300;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
 .movie-details {
 	font-style: italic;
 	font-size: 1em;
+	font-weight: 300;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+	justify-content: flex-start;
+}
+.movie-details-addl {
+	font-style: italic;
+	font-size: 0.75em;
 	font-weight: 300;
 	display: flex;
 	flex-direction: row;
@@ -490,7 +507,7 @@ body {
 
 .ant-input {
 	width: 100%;
-	height: 2.5rem;
+	height: 2.25rem;
 	font-size: 1.2rem;
 	border-radius: 0.5rem;
 	border: 1px solid #d9d9d9;
