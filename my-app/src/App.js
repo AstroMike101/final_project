@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, message } from 'antd';
+import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, message, Empty } from 'antd';
 
 import { database } from './firebase_setup/firebase.js'
 import { ref, push, child, update, getDatabase, onValue, get } from "firebase/database";
@@ -231,6 +231,9 @@ function Home(props) {
 		console.log(value)
 	}
 
+	var movieExists = false;
+	var empty = <Empty />;
+
 	return (
 		<div class="movie-display">
 			<div class="search-display">
@@ -294,9 +297,15 @@ function Home(props) {
 			{moviesList.filter((movie) => {
 				// there's probably a better way to write this logic but my presentation is in 4 hours and i don't care anymore
 				if (query === '') {
-					if (filter === 'All genres' || filter === movie.movie_category) return movie;
+					if (filter === 'All genres' || filter === movie.movie_category) {
+						empty = <></>;
+						return movie
+					}
 				} else if (movie.movie_name.toLowerCase().includes(query)) {
-					if (filter === 'All genres' || filter === movie.movie_category) return movie;
+					if (filter === 'All genres' || filter === movie.movie_category) {
+						empty = <></>;
+						return movie
+					}
 				}
 			}).map((movie) => {
 				return <div class="movie">
@@ -312,7 +321,7 @@ function Home(props) {
 					</div>
 				</div>
 			})}
-
+			{empty}
 			{/*<div class="movie">
 				<div>
 					<iframe width="560" height="315" src="https://www.youtube.com/embed/hebWYacbdvc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
