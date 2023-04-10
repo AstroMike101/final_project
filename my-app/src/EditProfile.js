@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forceUpdate } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link, useParams } from 'react-router-dom';
-import { Button, Form, Input, Select, Checkbox, useForm } from 'antd';
+import { Button, Form, Input, Select, Checkbox, useForm, message } from 'antd';
 import { database } from './firebase_setup/firebase.js'
 import { ref, push, child, update, getDatabase, onValue, get } from "firebase/database";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -34,30 +34,8 @@ function EditProfile(props) {
 		isAdmin: false,
 		isSubscribedToPromotions: false,
 	})
-	//console.log(editProfile)
-	var obj = {
-		uid: '',
-		name: '',
-		phone: '',
-		email: '',
-		//password: values.password,
 
-		billingaddress: '',
-		billingcitystate: '',
-		billingzip: '',
-
-		ccn1: '',
-		ccn1type: '',
-		ccn1expdate: '',
-		ccn1address: '',
-		ccn1citystate: '',
-		ccn1zip: '',
-
-		isAdmin: false,
-		isSubscribedToPromotions: false,
-	}
-
-	const userRef = ref(database, 'users');
+	//const userRef = ref(database, 'users');
 	useEffect(() => {
 		//console.log("FUCK!!!")
 		onAuthStateChanged(auth, (user) => {
@@ -94,18 +72,18 @@ function EditProfile(props) {
 							name: snapshot.val().name,
 							phone: snapshot.val().phone,
 							email: snapshot.val().email,
-		
+
 							billingaddress: snapshot.val().billingaddress,
 							billingcitystate: snapshot.val().billingcitystate,
 							billingzip: snapshot.val().billingzip,
-		
+
 							ccn1: snapshot.val().ccn1,
 							ccn1type: snapshot.val().ccn1type,
 							ccn1expdate: snapshot.val().ccn1expdate,
 							ccn1address: snapshot.val().ccn1address,
 							ccn1citystate: snapshot.val().ccn1citystate,
 							ccn1zip: snapshot.val().ccn1zip,
-		
+
 							subpromo: snapshot.val().isSubscribedToPromotions,
 						})
 					}
@@ -119,11 +97,22 @@ function EditProfile(props) {
 
 	const salt = bcrypt.genSaltSync(10);
 	const onFinish = (values) => {
-		console.log('Success:', values);
-		console.log(props.state)
+		let obj = values;
+		obj.uid = editProfile.uid
+		obj.isAdmin = editProfile.isAdmin
+		obj.email = editProfile.email
+		obj.isSubscribedToPromotions = values.subpromo
+		delete obj.password
+		delete obj.subpromo
+
+		const updates = {};
+		updates['/users/' + obj.uid] = obj;
+		message.success("Profile successfully updated!")
+		return update(ref(database), updates)
 	};
+
 	const onFinishFailed = (errorInfo) => {
-		console.log('Failed:', errorInfo);
+		message.error(errorInfo);
 	};
 
 	let name, value;
@@ -204,7 +193,6 @@ function EditProfile(props) {
 	/* jesus fucking christ */
 	return (
 		<div class="editprofile">
-			<div class="section-title">{editProfile.uid}</div>
 			<div class="section-title">Edit Profile</div>
 			<div>Fields marked with an * are required.</div>
 			<Form
