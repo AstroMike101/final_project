@@ -44,6 +44,7 @@ class App extends Component {
 			userIsAdmin: false,
 
 			movies: [],
+			showtimes: [],
 		};
 		//this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleLogoutClick = this.handleLogoutClick.bind(this);
@@ -109,6 +110,16 @@ class App extends Component {
 				})
 			});
 			//console.log(moviestemp)
+		});
+		onValue(ref(db, 'showtimes'), (snapshot) => {
+			const data = snapshot.val();
+			var showtimestemp = [];
+			Object.values(data).forEach((val) => {
+				showtimestemp = [...showtimestemp, val]
+				this.setState({
+					showtimes: showtimestemp,
+				})
+			});
 		});
 		//console.log(this.state)
 	}

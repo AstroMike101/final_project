@@ -6,18 +6,29 @@ import React, { Component, useState, useEffect } from "react";
 import './index.css';
 import BookingConfirmation from "./BookingConfirmation.js";
 
+const { Option } = Select;
+
 //import flashimg from "./images/flash.jpg"
 const onFinish = (values) => {
 	console.log('Received values of form:', values);
 };
 
 function BookMovie(props) {
+	const params = useParams();
+
 	const [value, setValue] = useState(1);
+	const [showState, setShowState] = useState(['dingus']);
 	const onChange = (e) => {
 		setValue(e.target.value);
 	};
+	const showtimes = props.state.showtimes.filter((showtimes) => { if (showtimes.movieid == params.id) return showtimes; })
+	var showtimesFormatted = []
+	/*showtimes.map((showtimes) => {
+		showtimesFormatted = [...showtimesFormatted, showtimes.showtimeMonth + '/' + showtimes.showtimeDay + '/' + showtimes.showtimeYear + ', ' + showtimes.showtimeHour + ':' + showtimes.showtimeMinute]
+	})*/
+	//setShowState(showtimesFormatted)
+	//console.log(showtimesFormatted)
 
-	const params = useParams();
 
 	return (
 		<div>
@@ -45,23 +56,16 @@ function BookMovie(props) {
 								<div class="booking-form">
 									<div class="section-title-minor">Choose showtime</div>
 									<div class="booking-inner-row">
-										<DatePicker />
 										<Select
-											defaultValue="8:00 PM"
+											placeholder="Choose a showtime..."
 											style={{
-												width: 120,
+												width: 250,
 											}}
-											options={[
-												{
-													label: '8:00 PM',
-													value: '1',
-												},
-												{
-													label: '10:30 PM',
-													value: '2',
-												},
-											]}
-										/>
+										>
+											{showtimes.map((showtimes, index) => {
+												return <Option value={index}>{showtimes.showtimeMonth + '/' + showtimes.showtimeDay + '/' + showtimes.showtimeYear + ', ' + showtimes.showtimeHour + ':' + showtimes.showtimeMinute}</Option>
+											})}
+										</Select>
 									</div>
 
 									<div class="section-title-minor">Add tickets</div>
