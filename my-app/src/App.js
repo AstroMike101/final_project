@@ -315,7 +315,7 @@ function Home(props) {
 					<div class="movie-description">
 						<div class="movie-title">{movie.movie_name}</div>
 						<div class="movie-details">Rated {movie.movie_rating_code}</div>
-						<div class="movie-details">Next showtime at {movie.movie_dates}</div>
+						<div class="movie-details">{movie.movie_category}</div>
 						<div>{movie.movie_synopsis}</div>
 						<NavLink to={"/booking/" + movie.movieid} style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
 					</div>
