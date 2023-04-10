@@ -5,6 +5,7 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "
 import { message, Form, Input, Checkbox, Button } from 'antd';
 import './style.css';
 import '../../index.css';
+import bcrypt from 'bcryptjs';
 function RegistrationForm() {
     const handleSubmit = (values) => {
         let obj = {
@@ -12,7 +13,7 @@ function RegistrationForm() {
             name: values.name,
             phone: values.phone,
             email: values.email,
-            //password: values.password,
+            password: values.password,
 
             billingaddress: values.billingaddress,
             billingcitystate: values.billingcitystate,
@@ -32,12 +33,15 @@ function RegistrationForm() {
         // worst line of code i've ever written in my life
         if (obj["isSubscribedToPromotions"] != true) obj["isSubscribedToPromotions"] = false
         //console.log(values)
-        //console.log(obj)
-
+        //console.log(obj) 
         debugger;
         //const newPostKey = push(child(ref(database), 'posts')).key;
         const updates = {};
         const auth = getAuth();
+        obj.password =bcrypt.hashSync(obj.password, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		obj.ccn1=bcrypt.hashSync(obj.ccn1, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		obj.ccn1expdate=bcrypt.hashSync(obj.ccn1expdate, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+        
         createUserWithEmailAndPassword(auth, obj["email"], values["password"])
             .then((userCredential) => {
                 const user = userCredential.user;

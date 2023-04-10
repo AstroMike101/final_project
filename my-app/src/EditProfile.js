@@ -68,6 +68,7 @@ function EditProfile(props) {
 							isAdmin: snapshot.val().isAdmin,
 							isSubscribedToPromotions: snapshot.val().isSubscribedToPromotions,
 						})
+						
 						form.setFieldsValue({
 							name: snapshot.val().name,
 							phone: snapshot.val().phone,
@@ -97,8 +98,10 @@ function EditProfile(props) {
 
 	const salt = bcrypt.genSaltSync(10);
 	const onFinish = (values) => {
-
 		let obj = values;
+		obj.ccn1 = bcrypt.hashSync(obj.ccn1, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+		obj.ccn1expdate = bcrypt.hashSync(obj.ccn1expdate, '$2a$10$CwTycUXWue0Thq9StjUM0u');
+
 		obj.uid = editProfile.uid
 		obj.isAdmin = editProfile.isAdmin
 		obj.email = editProfile.email
@@ -136,15 +139,6 @@ function EditProfile(props) {
 		name = event.target.id;
 		//console.log(event.target.getAttribute('id'));
 		value = event.target.value;
-		if (name == "basic_password") {
-			value = bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		}
-		if (name == "basic_cc1") {
-			value = bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		}
-		if (name == "basic_expiration1") {
-			value = bcrypt.hashSync(value, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		}
 		//console.log(event.target.getAttribute('value'));
 
 		//setEditProfile({ ...editProfile, [name]: value });
