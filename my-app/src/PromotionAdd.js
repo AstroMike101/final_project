@@ -4,7 +4,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, NavLink } from 'react-router-dom'
 import adminPortal from './pages/adminPortal/adminPortal'
 import { database } from './firebase_setup/firebase.js'
+import { ref, push, child, update, set, getDatabase } from "firebase/database";
 import { initializeApp } from 'firebase/app';
+import { message } from 'antd';
 
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
@@ -67,8 +69,22 @@ function PromotionAdd() {
         console.log(`Promotion Name: ${promotionName}`);
         console.log(`Expiration Date: ${expirationDate}`);
         console.log(`Promotion Effect: ${promotionEffect}`);
+        const newPostKey = push(child(ref(database), 'posts')).key;
+		const db = getDatabase();
+		set(ref(db, 'promotions/' + newPostKey), {
+			promocode: promotionName,
+            expdate: expirationDate,
+            promoeffect: promotionEffect
+		})
+			.then(() => {
+				message.success("Added new promotional code " + promotionName)
+			})
+			.catch((error) => {
+				message.error(error.message)
+			})
     };
 
+    // This needs to be changed to an antd form later -Andrew
     return (
         <div className="add-promotions-container1">
             <NavLink to="/admin"><button className="add-promotions-button1" type="submit">Return to Admin Panel</button></NavLink>
@@ -76,7 +92,7 @@ function PromotionAdd() {
             <h1 className="add-promotions-header1">Add Promotions</h1>
             <form className="add-promotions-form1" onSubmit={handleSubmit}>
                 <label className="add-promotions-label1">
-                    Promotion name:
+                    Promotional code:
                     <input
                         className="add-promotions-input1"
                         type="text"
@@ -96,7 +112,7 @@ function PromotionAdd() {
                 </label>
                 <br />
                 <label className="add-promotions-label1">
-                    Promotion effect:
+                    Discount percentage:
                     <input
                         className="add-promotions-input1"
                         type="text"
