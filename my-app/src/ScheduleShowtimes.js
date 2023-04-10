@@ -10,7 +10,24 @@ import './pages/registration_UI/style.css';
 
 function ScheduleShowtimes(props) {
 	const handleSubmit = (values) => {
-		console.log(values)
+		// Duplication check
+		const thisMovieShowtimes = props.state.showtimes.filter((showtimes) => { if (showtimes.movieid == values.movieid) return showtimes; })
+		var isDuplicate = false;
+		thisMovieShowtimes.map((showtimes) => {
+			if (
+				showtimes.showtimeMonth == values.showtime.$M &&
+				showtimes.showtimeDay == values.showtime.$D &&
+				showtimes.showtimeYear == values.showtime.$y &&
+				showtimes.showtimeHour == values.showtime.$H &&
+				showtimes.showtimeMinute == values.showtime.$m
+			) {
+				message.error("Cannot schedule multiple shows for the same time!")
+				isDuplicate = true
+			}
+		})
+
+		if (isDuplicate) return;
+		//console.log(values)
 		const newPostKey = push(child(ref(database), 'posts')).key;
 		const db = getDatabase();
 		set(ref(db, 'showtimes/' + newPostKey), {
