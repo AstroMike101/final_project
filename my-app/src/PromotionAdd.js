@@ -35,7 +35,7 @@ import 'firebase/functions';
 //     })
 
 /*firebase.initializeApp({
-    apiKey: "AIzaSyDDX4D9DiN0mq46K799tfpeokaBh5Ld-40",
+    apiKey: "[apikey]",
     authDomain: "cs4050-final.firebaseapp.com",
     databaseURL: "https://cs4050-final-default-rtdb.firebaseio.com",
     projectId: "cs4050-final",
