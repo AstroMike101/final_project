@@ -8,7 +8,7 @@ import firebase from 'firebase/app';
 
 
 const firebaseConfig = {
-  apiKey: "[apikey]",
+  apiKey: process.env.REACT_APP_apiKey,
   authDomain: "cs4050-final.firebaseapp.com",
   databaseURL: "https://cs4050-final-default-rtdb.firebaseio.com",
   projectId: "cs4050-final",
