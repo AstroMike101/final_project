@@ -5,8 +5,10 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "
 import { message, Form, Input, Checkbox, Button } from 'antd';
 import './style.css';
 import '../../index.css';
-import bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
+import CryptoJS from 'crypto-js'; 
 function RegistrationForm() {
+    const secretPass = "XkhZG4fW2t2W";
     const handleSubmit = (values) => {
         let obj = {
             uid: '',
@@ -38,10 +40,16 @@ function RegistrationForm() {
         //const newPostKey = push(child(ref(database), 'posts')).key;
         const updates = {};
         const auth = getAuth();
-        obj.password =bcrypt.hashSync(obj.password, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		obj.ccn1=bcrypt.hashSync(obj.ccn1, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		obj.ccn1expdate=bcrypt.hashSync(obj.ccn1expdate, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-        
+        //encryot password,ccn1,ccn1expdate
+        obj.password = CryptoJS.AES.encrypt(JSON.stringify(obj.password), secretPass).toString();
+        obj.ccn1 = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1), secretPass).toString();
+        obj.ccn1expdate = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1expdate), secretPass).toString();
+        obj.ccn1type = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1type), secretPass).toString();
+        obj.ccn1address = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1address), secretPass).toString();
+        obj.ccn1citystate = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1citystate), secretPass).toString();
+        obj.ccn1zip = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1zip), secretPass).toString();
+        console.log(obj)
+
         createUserWithEmailAndPassword(auth, obj["email"], values["password"])
             .then((userCredential) => {
                 const user = userCredential.user;

@@ -6,12 +6,15 @@ import { ref, push, child, update, getDatabase, onValue, get } from "firebase/da
 import { getAuth, onAuthStateChanged, updatePassword } from "firebase/auth";
 import './index.css';
 import swal from 'sweetalert';
-import bcrypt from 'bcryptjs'
+import CryptoJS from 'crypto-js';
+import RegistrationForm from './pages/registration_UI/registration_form.js';
 
 const auth = getAuth();
 const user = auth.currentUser;
 
 function EditProfile(props) {
+	
+	const secretPass = "XkhZG4fW2t2W";
 	const [form] = Form.useForm()
 	const [editProfile, setEditProfile] = useState({
 		uid: '',
@@ -43,7 +46,6 @@ function EditProfile(props) {
 				// User is signed in, see docs for a list of available properties
 				// https://firebase.google.com/docs/reference/js/firebase.User
 				const uid = user.uid;
-
 				const dbRef = ref(getDatabase());
 				get(child(dbRef, `users/${uid}`)).then((snapshot) => {
 					if (snapshot.exists()) {
@@ -95,20 +97,14 @@ function EditProfile(props) {
 		});
 	}, [])
 
-
-	const salt = bcrypt.genSaltSync(10);
 	const onFinish = (values) => {
 		let obj = values;
-		obj.ccn1 = bcrypt.hashSync(obj.ccn1, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-		obj.ccn1expdate = bcrypt.hashSync(obj.ccn1expdate, '$2a$10$CwTycUXWue0Thq9StjUM0u');
-
+		var bytes = CryptoJS.AES.decrypt(obj, 'XkhZG4fW2t2W');
 		obj.uid = editProfile.uid
 		obj.isAdmin = editProfile.isAdmin
 		obj.email = editProfile.email
 		obj.isSubscribedToPromotions = values.subpromo
-
 		const newPassword = obj.password;
-
 		delete obj.password
 		delete obj.subpromo
 
@@ -144,60 +140,12 @@ function EditProfile(props) {
 		//setEditProfile({ ...editProfile, [name]: value });
 	}
 
-	/*const postEditProfile = async (e) => {
-		console.log(props.state)
-		e.preventDefault();
-
-
-		const {
-			basic_name,
-			basic_password,
-			basic_phone,
-			basic_addressbilling,
-			basic_citystatebilling,
-			basic_zipcodebilling,
-			basic_ccn1,
-			basic_cardtype1,
-			basic_expiration1,
-			basic_address1,
-			basic_citystate1,
-			basic_zipcode1
-		} = editProfile;
-
-		const res = await fetch("https://cs4050-final-default-rtdb.firebaseio.com/users.json",
-			{
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify(
-					{
-						basic_name,
-						basic_password,
-						basic_phone,
-						basic_addressbilling,
-						basic_citystatebilling,
-						basic_zipcodebilling,
-						basic_ccn1,
-						basic_cardtype1,
-						basic_expiration1,
-						basic_address1,
-						basic_citystate1,
-						basic_zipcode1
-					}
-				)
-			}
-		);
-
-		console.log(res);
-		if (res) {
-
-			swal("Saved!", "You successfully Upadated your profile", "success");
-		}
-
-	}*/
-
 	/* jesus fucking christ */
+	const getVariable = (e)=> {
+		const val=e.target.value;
+		const id = e.target.id;
+		console.log(id);
+	}
 	return (
 		<div class="editprofile">
 			<div class="section-title">Edit Profile</div>
@@ -223,7 +171,7 @@ function EditProfile(props) {
 					billingcitystate: editProfile.billingcitystate,
 					billingzip: editProfile.billingzip,
 
-					ccn1: editProfile.ccn1,
+					ccn1: CryptoJS.AES.decrypt(editProfile.ccn1, secretPass),
 					ccn1type: editProfile.ccn1type,
 					ccn1expdate: editProfile.ccn1expdate,
 					ccn1address: editProfile.ccn1address,
@@ -250,6 +198,12 @@ function EditProfile(props) {
 						]}
 					>
 						<Input placeholder="Name*" />
+					</Form.Item>
+					<Form.Item
+					name="confirmpassword"
+					value={''}
+					>
+						<Input.Password placeholder="Confirm Password" />
 					</Form.Item>
 
 					<Form.Item
@@ -320,6 +274,7 @@ function EditProfile(props) {
 					<Form.Item
 						name="ccn1"
 						value={editProfile.ccn1}
+						onChange = {getVariable}
 					>
 						<Input placeholder="CC Number" />
 					</Form.Item>
@@ -368,228 +323,6 @@ function EditProfile(props) {
 						</Checkbox>
 					</Form.Item>
 				</div>
-
-				{/* <div class="section-title-but-more-minor">Card 2</div>
-				<div class="form-row">
-					<Form.Item
-						name="ccn2"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid card number!',
-							},
-						]}
-					>
-						<Input placeholder="CC Number" />
-					</Form.Item>
-
-					<Form.Item
-						name="cardtype2"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid card type!',
-							},
-						]}
-					>
-						<Input placeholder="Card Type" />
-					</Form.Item>
-					<Form.Item
-						name="expiration2"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid expiration date!',
-							},
-						]}
-					>
-						<Input placeholder="Expiration Date" />
-					</Form.Item>
-				</div>
-				<div class="form-row">
-					<Form.Item
-						name="address2"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid address!',
-							},
-						]}
-					>
-						<Input placeholder="Address" />
-					</Form.Item>
-
-					<Form.Item
-						name="citystate2"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid city/state!',
-							},
-						]}
-					>
-						<Input placeholder="City/State" />
-					</Form.Item>
-					<Form.Item
-						name="zipcode2"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid zip code!',
-							},
-						]}
-					>
-						<Input placeholder="Zip Code" />
-					</Form.Item>
-				</div>
-
-				<div class="section-title-but-more-minor">Card 3</div>
-				<div class="form-row">
-					<Form.Item
-						name="ccn3"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid card number!',
-							},
-						]}
-					>
-						<Input placeholder="CC Number" />
-					</Form.Item>
-
-					<Form.Item
-						name="cardtype3"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid card type!',
-							},
-						]}
-					>
-						<Input placeholder="Card Type" />
-					</Form.Item>
-					<Form.Item
-						name="expiration3"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid expiration date!',
-							},
-						]}
-					>
-						<Input placeholder="Expiration Date" />
-					</Form.Item>
-				</div>
-				<div class="form-row">
-					<Form.Item
-						name="address3"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid address!',
-							},
-						]}
-					>
-						<Input placeholder="Address" />
-					</Form.Item>
-
-					<Form.Item
-						name="citystate3"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid city/state!',
-							},
-						]}
-					>
-						<Input placeholder="City/State" />
-					</Form.Item>
-					<Form.Item
-						name="zipcode3"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid zip code!',
-							},
-						]}
-					>
-						<Input placeholder="Zip Code" />
-					</Form.Item>
-				</div>
-
-				<div class="section-title-but-more-minor">Card 4</div>
-				<div class="form-row">
-					<Form.Item
-						name="ccn4"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid card number!',
-							},
-						]}
-					>
-						<Input placeholder="CC Number" />
-					</Form.Item>
-
-					<Form.Item
-						name="cardtype4"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid card type!',
-							},
-						]}
-					>
-						<Input placeholder="Card Type" />
-					</Form.Item>
-					<Form.Item
-						name="expiration4"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid expiration date!',
-							},
-						]}
-					>
-						<Input placeholder="Expiration Date" />
-					</Form.Item>
-				</div>
-				<div class="form-row">
-					<Form.Item
-						name="address4"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid address!',
-							},
-						]}
-					>
-						<Input placeholder="Address" />
-					</Form.Item>
-
-					<Form.Item
-						name="citystate4"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid city/state!',
-							},
-						]}
-					>
-						<Input placeholder="City/State" />
-					</Form.Item>
-					<Form.Item
-						name="zipcode4"
-						rules={[
-							{
-								required: true,
-								message: 'Invalid zip code!',
-							},
-						]}
-					>
-						<Input placeholder="Zip Code" />
-					</Form.Item>
-				</div>*/}
 				<div class="form-row">
 					<Button type="primary" htmlType="submit">
 						Submit

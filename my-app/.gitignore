@@ -1,5 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
+REACT_APP_apiKey = "AIzaSyCoafZIfUKDn88GmkWP5j7xi80zX1cJfn0"
 # dependencies
 /node_modules
 /.pnp
