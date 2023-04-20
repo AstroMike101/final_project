@@ -10,10 +10,8 @@ import CryptoJS from 'crypto-js';
 import RegistrationForm from './pages/registration_UI/registration_form.js';
 
 const auth = getAuth();
-const user = auth.currentUser;
 
 function EditProfile(props) {
-	
 	const secretPass = "XkhZG4fW2t2W";
 	const [form] = Form.useForm()
 	const [editProfile, setEditProfile] = useState({
@@ -21,7 +19,7 @@ function EditProfile(props) {
 		name: '',
 		phone: '',
 		email: '',
-		//password: values.password,
+		currentPassword: '',
 
 		billingaddress: '',
 		billingcitystate: '',
@@ -99,7 +97,6 @@ function EditProfile(props) {
 
 	const onFinish = (values) => {
 		let obj = values;
-		var bytes = CryptoJS.AES.decrypt(obj, 'XkhZG4fW2t2W');
 		obj.uid = editProfile.uid
 		obj.isAdmin = editProfile.isAdmin
 		obj.email = editProfile.email
@@ -127,6 +124,15 @@ function EditProfile(props) {
 		message.error(errorInfo);
 	};
 
+	const validateConfirmPassword = ({ getFieldValue }) => ({
+		validator(_, value) {
+		  if (!value || getFieldValue("password") === value) {
+			return Promise.resolve();
+		  }
+		  return Promise.reject(new Error("The two passwords do not match."));
+		},
+	});
+
 	let name, value;
 	const getEditProfileData = (event) => {
 		// event.persist();
@@ -141,11 +147,11 @@ function EditProfile(props) {
 	}
 
 	/* jesus fucking christ */
-	const getVariable = (e)=> {
-		const val=e.target.value;
-		const id = e.target.id;
-		console.log(id);
-	}
+	// const getVariable = (e)=> {
+	// 	const val=e.target.value;
+	// 	const id = e.target.id;
+	// 	console.log(id);
+	// }
 	return (
 		<div class="editprofile">
 			<div class="section-title">Edit Profile</div>
@@ -164,14 +170,14 @@ function EditProfile(props) {
 				}}
 				initialValues={{
 					name: editProfile.name,
+					
 					phone: editProfile.phone,
 					email: editProfile.email,
-
 					billingaddress: editProfile.billingaddress,
 					billingcitystate: editProfile.billingcitystate,
 					billingzip: editProfile.billingzip,
 
-					ccn1: CryptoJS.AES.decrypt(editProfile.ccn1, secretPass),
+					ccn1: CryptoJS.AES.decrypt(editProfile.ccn1,secretPass),
 					ccn1type: editProfile.ccn1type,
 					ccn1expdate: editProfile.ccn1expdate,
 					ccn1address: editProfile.ccn1address,
@@ -200,12 +206,19 @@ function EditProfile(props) {
 						<Input placeholder="Name*" />
 					</Form.Item>
 					<Form.Item
-					name="confirmpassword"
-					value={''}
+						label="Confirm Password"
+						name="confirmPassword"
+						dependencies={["password"]}
+						rules={[
+							{
+							required: true,
+							message: "Please confirm your password!",
+							},
+							validateConfirmPassword,
+						]}
 					>
-						<Input.Password placeholder="Confirm Password" />
+					<Input.Password />
 					</Form.Item>
-
 					<Form.Item
 						name="password"
 						value={''}
