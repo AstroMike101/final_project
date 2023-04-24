@@ -102,24 +102,28 @@ class App extends Component {
 			const data = snapshot.val();
 			var moviestemp = [];
 			//console.log(data);
-			Object.values(data).forEach((val) => {
-				//console.log(val)
-				moviestemp = [...moviestemp, val]
-				this.setState({
-					movies: moviestemp,
-				})
-			});
+			if (snapshot.val()) {
+				Object.values(data).forEach((val) => {
+					//console.log(val)
+					moviestemp = [...moviestemp, val]
+					this.setState({
+						movies: moviestemp,
+					})
+				});
+			}
 			//console.log(moviestemp)
 		});
 		onValue(ref(db, 'showtimes'), (snapshot) => {
 			const data = snapshot.val();
 			var showtimestemp = [];
-			Object.values(data).forEach((val) => {
-				showtimestemp = [...showtimestemp, val]
-				this.setState({
-					showtimes: showtimestemp,
-				})
-			});
+			if (snapshot.val()) {
+				Object.values(data).forEach((val) => {
+					showtimestemp = [...showtimestemp, val]
+					this.setState({
+						showtimes: showtimestemp,
+					})
+				});
+			}
 		});
 		//console.log(this.state)
 	}
@@ -164,7 +168,7 @@ class App extends Component {
 						</Route>
 						<Route path="/admin/addmovies" element={<AddMovies />}>
 						</Route>
-						<Route path="/admin/scheduleshowtimes" element={<ScheduleShowtimes state = {this.state} />}>
+						<Route path="/admin/scheduleshowtimes" element={<ScheduleShowtimes state={this.state} />}>
 						</Route>
 						<Route path="/admin" element={<AdminPortal />}>
 						</Route>

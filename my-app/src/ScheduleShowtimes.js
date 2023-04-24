@@ -13,30 +13,44 @@ function ScheduleShowtimes(props) {
 		// Duplication check
 		const thisMovieShowtimes = props.state.showtimes.filter((showtimes) => { if (showtimes.movieid == values.movieid) return showtimes; })
 		var isDuplicate = false;
+		var curShowtime = new Date(values.showtime.$d.toJSON()) // fuck off javascript
+		var movieDuration;
+		props.state.movies.map((movies) => { 
+			if (movies.movieid == values.movieid) {
+				movieDuration = movies.movie_duration
+			}; 
+		})
 		thisMovieShowtimes.map((showtimes) => {
+			var otherShowtime = new Date(showtimes.showtimeJSDate)
 			if (
-				showtimes.showtimeMonth == values.showtime.$M &&
+				/*showtimes.showtimeMonth == values.showtime.$M &&
 				showtimes.showtimeDay == values.showtime.$D &&
 				showtimes.showtimeYear == values.showtime.$y &&
 				showtimes.showtimeHour == values.showtime.$H &&
-				showtimes.showtimeMinute == values.showtime.$m
+				showtimes.showtimeMinute == values.showtime.$m*/
+
+				((otherShowtime.getTime() <= curShowtime.getTime()) && (otherShowtime.getTime() + (movieDuration*60*60*1000)) >= curShowtime.getTime()) ||
+				((curShowtime.getTime() <= otherShowtime.getTime()) && (curShowtime.getTime() + (movieDuration*60*60*1000)) >= otherShowtime.getTime())
 			) {
-				message.error("Cannot schedule multiple shows for the same time!")
+				message.error("Cannot schedule overlapping showtimes!")
+				console.log(otherShowtime.getTime())
+				console.log(curShowtime.getTime())
 				isDuplicate = true
 			}
 		})
 
 		if (isDuplicate) return;
-		//console.log(values)
+		console.log(values)
 		const newPostKey = push(child(ref(database), 'posts')).key;
 		const db = getDatabase();
 		set(ref(db, 'showtimes/' + newPostKey), {
 			movieid: values.movieid,
-			showtimeMonth: values.showtime.$M,
+			showtimeMonth: values.showtime.$M + 1, // lol?????????????????
 			showtimeDay: values.showtime.$D,
 			showtimeYear: values.showtime.$y,
 			showtimeHour: values.showtime.$H,
-			showtimeMinute: values.showtime.$m
+			showtimeMinute: values.showtime.$m,
+			showtimeJSDate: values.showtime.$d.toJSON()
 		})
 			.then(() => {
 				message.success("Added new showtime for " + values.moviename)
@@ -46,10 +60,11 @@ function ScheduleShowtimes(props) {
 			})
 	}
 	return (
-		<div>
+		<div className='showtimes'>
+			<NavLink to="/admin"><button className="add-promotions-button1" type="submit">Return to Admin Panel</button></NavLink>
 			{props.state.movies.map((movie) => {
 				return (
-					<div className="form">
+					<div className="form" key = {movie.movieid}>
 						<div class="section-title">{movie.movie_name}</div>
 						<Form
 							name=""
@@ -81,7 +96,16 @@ function ScheduleShowtimes(props) {
 								</Button>
 							</div>
 						</Form>
-
+						<div className = "showtimes">
+							<div className="section-title-minor">Showtimes for this movie:</div>
+							{props.state.showtimes.map((showtime) => {
+								if (showtime.movieid == movie.movieid) {
+									return (
+										<div key = {showtime.showtimeJSDate}>{showtime.showtimeMonth + '/' + showtime.showtimeDay + '/' + showtime.showtimeYear + ', ' + showtime.showtimeHour + ':' + showtime.showtimeMinute}</div>
+									)
+								}
+							})}
+						</div>
 					</div>
 				)
 			})}

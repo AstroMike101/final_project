@@ -24,10 +24,9 @@ function AddMovies() {
 			movie_synopsis: values.synopsis,
 			movie_score: values.score,
 			movie_rating_code: values.ratingcode,
-			movie_dates: values.dates,
-			movie_times: values.times,
 			movie_trailer: values.trailerlink,
 			movie_image: values.image,
+			movie_duration: values.duration,
 		})
 			.then(() => {
 				message.success("Added new movie " + values.name)
@@ -52,9 +51,6 @@ function AddMovies() {
 					productor: '',
 					synopsis: '',
 					score: '',
-					ratingcode: '',
-					dates: '',
-					times: '',
 					trailerlink: '',
 					image: '',
 				}}
@@ -168,35 +164,20 @@ function AddMovies() {
 						rules={[
 							{
 								required: true,
-								message: 'Please input movie rating code!',
+								message: 'Please input movie rating code!'
 							},
 						]}
 					>
-						<Input placeholder="Rating code" />
-					</Form.Item>
-
-					<Form.Item
-						name="dates"
-						rules={[
-							{
-								required: true,
-								message: 'Please input movie dates!',
-							},
-						]}
-					>
-						<Input placeholder="Dates" />
-					</Form.Item>
-
-					<Form.Item
-						name="times"
-						rules={[
-							{
-								required: true,
-								message: 'Please input movie times!',
-							},
-						]}
-					>
-						<Input placeholder="Times" />
+						<Select
+							placeholder="Rating Code"
+							allowClear
+						>
+							<Option value="G">G</Option>
+							<Option value="PG">PG</Option>
+							<Option value="PG-13">PG-13</Option>
+							<Option value="R">R</Option>
+							<Option value="NC-17">NC-17</Option>
+						</Select>
 					</Form.Item>
 					<Form.Item
 						name="trailerlink"
@@ -220,6 +201,22 @@ function AddMovies() {
 					>
 						<Input placeholder="Promotional image link" />
 					</Form.Item>
+					<Form.Item
+						name="duration"
+						style={{
+							maxWidth: 330,
+						}}
+						rules={[
+							{
+								required: true,
+								message: 'Please input the movie duration',
+							},
+						]}
+					>
+						<Input placeholder="Duration (hours)" />
+					</Form.Item>
+				</div>
+				<div className="showtimes">
 					<Button type="primary" htmlType="submit">
 						Add Movie
 					</Button>
