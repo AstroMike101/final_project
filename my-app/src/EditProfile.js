@@ -68,7 +68,7 @@ function EditProfile(props) {
 							isAdmin: snapshot.val().isAdmin,
 							isSubscribedToPromotions: snapshot.val().isSubscribedToPromotions,
 						})
-						
+
 						form.setFieldsValue({
 							name: snapshot.val().name,
 							phone: snapshot.val().phone,
@@ -126,10 +126,10 @@ function EditProfile(props) {
 
 	const validateConfirmPassword = ({ getFieldValue }) => ({
 		validator(_, value) {
-		  if (!value || getFieldValue("password") === value) {
-			return Promise.resolve();
-		  }
-		  return Promise.reject(new Error("The two passwords do not match."));
+			if (!value || getFieldValue("password") === value) {
+				return Promise.resolve();
+			}
+			return Promise.reject(new Error("The two passwords do not match."));
 		},
 	});
 
@@ -159,6 +159,7 @@ function EditProfile(props) {
 			<Form
 				form={form}
 				name="basic"
+				layout="vertical"
 				labelCol={{
 					span: 10,
 				}}
@@ -170,14 +171,14 @@ function EditProfile(props) {
 				}}
 				initialValues={{
 					name: editProfile.name,
-					
+
 					phone: editProfile.phone,
 					email: editProfile.email,
 					billingaddress: editProfile.billingaddress,
 					billingcitystate: editProfile.billingcitystate,
 					billingzip: editProfile.billingzip,
 
-					ccn1: CryptoJS.AES.decrypt(editProfile.ccn1,secretPass),
+					ccn1: CryptoJS.AES.decrypt(editProfile.ccn1, secretPass),
 					ccn1type: editProfile.ccn1type,
 					ccn1expdate: editProfile.ccn1expdate,
 					ccn1address: editProfile.ccn1address,
@@ -195,6 +196,7 @@ function EditProfile(props) {
 				<div className="form-row">
 					<Form.Item
 						name="name"
+						label="Name"
 						defaultValue={editProfile.name}
 						rules={[
 							{
@@ -206,27 +208,7 @@ function EditProfile(props) {
 						<Input placeholder="Name*" />
 					</Form.Item>
 					<Form.Item
-						label="Confirm Password"
-						name="confirmPassword"
-						dependencies={["password"]}
-						rules={[
-							{
-							required: true,
-							message: "Please confirm your password!",
-							},
-							validateConfirmPassword,
-						]}
-					>
-					<Input.Password />
-					</Form.Item>
-					<Form.Item
-						name="password"
-						value={''}
-					>
-						<Input.Password placeholder="Change Password" />
-					</Form.Item>
-
-					<Form.Item
+						label="Phone Number"
 						name="phone"
 						defaultValue={editProfile.phone}
 						rules={[
@@ -238,11 +220,33 @@ function EditProfile(props) {
 					>
 						<Input placeholder="Phone Number*" />
 					</Form.Item>
+					<Form.Item
+						label="New Password"
+						name="password"
+						value={''}
+					>
+						<Input.Password placeholder="New Password" />
+					</Form.Item>
+					<Form.Item
+						label="Current Password"
+						name="confirmPassword"
+						dependencies={["password"]}
+						rules={[
+							{
+								required: true,
+								message: "Please enter your current password!",
+							},
+							validateConfirmPassword,
+						]}
+					>
+						<Input.Password placeholder = "Current Password"/>
+					</Form.Item>
 				</div>
 
 				<div class="section-title-minor">Billing Information</div>
 				<div class="form-row">
 					<Form.Item
+						label = "Address"
 						name="billingaddress"
 						value={editProfile.billingaddress}
 						rules={[
@@ -256,6 +260,7 @@ function EditProfile(props) {
 					</Form.Item>
 
 					<Form.Item
+						label = "City/State"
 						name="billingcitystate"
 						value={editProfile.billingcitystate}
 						rules={[
@@ -268,6 +273,7 @@ function EditProfile(props) {
 						<Input placeholder="City/State*" />
 					</Form.Item>
 					<Form.Item
+						label = "Zip Code"
 						name="billingzip"
 						value={editProfile.billingzip}
 						rules={[
@@ -285,6 +291,7 @@ function EditProfile(props) {
 				<div class="section-title-but-more-minor">Card 1</div>
 				<div class="form-row">
 					<Form.Item
+						label = "CC Number"
 						name="ccn1"
 						value={editProfile.ccn1}
 					>
@@ -292,12 +299,14 @@ function EditProfile(props) {
 					</Form.Item>
 
 					<Form.Item
+						label = "Card Type"
 						name="ccn1type"
 						value={editProfile.ccn1type}
 					>
 						<Input placeholder="Card Type" />
 					</Form.Item>
 					<Form.Item
+						label = "Expiration Date"
 						name="ccn1expdate"
 						value={editProfile.ccn1expdate}
 					>
@@ -306,6 +315,7 @@ function EditProfile(props) {
 				</div>
 				<div class="form-row">
 					<Form.Item
+						label = "Address"
 						name="ccn1address"
 						value={editProfile.ccn1address}
 					>
@@ -313,12 +323,14 @@ function EditProfile(props) {
 					</Form.Item>
 
 					<Form.Item
+						label = "City/State"
 						name="ccn1citystate"
 						value={editProfile.ccn1citystate}
 					>
 						<Input placeholder="City/State" />
 					</Form.Item>
 					<Form.Item
+						label = "Zip Code"
 						name="ccn1zip"
 						value={editProfile.ccn1zip}
 					>
