@@ -23,12 +23,6 @@ function ScheduleShowtimes(props) {
 		thisMovieShowtimes.map((showtimes) => {
 			var otherShowtime = new Date(showtimes.showtimeJSDate)
 			if (
-				/*showtimes.showtimeMonth == values.showtime.$M &&
-				showtimes.showtimeDay == values.showtime.$D &&
-				showtimes.showtimeYear == values.showtime.$y &&
-				showtimes.showtimeHour == values.showtime.$H &&
-				showtimes.showtimeMinute == values.showtime.$m*/
-
 				((otherShowtime.getTime() <= curShowtime.getTime()) && (otherShowtime.getTime() + (movieDuration*60*60*1000)) >= curShowtime.getTime()) ||
 				((curShowtime.getTime() <= otherShowtime.getTime()) && (curShowtime.getTime() + (movieDuration*60*60*1000)) >= otherShowtime.getTime())
 			) {

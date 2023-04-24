@@ -287,7 +287,6 @@ function EditProfile(props) {
 					<Form.Item
 						name="ccn1"
 						value={editProfile.ccn1}
-						onChange = {getVariable}
 					>
 						<Input placeholder="CC Number" />
 					</Form.Item>
