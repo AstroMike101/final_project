@@ -1,10 +1,46 @@
 import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
-import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, Radio, Divider } from 'antd';
+import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, Radio, Divider, notification } from 'antd';
 import { FieldTimeOutlined, DownOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import React, { Component, useState, useEffect } from "react";
-
 import './index.css';
 import BookingConfirmation from "./BookingConfirmation.js";
+import emailjs from 'emailjs-com';
+
+
+/* fail piece of shit sadge
+/const API_KEY = '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'; 
+//const API_KEY = process.env.SENDGRID_API_KEY;
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(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);
+const message = {
+    to: 'brent.voyles3@uga.edu',
+    from: {
+        name: 'B11 Cinema Group',
+        email: 'Athenscinemaebooking@gmail.com',
+    },
+    subject: 'Order Confirmation Receipt',
+    text: 'Thank you for your order with the B11 Cinema Group! See order details below...',
+    html: '<h1> Thank you for your order with the B11 Cinema Group! </h1> <h2> Please see ticket order details below... </h2> ',
+   };
+
+   const handleClick = (e) => {
+	e.preventDefault();
+	sgMail.send(message)
+ .then(response => console.log('Email sent...'))
+ .catch(error => console.log(error.message))
+   }
+   (async () => {
+	try {
+	  await sgMail.send(message);
+	} catch (error) {
+	  console.error(error);
+  
+	  if (error.response) {
+		console.error(error.response.body)
+	  }
+	}
+  })();
+*/
 
 const { Option } = Select;
 
@@ -13,9 +49,9 @@ const onFinish = (values) => {
 	console.log('Received values of form:', values);
 };
 
-function BookMovie(props) {
-	const params = useParams();
 
+function BookMovie(props) {	
+	const params = useParams();
 	const [value, setValue] = useState(1);
 	const [showState, setShowState] = useState(['dingus']);
 	const onChange = (e) => {
@@ -28,7 +64,26 @@ function BookMovie(props) {
 	})*/
 	//setShowState(showtimesFormatted)
 	//console.log(showtimesFormatted)
+	const [form] = Form.useForm();
 
+	//The other template params will be actually be pulled from the forms below. 
+	var templateParams = {
+		email: 'Brent.Voyles3@gmail.com',
+		movie: 'The Flash',
+		ConfirmationID: "6942069",
+		numTickets: '4',
+		cost: '$65'
+	};
+		function sendEmail(e) {
+		emailjs.send(
+			"service_i7ijuur", 
+			"template_uqm5k2w",
+			templateParams,
+			"vBCPNxurX9J4R94Ye"
+			).then(res=>{
+				console.log(res);
+			}) .catch(err=>console.log(err));
+	}
 
 	return (
 		<div>
@@ -69,9 +124,10 @@ function BookMovie(props) {
 									</div>
 
 									<div class="section-title-minor">Add tickets</div>
-
+											
 									<Form
 										name="dynamic_form_nest_item"
+										form={form}							
 										onFinish={onFinish}
 										style={{
 											maxWidth: 600,
@@ -236,13 +292,18 @@ function BookMovie(props) {
 										<div class="booking-display-smallgap">
 											<Form.Item>
 												<NavLink to="/booking/confirmation" style={{ textDecoration: 'none' }}>
-													<Button type="primary" htmlType="submit">
+													<Button
+													type="primary"
+													onClick={sendEmail}													
+													htmlType="submit">
 														Book tickets
 													</Button>
 												</NavLink>
 											</Form.Item>
 											<NavLink to="/" style={{ textDecoration: 'none' }}>
-												<Button type="dashed" danger>
+												<Button 
+												onClick={(e) => form.resetFields()}
+												type="dashed" danger>												
 													Cancel
 												</Button>
 											</NavLink>

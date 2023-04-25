@@ -1,9 +1,11 @@
 import React from 'react';
-import{ BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
+import{ BrowserRouter as Router, Route, Switch, Link, useParams, NavLink, useNavigate} from 'react-router-dom';
 import { Button, Form, Input, Select } from 'antd';
 import './index.css';
+import emailjs from 'emailjs-com';
 
 function BookingConfirmation(props) {
+
 	return (
 		<div class="booking-display">
 			<div class="section-title">Thank you for your purchase!</div>
@@ -18,7 +20,8 @@ function BookingConfirmation(props) {
 			<div class="section-title-minor">A receipt has been sent to your email address.</div>
 
 			<NavLink to="/" style={{ textDecoration: 'none' }}>
-				<Button type="primary">
+				<Button 
+				type="primary">
 					Return home
 				</Button>
 			</NavLink>
