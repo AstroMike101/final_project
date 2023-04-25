@@ -29,6 +29,35 @@ function BookMovie(props) {
 	//setShowState(showtimesFormatted)
 	//console.log(showtimesFormatted)
 
+function returnOrderSummary() { 
+	let numberoftickets = document.querySelectorAll('.ant-select-selector');
+	console.log(numberoftickets);
+	let orderTotal = 0;
+
+	for (let i=0; i>=numberoftickets; i++ ) { 
+		orderTotal+=15; 
+	}
+	return orderTotal;
+}
+
+	
+
+
+function returnTicketStats() { 
+	let orderSummary = document.querySelector('.section-title-minor');
+	let ageForm = document.querySelectorAll('.ant-select-selection-item')
+	return ageForm;
+
+}
+
+
+
+
+
+
+
+
+
 
 	return (
 		<div>
@@ -216,6 +245,11 @@ function BookMovie(props) {
 
 										<div class="booking-display-smallgap">
 											<div class="section-title-minor">Order summary</div>
+											
+
+										
+
+
 											<div>4x Teenager Ticket: $60</div>
 											<div>Sales Tax: $5</div>
 											<div class="section-title-but-even-more-minor">Total: $65</div>
@@ -235,7 +269,8 @@ function BookMovie(props) {
 										<Divider orientation="left"></Divider>
 										<div class="booking-display-smallgap">
 											<Form.Item>
-												<NavLink to="/booking/confirmation" style={{ textDecoration: 'none' }}>
+												<NavLink to="/CheckOutPage" style={{ textDecoration: 'none' }}>
+										
 													<Button type="primary" htmlType="submit">
 														Book tickets
 													</Button>
@@ -260,5 +295,11 @@ function BookMovie(props) {
 		</div>
 	)
 }
+
+
+
+
+
+
 
 export default BookMovie;

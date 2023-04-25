@@ -26,6 +26,7 @@ import ForgotPassword from './ForgotPassword.js';
 import AdminLoginPage from './adminLoginPage.js';
 import ScheduleShowtimes from './ScheduleShowtimes.js';
 import Header from './header.js';
+import CheckOutPage from './CheckOutPage.js'
 const { Search } = Input;
 
 // Initialize Firebase Authentication and get a reference to the service
@@ -201,6 +202,11 @@ class App extends Component {
 						<Route path="/login/forgotpassword" element={<ForgotPassword />}>
 						</Route>
 
+						<Route path="/CheckOutPage" element={<CheckOutPage/>}>
+						</Route>
+
+
+
 
 					</Routes>
 				</React.Fragment>
@@ -322,6 +328,9 @@ function Home(props) {
 						<div class="movie-details">{movie.movie_category}</div>
 						<div>{movie.movie_synopsis}</div>
 						<NavLink to={"/booking/" + movie.movieid} style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
+
+					
+
 					</div>
 				</div>
 			})}
