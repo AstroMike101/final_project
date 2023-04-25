@@ -1,46 +1,9 @@
 import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
-import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, Radio, Divider, notification } from 'antd';
+import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, Radio, Divider } from 'antd';
 import { FieldTimeOutlined, DownOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import React, { Component, useState, useEffect } from "react";
 import './index.css';
 import BookingConfirmation from "./BookingConfirmation.js";
-import emailjs from 'emailjs-com';
-
-
-/* fail piece of shit sadge
-/const API_KEY = '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'; 
-//const API_KEY = process.env.SENDGRID_API_KEY;
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(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);
-const message = {
-    to: 'brent.voyles3@uga.edu',
-    from: {
-        name: 'B11 Cinema Group',
-        email: 'Athenscinemaebooking@gmail.com',
-    },
-    subject: 'Order Confirmation Receipt',
-    text: 'Thank you for your order with the B11 Cinema Group! See order details below...',
-    html: '<h1> Thank you for your order with the B11 Cinema Group! </h1> <h2> Please see ticket order details below... </h2> ',
-   };
-
-   const handleClick = (e) => {
-	e.preventDefault();
-	sgMail.send(message)
- .then(response => console.log('Email sent...'))
- .catch(error => console.log(error.message))
-   }
-   (async () => {
-	try {
-	  await sgMail.send(message);
-	} catch (error) {
-	  console.error(error);
-  
-	  if (error.response) {
-		console.error(error.response.body)
-	  }
-	}
-  })();
-*/
 
 const { Option } = Select;
 
@@ -49,11 +12,10 @@ const onFinish = (values) => {
 	console.log('Received values of form:', values);
 };
 
-
 function BookMovie(props) {	
 	const params = useParams();
+
 	const [value, setValue] = useState(1);
-	const [showState, setShowState] = useState(['dingus']);
 	const onChange = (e) => {
 		setValue(e.target.value);
 	};
@@ -66,24 +28,6 @@ function BookMovie(props) {
 	//console.log(showtimesFormatted)
 	const [form] = Form.useForm();
 
-	//The other template params will be actually be pulled from the forms below. 
-	var templateParams = {
-		email: 'Brent.Voyles3@gmail.com',
-		movie: 'The Flash',
-		ConfirmationID: "6942069",
-		numTickets: '4',
-		cost: '$65'
-	};
-		function sendEmail(e) {
-		emailjs.send(
-			"service_i7ijuur", 
-			"template_uqm5k2w",
-			templateParams,
-			"vBCPNxurX9J4R94Ye"
-			).then(res=>{
-				console.log(res);
-			}) .catch(err=>console.log(err));
-	}
 
 	return (
 		<div>
@@ -124,7 +68,7 @@ function BookMovie(props) {
 									</div>
 
 									<div class="section-title-minor">Add tickets</div>
-											
+
 									<Form
 										name="dynamic_form_nest_item"
 										form={form}							
@@ -134,8 +78,26 @@ function BookMovie(props) {
 										}}
 										autoComplete="off"
 									>
+										<div class="booking-display">
+											<Form.Item
+												name="showtime"
+											>
+												<Select
+													placeholder="Choose a showtime..."
+													style={{
+														width: 250,
+													}}
+												>
+													{showtimes.map((showtimes, index) => {
+														return <Option value={showtimes.showtimeid}>{showtimes.showtimeMonth + '/' + showtimes.showtimeDay + '/' + showtimes.showtimeYear + ', ' + showtimes.showtimeHour + ':' + showtimes.showtimeMinute}</Option>
+													})}
+												</Select>
+											</Form.Item>
+										</div>
+
 										<div class="booking-addtickets">
-											<Form.List name="users">
+											<div class="section-title-minor">Add tickets</div>
+											<Form.List name="tickets">
 												{(fields, { add, remove }) => (
 													<>
 														{fields.map(({ key, name, ...restField }) => (
@@ -148,26 +110,26 @@ function BookMovie(props) {
 																align="baseline"
 															>
 																<div>Price: $15</div>
-																<Select
-																	defaultValue={'Select age category'}
+																<Form.Item
+																	{...restField}
+																	name={[name, 'age']}
 																	style={{
 																		width: 200,
 																	}}
-																	options={[
+																	rules={[
 																		{
-																			value: 'Child',
-																			label: 'Child (0-11)',
+																			required: true,
+																			message: 'Please input the age of the ticket holder!'
 																		},
-																		{
-																			value: 'Teen',
-																			label: 'Teen (12-17)',
-																		},
-																		{
-																			value: 'Adult',
-																			label: 'Adult (18+)',
-																		},
-																	]}
-																/>
+																	]}>
+																	<Select
+																		placeholder="Select age category"
+																	>
+																		<Option value="Child">Child (0-11)</Option>
+																		<Option value="Teen">Teen (12-17)</Option>
+																		<Option value="Adult">Adult (18+)</Option>
+																	</Select>
+																</Form.Item>
 																<MinusCircleOutlined onClick={() => remove(name)} />
 															</Space>
 														))}
@@ -272,12 +234,17 @@ function BookMovie(props) {
 
 										<div class="booking-display-smallgap">
 											<div class="section-title-minor">Order summary</div>
+
+
+
+
+
 											<div>4x Teenager Ticket: $60</div>
 											<div>Sales Tax: $5</div>
 											<div class="section-title-but-even-more-minor">Total: $65</div>
 										</div>
 
-										<div class="booking-display">
+										{/*<div class="booking-display">
 											<div class="section-title-minor">Pay with saved card</div>
 											<Radio.Group value={value} onChange={onChange}>
 												<Space direction="vertical">
@@ -287,15 +254,12 @@ function BookMovie(props) {
 													<Radio value={4}>Card 4</Radio>
 												</Space>
 											</Radio.Group>
-										</div>
+										</div>*/}
 										<Divider orientation="left"></Divider>
 										<div class="booking-display-smallgap">
 											<Form.Item>
 												<NavLink to="/booking/confirmation" style={{ textDecoration: 'none' }}>
-													<Button
-													type="primary"
-													onClick={sendEmail}													
-													htmlType="submit">
+													<Button type="primary" htmlType="submit">
 														Book tickets
 													</Button>
 												</NavLink>
@@ -317,9 +281,14 @@ function BookMovie(props) {
 					);
 				}
 			})}
-
 		</div>
 	)
 }
+
+
+
+
+
+
 
 export default BookMovie;

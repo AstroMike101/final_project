@@ -25,3 +25,6 @@ yarn-error.log*
 
 # firebase
 /src/firebase_setup/firebase.js
+
+# lol
+react-app-env.d.ts
