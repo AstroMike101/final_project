@@ -42,6 +42,7 @@ class App extends Component {
 		this.state = {
 			login: false,
 			loginid: 0,
+			loginemail: '',
 			userIsAdmin: false,
 
 			movies: [],
@@ -72,7 +73,7 @@ class App extends Component {
 					if (snapshot.exists()) {
 						this.setState((state) => {
 							return {
-								userIsAdmin: snapshot.val().isAdmin
+								userIsAdmin: snapshot.val().isAdmin,
 							}
 						})
 					}
@@ -82,6 +83,7 @@ class App extends Component {
 				this.setState((state) => {
 					return {
 						loginid: uid,
+						loginemail: user.email,
 						login: true
 					}
 				})
@@ -90,6 +92,7 @@ class App extends Component {
 				this.setState((state) => {
 					return {
 						loginid: 0,
+						loginemail: '',
 						login: false
 					}
 				})
