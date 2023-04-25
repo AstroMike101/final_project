@@ -1,23 +1,27 @@
-import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Switch, Link, useParams, NavLink, useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Select, DatePicker, Dropdown, Space, Checkbox, Row, Col, Radio, Divider } from 'antd';
 import { FieldTimeOutlined, DownOutlined, MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import React, { Component, useState, useEffect } from "react";
 
 import './index.css';
 import BookingConfirmation from "./BookingConfirmation.js";
+import CheckOutPage from './CheckOutPage.js'
 
 const { Option } = Select;
 
 //import flashimg from "./images/flash.jpg"
-const onFinish = (values) => {
-	console.log('Received values of form:', values);
-};
 
 function BookMovie(props) {
 	const params = useParams();
+	const navigate = useNavigate();
+
+	const onFinish = (values) => {
+		console.log('Received values of form:', values);
+		props.changeCurrentOrder(values)
+		navigate("/CheckOutPage/" + params.id)
+	};
 
 	const [value, setValue] = useState(1);
-	const [showState, setShowState] = useState(['dingus']);
 	const onChange = (e) => {
 		setValue(e.target.value);
 	};
@@ -29,35 +33,23 @@ function BookMovie(props) {
 	//setShowState(showtimesFormatted)
 	//console.log(showtimesFormatted)
 
-function returnOrderSummary() { 
-	let numberoftickets = document.querySelectorAll('.ant-select-selector');
-	console.log(numberoftickets);
-	let orderTotal = 0;
+	function returnOrderSummary() {
+		let numberoftickets = document.querySelectorAll('.ant-select-selector');
+		console.log(numberoftickets);
+		let orderTotal = 0;
 
-	for (let i=0; i>=numberoftickets; i++ ) { 
-		orderTotal+=15; 
+		for (let i = 0; i >= numberoftickets; i++) {
+			orderTotal += 15;
+		}
+		return orderTotal;
 	}
-	return orderTotal;
-}
 
-	
+	function returnTicketStats() {
+		let orderSummary = document.querySelector('.section-title-minor');
+		let ageForm = document.querySelectorAll('.ant-select-selection-item')
+		return ageForm;
 
-
-function returnTicketStats() { 
-	let orderSummary = document.querySelector('.section-title-minor');
-	let ageForm = document.querySelectorAll('.ant-select-selection-item')
-	return ageForm;
-
-}
-
-
-
-
-
-
-
-
-
+	}
 
 	return (
 		<div>
@@ -84,20 +76,6 @@ function returnTicketStats() {
 								</div>
 								<div class="booking-form">
 									<div class="section-title-minor">Choose showtime</div>
-									<div class="booking-inner-row">
-										<Select
-											placeholder="Choose a showtime..."
-											style={{
-												width: 250,
-											}}
-										>
-											{showtimes.map((showtimes, index) => {
-												return <Option value={index}>{showtimes.showtimeMonth + '/' + showtimes.showtimeDay + '/' + showtimes.showtimeYear + ', ' + showtimes.showtimeHour + ':' + showtimes.showtimeMinute}</Option>
-											})}
-										</Select>
-									</div>
-
-									<div class="section-title-minor">Add tickets</div>
 
 									<Form
 										name="dynamic_form_nest_item"
@@ -107,8 +85,26 @@ function returnTicketStats() {
 										}}
 										autoComplete="off"
 									>
+										<div class="booking-display">
+											<Form.Item
+												name="showtime"
+											>
+												<Select
+													placeholder="Choose a showtime..."
+													style={{
+														width: 250,
+													}}
+												>
+													{showtimes.map((showtimes, index) => {
+														return <Option value={showtimes.showtimeid}>{showtimes.showtimeMonth + '/' + showtimes.showtimeDay + '/' + showtimes.showtimeYear + ', ' + showtimes.showtimeHour + ':' + showtimes.showtimeMinute}</Option>
+													})}
+												</Select>
+											</Form.Item>
+										</div>
+
 										<div class="booking-addtickets">
-											<Form.List name="users">
+											<div class="section-title-minor">Add tickets</div>
+											<Form.List name="tickets">
 												{(fields, { add, remove }) => (
 													<>
 														{fields.map(({ key, name, ...restField }) => (
@@ -121,26 +117,26 @@ function returnTicketStats() {
 																align="baseline"
 															>
 																<div>Price: $15</div>
-																<Select
-																	defaultValue={'Select age category'}
+																<Form.Item
+																	{...restField}
+																	name={[name, 'age']}
 																	style={{
 																		width: 200,
 																	}}
-																	options={[
+																	rules={[
 																		{
-																			value: 'Child',
-																			label: 'Child (0-11)',
+																			required: true,
+																			message: 'Please input the age of the ticket holder!'
 																		},
-																		{
-																			value: 'Teen',
-																			label: 'Teen (12-17)',
-																		},
-																		{
-																			value: 'Adult',
-																			label: 'Adult (18+)',
-																		},
-																	]}
-																/>
+																	]}>
+																	<Select
+																		placeholder="Select age category"
+																	>
+																		<Option value="Child">Child (0-11)</Option>
+																		<Option value="Teen">Teen (12-17)</Option>
+																		<Option value="Adult">Adult (18+)</Option>
+																	</Select>
+																</Form.Item>
 																<MinusCircleOutlined onClick={() => remove(name)} />
 															</Space>
 														))}
@@ -245,9 +241,9 @@ function returnTicketStats() {
 
 										<div class="booking-display-smallgap">
 											<div class="section-title-minor">Order summary</div>
-											
 
-										
+
+
 
 
 											<div>4x Teenager Ticket: $60</div>
@@ -255,7 +251,7 @@ function returnTicketStats() {
 											<div class="section-title-but-even-more-minor">Total: $65</div>
 										</div>
 
-										<div class="booking-display">
+										{/*<div class="booking-display">
 											<div class="section-title-minor">Pay with saved card</div>
 											<Radio.Group value={value} onChange={onChange}>
 												<Space direction="vertical">
@@ -265,16 +261,14 @@ function returnTicketStats() {
 													<Radio value={4}>Card 4</Radio>
 												</Space>
 											</Radio.Group>
-										</div>
+										</div>*/}
 										<Divider orientation="left"></Divider>
 										<div class="booking-display-smallgap">
 											<Form.Item>
-												<NavLink to="/CheckOutPage" style={{ textDecoration: 'none' }}>
-										
-													<Button type="primary" htmlType="submit">
-														Book tickets
-													</Button>
-												</NavLink>
+
+												<Button type="primary" htmlType="submit">
+													Book tickets
+												</Button>
 											</Form.Item>
 											<NavLink to="/" style={{ textDecoration: 'none' }}>
 												<Button type="dashed" danger>
@@ -291,7 +285,6 @@ function returnTicketStats() {
 					);
 				}
 			})}
-
 		</div>
 	)
 }

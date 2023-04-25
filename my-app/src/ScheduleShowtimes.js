@@ -15,16 +15,16 @@ function ScheduleShowtimes(props) {
 		var isDuplicate = false;
 		var curShowtime = new Date(values.showtime.$d.toJSON()) // fuck off javascript
 		var movieDuration;
-		props.state.movies.map((movies) => { 
+		props.state.movies.map((movies) => {
 			if (movies.movieid == values.movieid) {
 				movieDuration = movies.movie_duration
-			}; 
+			};
 		})
 		thisMovieShowtimes.map((showtimes) => {
 			var otherShowtime = new Date(showtimes.showtimeJSDate)
 			if (
-				((otherShowtime.getTime() <= curShowtime.getTime()) && (otherShowtime.getTime() + (movieDuration*60*60*1000)) >= curShowtime.getTime()) ||
-				((curShowtime.getTime() <= otherShowtime.getTime()) && (curShowtime.getTime() + (movieDuration*60*60*1000)) >= otherShowtime.getTime())
+				((otherShowtime.getTime() <= curShowtime.getTime()) && (otherShowtime.getTime() + (movieDuration * 60 * 60 * 1000)) >= curShowtime.getTime()) ||
+				((curShowtime.getTime() <= otherShowtime.getTime()) && (curShowtime.getTime() + (movieDuration * 60 * 60 * 1000)) >= otherShowtime.getTime())
 			) {
 				message.error("Cannot schedule overlapping showtimes!")
 				console.log(otherShowtime.getTime())
@@ -39,6 +39,7 @@ function ScheduleShowtimes(props) {
 		const db = getDatabase();
 		set(ref(db, 'showtimes/' + newPostKey), {
 			movieid: values.movieid,
+			showtimeid: newPostKey,
 			showtimeMonth: values.showtime.$M + 1, // lol?????????????????
 			showtimeDay: values.showtime.$D,
 			showtimeYear: values.showtime.$y,
@@ -58,7 +59,7 @@ function ScheduleShowtimes(props) {
 			<NavLink to="/admin"><button className="add-promotions-button1" type="submit">Return to Admin Panel</button></NavLink>
 			{props.state.movies.map((movie) => {
 				return (
-					<div className="form" key = {movie.movieid}>
+					<div className="form" key={movie.movieid}>
 						<div class="section-title">{movie.movie_name}</div>
 						<Form
 							name=""
@@ -71,8 +72,8 @@ function ScheduleShowtimes(props) {
 							scrollToFirstError
 						>
 
-							<Form.Item name = "movieid" initialValue={movie.movieid} hidden = {true}></Form.Item>
-							<Form.Item name = "moviename" initialValue={movie.movie_name} hidden = {true}></Form.Item>
+							<Form.Item name="movieid" initialValue={movie.movieid} hidden={true}></Form.Item>
+							<Form.Item name="moviename" initialValue={movie.movie_name} hidden={true}></Form.Item>
 							<Form.Item
 								name="showtime"
 								rules={[
@@ -90,12 +91,12 @@ function ScheduleShowtimes(props) {
 								</Button>
 							</div>
 						</Form>
-						<div className = "showtimes">
+						<div className="showtimes">
 							<div className="section-title-minor">Showtimes for this movie:</div>
 							{props.state.showtimes.map((showtime) => {
 								if (showtime.movieid == movie.movieid) {
 									return (
-										<div key = {showtime.showtimeJSDate}>{showtime.showtimeMonth + '/' + showtime.showtimeDay + '/' + showtime.showtimeYear + ', ' + showtime.showtimeHour + ':' + showtime.showtimeMinute}</div>
+										<div key={showtime.showtimeJSDate}>{showtime.showtimeMonth + '/' + showtime.showtimeDay + '/' + showtime.showtimeYear + ', ' + showtime.showtimeHour + ':' + showtime.showtimeMinute}</div>
 									)
 								}
 							})}

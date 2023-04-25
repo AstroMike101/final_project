@@ -12,7 +12,8 @@ import BookMovie from './BookMovie.js'
 
 
 
-const CheckoutPage = () => {
+const CheckoutPage = (props) => {
+	const params = useParams();
     const [selectedCard, setSelectedCard] = useState("card1");
 
     const handleCardChange = (e) => {
@@ -28,6 +29,10 @@ const CheckoutPage = () => {
         name: "Card 2",
        
     };
+
+    const test = () => {
+        console.log(props.currentOrder)
+    }
 
     return (
         <div>
@@ -76,7 +81,7 @@ const CheckoutPage = () => {
                     )}
 
                     <div style={{ marginTop: "20px" }}>
-                        <Button type="primary">Confirm Payment</Button>
+                        <Button type="primary" onClick={test}>Confirm Payment</Button>
                         <Button style={{ marginLeft: "10px" }}>Cancel</Button>
                     </div>
                 </Card>
