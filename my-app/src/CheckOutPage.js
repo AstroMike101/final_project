@@ -13,8 +13,11 @@ import BookMovie from './BookMovie.js'
 
 
 const CheckoutPage = (props) => {
-	const params = useParams();
+    const params = useParams();
     const [selectedCard, setSelectedCard] = useState("card1");
+
+    var numTickets = 0;
+    var price = 0;
 
     const handleCardChange = (e) => {
         setSelectedCard(e.target.value);
@@ -22,30 +25,32 @@ const CheckoutPage = (props) => {
 
     const card1 = {
         name: "Card 1",
-       
     };
 
     const card2 = {
         name: "Card 2",
-       
     };
 
     const test = () => {
         console.log(props.currentOrder)
+        props.currentOrder.tickets.map((ticket) => {
+            console.log(ticket)
+            numTickets++;
+        })
     }
 
     return (
         <div>
             <div style={{ marginTop: "20px" }}>
                 <Card title="Order Summary">
+                    {props.currentOrder.tickets && props.currentOrder.tickets.map((ticket) => {
+                        numTickets++;
+                        return (
+                            <div>{ticket.age + " Ticket"}</div>
+                        )
+                    })}
 
-
-
-
-                    <div>Item 1</div>
-                    <div>Item 2</div>
-                    <div>Item 3</div>
-                    <div>Total: $50</div>
+                    <div>{"Total: " + numTickets * 15}</div>
 
                     <div>
                     </div>
