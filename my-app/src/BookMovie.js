@@ -6,6 +6,7 @@ import React, { Component, useState, useEffect } from "react";
 import './index.css';
 import BookingConfirmation from "./BookingConfirmation.js";
 import CheckOutPage from './CheckOutPage.js'
+import emailjs from 'emailjs-com';
 
 const { Option } = Select;
 
@@ -50,6 +51,29 @@ function BookMovie(props) {
 		return ageForm;
 
 	}
+
+	var templateParams = {
+		movie : "",
+		showtime : "",
+		seats : "",
+		numTickets : '',
+		cost : ''
+	};
+		function sendEmail(e) {
+			if (templateParams) {	
+				console.log(showtimes);	
+		emailjs.send(
+			"service_7meiuxn", 
+			"template_iun5622",
+			templateParams,
+			"IZH6BCzIJ64l2t4mj"
+			).then(res=>{
+				console.log(res);
+			}) .catch(err=>console.log(err)); 
+		} else {
+			console.error('Template params are not defined');
+		}
+	} // sendEmail
 
 	return (
 		<div>
