@@ -18,7 +18,7 @@ function BookMovie(props) {
 	const onFinish = (values) => {
 		console.log('Received values of form:', values);
 		props.changeCurrentOrder(values)
-		navigate("/CheckOutPage/" + params.id)
+		navigate("/booking/checkout/" + params.id)
 	};
 
 	const [value, setValue] = useState(1);
@@ -88,6 +88,12 @@ function BookMovie(props) {
 										<div class="booking-display">
 											<Form.Item
 												name="showtime"
+												rules={[
+													{
+														required: true,
+														message: 'Please select a showtime!'
+													},
+												]}
 											>
 												<Select
 													placeholder="Choose a showtime..."
@@ -116,7 +122,7 @@ function BookMovie(props) {
 																}}
 																align="baseline"
 															>
-																<div>Price: $15</div>
+																{/*<div>Price: $15</div>*/}
 																<Form.Item
 																	{...restField}
 																	name={[name, 'age']}
@@ -153,102 +159,92 @@ function BookMovie(props) {
 										</div>
 										<div class="booking-display">
 											<div class="section-title-minor">Select seats</div>
-											<Checkbox.Group
-												style={{
-													width: '80%',
-												}}
-											>
-												<Row gutter={[2, 2]} flex="auto">
-													<Col span={4}>
-														<Checkbox value="A1">A1</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="A2">A2</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="A3">A3</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="A4">A4</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="A5">A5</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="A6">A6</Checkbox>
-													</Col>
+											<Form.Item name="seats">
+												<Checkbox.Group
+													style={{
+														width: '80%',
+													}}
+												>
+													<Row gutter={[2, 2]} flex="auto">
+														<Col span={4}>
+															<Checkbox value="A1">A1</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="A2">A2</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="A3">A3</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="A4">A4</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="A5">A5</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="A6">A6</Checkbox>
+														</Col>
 
-													<Col span={4}>
-														<Checkbox value="B1">B1</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="B2">B2</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="B3">B3</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="B4">B4</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="B5">B5</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="B6">B6</Checkbox>
-													</Col>
+														<Col span={4}>
+															<Checkbox value="B1">B1</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="B2">B2</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="B3">B3</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="B4">B4</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="B5">B5</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="B6">B6</Checkbox>
+														</Col>
 
-													<Col span={4}>
-														<Checkbox value="C1">C1</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="C2">C2</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="C3">C3</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="C4">C4</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="C5">C5</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="C6">C6</Checkbox>
-													</Col>
+														<Col span={4}>
+															<Checkbox value="C1">C1</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="C2">C2</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="C3">C3</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="C4">C4</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="C5">C5</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="C6">C6</Checkbox>
+														</Col>
 
-													<Col span={4}>
-														<Checkbox value="D1">D1</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="D2">D2</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="D3">D3</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="D4">D4</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="D5">D5</Checkbox>
-													</Col>
-													<Col span={4}>
-														<Checkbox value="D6">D6</Checkbox>
-													</Col>
-												</Row>
+														<Col span={4}>
+															<Checkbox value="D1">D1</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="D2">D2</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="D3">D3</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="D4">D4</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="D5">D5</Checkbox>
+														</Col>
+														<Col span={4}>
+															<Checkbox value="D6">D6</Checkbox>
+														</Col>
+													</Row>
 
-											</Checkbox.Group>
-										</div>
-
-										<div class="booking-display-smallgap">
-											<div class="section-title-minor">Order summary</div>
-
-
-
-
-
-											<div>4x Teenager Ticket: $60</div>
-											<div>Sales Tax: $5</div>
-											<div class="section-title-but-even-more-minor">Total: $65</div>
+												</Checkbox.Group>
+											</Form.Item>
 										</div>
 
 										{/*<div class="booking-display">

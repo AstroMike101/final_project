@@ -41,13 +41,13 @@ function RegistrationForm() {
         const updates = {};
         const auth = getAuth();
         //encryot password,ccn1,ccn1expdate
-        obj.password = CryptoJS.AES.encrypt(JSON.stringify(obj.password), secretPass).toString();
-        obj.ccn1 = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1), secretPass).toString();
-        obj.ccn1expdate = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1expdate), secretPass).toString();
-        obj.ccn1type = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1type), secretPass).toString();
-        obj.ccn1address = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1address), secretPass).toString();
-        obj.ccn1citystate = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1citystate), secretPass).toString();
-        obj.ccn1zip = CryptoJS.AES.encrypt(JSON.stringify(obj.ccn1zip), secretPass).toString();
+        obj.password = CryptoJS.AES.encrypt(obj.password, secretPass).toString();
+        obj.ccn1 = CryptoJS.AES.encrypt(obj.ccn1, secretPass).toString();
+        obj.ccn1expdate = CryptoJS.AES.encrypt(obj.ccn1expdate, secretPass).toString();
+        obj.ccn1type = CryptoJS.AES.encrypt(obj.ccn1type, secretPass).toString();
+        obj.ccn1address = CryptoJS.AES.encrypt(obj.ccn1address, secretPass).toString();
+        obj.ccn1citystate = CryptoJS.AES.encrypt(obj.ccn1citystate, secretPass).toString();
+        obj.ccn1zip = CryptoJS.AES.encrypt(obj.ccn1zip, secretPass).toString();
         console.log(obj)
 
         createUserWithEmailAndPassword(auth, obj["email"], values["password"])
@@ -225,7 +225,7 @@ function RegistrationForm() {
                                 name="ccn"
                                 rules={[
                                     {
-                                        pattern: new RegExp(/^[0-9]+$/),
+                                        pattern: new RegExp( /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/),
                                         message: 'Not a valid credit card number',
                                     },
                                 ]}

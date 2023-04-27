@@ -1,36 +1,44 @@
-import React from 'react';
-import{ BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
-import {Modal, Button, Form, Input, Select } from 'antd';
+import React, { Component, useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink, useLocation } from 'react-router-dom';
+import { Modal, Button, Form, Input, Select } from 'antd';
+import { getAuth, onAuthStateChanged, updatePassword } from "firebase/auth";
+import { ref, push, child, update, getDatabase, onValue, get, set } from "firebase/database";
+import { database } from './firebase_setup/firebase.js'
 import './index.css';
 
-// function BookingConfirmation(props) {
-// 	return (
-// 		<div class="booking-display">
-// 			<div class="section-title">Thank you for your purchase!</div>
-// 			<div class="section-title-minor text-bg">Order Summary</div>
-// 			<div>Order ID: 6942069</div>
-// 			<div>"The Flash", 2/20/2023, 8:00 PM</div>
-// 			<div>Seats A1, A2, A3</div>
-// 			<div>4x Teenager Ticket: $60</div>
-// 			<div>Sales Tax: $5</div>
-// 			<div class="section-title-but-even-more-minor text-bg">Total: $65</div>
+function BookingConfirmation(props) {
+	const {state} = useLocation();
+	const {order} = state
+	const secretPass = "XkhZG4fW2t2W"; // lol
+    const params = useParams();
+	const [orderInfo, setOrderInfo] = useState({})
+	useEffect(() => {
+		//console.log("FUCK!!!")
+		console.log(state)
+	}, [])
+	return (
+		<div class="booking-display">
+			<div class="section-title">Thank you for your purchase!</div>
+			<div class="section-title-minor">Order Summary</div>
 
-// 			<div class="section-title-minor">A receipt has been sent to your email address.</div>
+			<div class="section-title-but-even-more-minor">Movie: {order.moviename}</div>
+			<div class="section-title-but-even-more-minor">Showtime: {order.showtimestr}</div>
+			<div class="section-title-but-even-more-minor">Tickets: {order.tickets.toString()}</div>
+			<div class="section-title-but-even-more-minor">Seats: {order.seats.toString()}</div>
+			<div class="section-title-but-even-more-minor">Total: ${order.pricetotal}</div>
 
-// 			<NavLink to="/" style={{ textDecoration: 'none' }}>
-// 				<Button type="primary">
-// 					Return home
-// 				</Button>
-// 			</NavLink>
-// 		</div>
-// 	)
-// }
+			<div class="section-title-minor">A receipt has been sent to your email address.</div>
 
-// export default BookingConfirmation;
+			<NavLink to="/" style={{ textDecoration: 'none' }}>
+				<Button type="primary">
+					Return home
+				</Button>
+			</NavLink>
+		</div>
+	)
+}
 
-
-
-const BookingConfirmation = ({ data, visible, onClose }) => {
+/*const BookingConfirmation = ({ data, visible, onClose }) => {
 	return (
 		<Modal
 			visible={visible}
@@ -46,12 +54,12 @@ const BookingConfirmation = ({ data, visible, onClose }) => {
 		>
 			<h2>Order Confirmation</h2>
 			<p>Thank you for your purchase!</p>
-			{/* <p>Movie: {data.movie}</p>
+			<p>Movie: {data.movie}</p>
 			<p>Date: {data.date}</p>
 			<p>Time: {data.time}</p>
-			<p>Seat: {data.seat}</p> */}
+			<p>Seat: {data.seat}</p>
 		</Modal>
 	);
-};
+};*/
 
 export default BookingConfirmation;

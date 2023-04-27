@@ -52,18 +52,17 @@ function EditProfile(props) {
 							name: snapshot.val().name,
 							phone: snapshot.val().phone,
 							email: snapshot.val().email,
-							//password: values.password,
-
+							password: CryptoJS.AES.decrypt(snapshot.val().password, secretPass).toString(CryptoJS.enc.Utf8),
 							billingaddress: snapshot.val().billingaddress,
 							billingcitystate: snapshot.val().billingcitystate,
 							billingzip: snapshot.val().billingzip,
 
-							ccn1: snapshot.val().ccn1,
-							ccn1type: snapshot.val().ccn1type,
-							ccn1expdate: snapshot.val().ccn1expdate,
-							ccn1address: snapshot.val().ccn1address,
-							ccn1citystate: snapshot.val().ccn1citystate,
-							ccn1zip: snapshot.val().ccn1zip,
+							ccn1: CryptoJS.AES.decrypt(snapshot.val().ccn1, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1type: CryptoJS.AES.decrypt(snapshot.val().ccn1type, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1expdate: CryptoJS.AES.decrypt(snapshot.val().ccn1expdate, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1address: CryptoJS.AES.decrypt(snapshot.val().ccn1address, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1citystate: CryptoJS.AES.decrypt(snapshot.val().ccn1citystate, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1zip: CryptoJS.AES.decrypt(snapshot.val().ccn1zip, secretPass).toString(CryptoJS.enc.Utf8),
 
 							isAdmin: snapshot.val().isAdmin,
 							isSubscribedToPromotions: snapshot.val().isSubscribedToPromotions,
@@ -78,12 +77,12 @@ function EditProfile(props) {
 							billingcitystate: snapshot.val().billingcitystate,
 							billingzip: snapshot.val().billingzip,
 
-							ccn1: snapshot.val().ccn1,
-							ccn1type: snapshot.val().ccn1type,
-							ccn1expdate: snapshot.val().ccn1expdate,
-							ccn1address: snapshot.val().ccn1address,
-							ccn1citystate: snapshot.val().ccn1citystate,
-							ccn1zip: snapshot.val().ccn1zip,
+							ccn1: CryptoJS.AES.decrypt(snapshot.val().ccn1, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1expdate: CryptoJS.AES.decrypt(snapshot.val().ccn1expdate, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1type: CryptoJS.AES.decrypt(snapshot.val().ccn1type, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1address: CryptoJS.AES.decrypt(snapshot.val().ccn1address, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1citystate: CryptoJS.AES.decrypt(snapshot.val().ccn1citystate, secretPass).toString(CryptoJS.enc.Utf8),
+							ccn1zip: CryptoJS.AES.decrypt(snapshot.val().ccn1zip, secretPass).toString(CryptoJS.enc.Utf8),
 
 							subpromo: snapshot.val().isSubscribedToPromotions,
 						})
@@ -96,24 +95,43 @@ function EditProfile(props) {
 	}, [])
 
 	const onFinish = (values) => {
+		if (values.confirmPassword != editProfile.password) {
+			message.error("Please enter your current password to edit your profile information.")
+			return
+		}
 		let obj = values;
 		obj.uid = editProfile.uid
 		obj.isAdmin = editProfile.isAdmin
 		obj.email = editProfile.email
 		obj.isSubscribedToPromotions = values.subpromo
-		const newPassword = obj.password;
-		delete obj.password
-		delete obj.subpromo
+		
+		// encryption bullheck
+        obj.ccn1 = CryptoJS.AES.encrypt(obj.ccn1, secretPass).toString();
+        obj.ccn1expdate = CryptoJS.AES.encrypt(obj.ccn1expdate, secretPass).toString();
+        obj.ccn1type = CryptoJS.AES.encrypt(obj.ccn1type, secretPass).toString();
+        obj.ccn1address = CryptoJS.AES.encrypt(obj.ccn1address, secretPass).toString();
+        obj.ccn1citystate = CryptoJS.AES.encrypt(obj.ccn1citystate, secretPass).toString();
+        obj.ccn1zip = CryptoJS.AES.encrypt(obj.ccn1zip, secretPass).toString();
+		if (obj.password == undefined) {
+			obj.password = CryptoJS.AES.encrypt(editProfile.password, secretPass).toString()
+		} else {
+			const newPassword = obj.password
+			console.log(newPassword)
+			obj.password = CryptoJS.AES.encrypt(newPassword, secretPass).toString()
+			onAuthStateChanged(auth, (user) => {
+				if (user) {
+					updatePassword(user, newPassword).then(() => {
+						console.log("password updated")
+					}).catch((error) => {
+						message.error(error.message)
+					});
+				}
+			})
+		}
 
-		onAuthStateChanged(auth, (user) => {
-			if (user) {
-				updatePassword(user, newPassword).then(() => {
-					console.log("password updated")
-				}).catch((error) => {
-					message.error(error.message)
-				});
-			}
-		})
+		delete obj.subpromo
+		delete obj.confirmPassword
+
 		const updates = {};
 		updates['/users/' + obj.uid] = obj;
 		message.success("Profile successfully updated!")
@@ -130,6 +148,14 @@ function EditProfile(props) {
 				return Promise.resolve();
 			}
 			return Promise.reject(new Error("The two passwords do not match."));
+		},
+	});
+	const validateCurrentPassword = ({ getFieldValue }) => ({
+		validator(_, value) {
+			if (!value || getFieldValue("confirmPassword") === editProfile.password) {
+				return Promise.resolve();
+			}
+			return Promise.reject(new Error("Current password is not correct"));
 		},
 	});
 
@@ -169,24 +195,6 @@ function EditProfile(props) {
 				style={{
 					maxWidth: 1500,
 				}}
-				initialValues={{
-					name: editProfile.name,
-
-					phone: editProfile.phone,
-					email: editProfile.email,
-					billingaddress: editProfile.billingaddress,
-					billingcitystate: editProfile.billingcitystate,
-					billingzip: editProfile.billingzip,
-
-					ccn1: CryptoJS.AES.decrypt(editProfile.ccn1, secretPass),
-					ccn1type: editProfile.ccn1type,
-					ccn1expdate: editProfile.ccn1expdate,
-					ccn1address: editProfile.ccn1address,
-					ccn1citystate: editProfile.ccn1citystate,
-					ccn1zip: editProfile.ccn1zip,
-
-					subpromo: editProfile.isSubscribedToPromotions,
-				}}
 				onFinish={onFinish}
 				onFinishFailed={onFinishFailed}
 				autoComplete="off"
@@ -223,7 +231,9 @@ function EditProfile(props) {
 					<Form.Item
 						label="New Password"
 						name="password"
-						value={''}
+						rules={[
+							validateConfirmPassword,
+						]}
 					>
 						<Input.Password placeholder="New Password" />
 					</Form.Item>
@@ -234,19 +244,19 @@ function EditProfile(props) {
 						rules={[
 							{
 								required: true,
-								message: "Please enter your current password!",
+								message: 'Please input your current password!',
 							},
-							validateConfirmPassword,
+							validateCurrentPassword,
 						]}
 					>
-						<Input.Password placeholder = "Current Password"/>
+						<Input.Password placeholder="Current Password" />
 					</Form.Item>
 				</div>
 
 				<div class="section-title-minor">Billing Information</div>
 				<div class="form-row">
 					<Form.Item
-						label = "Address"
+						label="Address"
 						name="billingaddress"
 						value={editProfile.billingaddress}
 						rules={[
@@ -260,7 +270,7 @@ function EditProfile(props) {
 					</Form.Item>
 
 					<Form.Item
-						label = "City/State"
+						label="City/State"
 						name="billingcitystate"
 						value={editProfile.billingcitystate}
 						rules={[
@@ -273,7 +283,7 @@ function EditProfile(props) {
 						<Input placeholder="City/State*" />
 					</Form.Item>
 					<Form.Item
-						label = "Zip Code"
+						label="Zip Code"
 						name="billingzip"
 						value={editProfile.billingzip}
 						rules={[
@@ -291,22 +301,28 @@ function EditProfile(props) {
 				<div class="section-title-but-more-minor">Card 1</div>
 				<div class="form-row">
 					<Form.Item
-						label = "CC Number"
+						label="CC Number"
 						name="ccn1"
 						value={editProfile.ccn1}
+						rules={[
+							{
+								pattern: new RegExp(/^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/),
+								message: 'Not a valid credit card number',
+							},
+						]}
 					>
 						<Input placeholder="CC Number" />
 					</Form.Item>
 
 					<Form.Item
-						label = "Card Type"
+						label="Card Type"
 						name="ccn1type"
 						value={editProfile.ccn1type}
 					>
 						<Input placeholder="Card Type" />
 					</Form.Item>
 					<Form.Item
-						label = "Expiration Date"
+						label="Expiration Date"
 						name="ccn1expdate"
 						value={editProfile.ccn1expdate}
 					>
@@ -315,7 +331,7 @@ function EditProfile(props) {
 				</div>
 				<div class="form-row">
 					<Form.Item
-						label = "Address"
+						label="Address"
 						name="ccn1address"
 						value={editProfile.ccn1address}
 					>
@@ -323,14 +339,14 @@ function EditProfile(props) {
 					</Form.Item>
 
 					<Form.Item
-						label = "City/State"
+						label="City/State"
 						name="ccn1citystate"
 						value={editProfile.ccn1citystate}
 					>
 						<Input placeholder="City/State" />
 					</Form.Item>
 					<Form.Item
-						label = "Zip Code"
+						label="Zip Code"
 						name="ccn1zip"
 						value={editProfile.ccn1zip}
 					>

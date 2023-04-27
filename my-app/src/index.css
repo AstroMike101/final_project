@@ -460,6 +460,7 @@ body {
 	width: 100%;
 }*/
 
+/*?????*/
 .section-title-but-more-minor { 
 
 	font-size: 15px;
@@ -477,6 +478,11 @@ body {
 	font-weight: bold;
 	margin-top: 2rem;
 	margin-bottom: 1rem;
+}
+
+.section-title-checkout {
+	font-size: 1.2rem;
+	font-weight: bold;
 }
 
 .form-container {
