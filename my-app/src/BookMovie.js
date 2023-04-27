@@ -52,29 +52,6 @@ function BookMovie(props) {
 
 	}
 
-	var templateParams = {
-		movie : "",
-		showtime : "",
-		seats : "",
-		numTickets : '',
-		cost : ''
-	};
-		function sendEmail(e) {
-			if (templateParams) {	
-				console.log(showtimes);	
-		emailjs.send(
-			"service_7meiuxn", 
-			"template_iun5622",
-			templateParams,
-			"IZH6BCzIJ64l2t4mj"
-			).then(res=>{
-				console.log(res);
-			}) .catch(err=>console.log(err)); 
-		} else {
-			console.error('Template params are not defined');
-		}
-	} // sendEmail
-
 	return (
 		<div>
 			{props.state.movies.map((movie) => {

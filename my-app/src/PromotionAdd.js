@@ -49,9 +49,9 @@ const sendPromoEmail = firebase.functions().httpsCallable('sendPromotionalEmail'
 */
 
 var templateParams = {
-    expirationDate: expirationDate,
-    promoCode: this.promotionName,
-    promoDiscount: this.promotionEffect,
+    expirationDate: "",
+    promoCode: "",
+    promoDiscount: "",
 };
     function sendPromoEmail(e) {
         if (templateParams) {		

@@ -6,11 +6,10 @@ import { getAuth, onAuthStateChanged, updatePassword } from "firebase/auth";
 import { ref, push, child, update, getDatabase, onValue, get, set } from "firebase/database";
 import { database } from './firebase_setup/firebase.js'
 import CryptoJS from 'crypto-js';
-
+import emailjs from 'emailjs-com';
 import './index.css';
 import BookMovie from './BookMovie.js'
 import BookingConfirmation from './BookingConfirmation';
-
 
 
 
@@ -74,7 +73,7 @@ const CheckoutPage = (props) => {
 
         get(child(dbRef, `showtimes/${props.currentOrder.showtime}`)).then((snapshot) => {
             if (snapshot.exists()) {
-                setShowtimeStr(snapshot.val().showtimeMonth + '/' + snapshot.val().showtimeDay + '/' + snapshot.val().showtimeYear + ', ' + snapshot.val().showtimeHour + ':' + snapshot.val().showtimeMinute)
+                setShowtimeStr(snapshot.val().showtimeMonth + '/' + snapshot.val().showtimeDay + '/' + snapshot.val().showtimeYear + ' at ' + snapshot.val().showtimeHour + ':' + snapshot.val().showtimeMinute)
             }
         }).catch((error) => {
             console.error(error);
@@ -129,6 +128,8 @@ const CheckoutPage = (props) => {
         name: "Card 2",
     };
 
+    
+
     const handleSubmit = (values) => {
         console.log(order)
         console.log(values)
@@ -171,6 +172,23 @@ const CheckoutPage = (props) => {
     const navBack = () => {
         navigate("/booking/" + params.id)
     }
+
+    function sendEmail(e) {
+		emailjs.send("service_7meiuxn","template_p2orz05",{
+            movie_id: order.moviename,
+            show_id: order.showtimestr +"pm.",
+            tickets_id: order.tickets.length + ": " + order.tickets,
+            seats_id: order.seats,
+            costs_id: order.pricetotal,
+}, 'IZH6BCzIJ64l2t4mj');     
+       /*
+			.then(res=>{
+				console.log(res);
+                console.log(templateParams)
+			}) .catch(err=>console.log(err));
+		} 
+*/
+            } //sendEmail
 
     return (
         <div>
@@ -344,7 +362,7 @@ const CheckoutPage = (props) => {
                         )}
 
                         <div style={{ marginTop: "20px" }}>
-                            <Button type="primary" htmlType="submit">Confirm Payment</Button>
+                            <Button type="primary" onClick={sendEmail} htmlType="submit">Confirm Payment</Button>
                             <Button style={{ marginLeft: "10px" }} onClick={navBack}>Cancel</Button>
                         </div>
                     </Form>
@@ -354,4 +372,5 @@ const CheckoutPage = (props) => {
     );
 };
 
+//export var order;
 export default CheckoutPage;
