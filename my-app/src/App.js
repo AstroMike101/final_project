@@ -27,6 +27,7 @@ import AdminLoginPage from './adminLoginPage.js';
 import ScheduleShowtimes from './ScheduleShowtimes.js';
 import Header from './header.js';
 import CheckOutPage from './CheckOutPage.js'
+import OrderHistory from './OrderHistory.js';
 const { Search } = Input;
 
 // Initialize Firebase Authentication and get a reference to the service
@@ -47,8 +48,11 @@ class App extends Component {
 
 			movies: [],
 			showtimes: [],
+			promocodes: [],
 
 			curOrder: [],
+
+			orders: [], // i have no time to make this any less stupid
 		};
 		//this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleLogoutClick = this.handleLogoutClick.bind(this);
@@ -132,6 +136,30 @@ class App extends Component {
 				});
 			}
 		});
+		onValue(ref(db, 'orders'), (snapshot) => {
+			const data = snapshot.val();
+			var orderstemp = [];
+			if (snapshot.val()) {
+				Object.values(data).forEach((val) => {
+					orderstemp = [...orderstemp, val]
+					this.setState({
+						orders: orderstemp,
+					})
+				});
+			}
+		});
+		onValue(ref(db, 'promotions'), (snapshot) => {
+			const data = snapshot.val();
+			var promostemp = [];
+			if (snapshot.val()) {
+				Object.values(data).forEach((val) => {
+					promostemp = [...promostemp, val]
+					this.setState({
+						promocodes: promostemp,
+					})
+				});
+			}
+		});
 		//console.log(this.state)
 	}
 
@@ -193,7 +221,7 @@ class App extends Component {
 
 
 
-						<Route path="/booking/:id" element={<BookMovie state={this.state} changeCurrentOrder = {this.changeCurrentOrder} />}>
+						<Route path="/booking/:id" element={<BookMovie state={this.state} changeCurrentOrder={this.changeCurrentOrder} />}>
 						</Route>
 						<Route path="/admin/PromotionAdd" element={<PromotionAdd />}>
 						</Route>
@@ -216,10 +244,10 @@ class App extends Component {
 						<Route path="/login/forgotpassword" element={<ForgotPassword />}>
 						</Route>
 
-						<Route path="/booking/checkout/:id" element={<CheckOutPage currentOrder = {this.state.curOrder} curUser = {this.state.loginid}/>}>
+						<Route path="/booking/checkout/:id" element={<CheckOutPage currentOrder={this.state.curOrder} curUser={this.state.loginid} promocodes = {this.state.promocodes} />}>
 						</Route>
 
-
+						<Route path="/orderhistory" element={<OrderHistory orders={this.state.orders} curUser={this.state.loginid} />}></Route>
 
 
 					</Routes>
@@ -343,7 +371,7 @@ function Home(props) {
 						<div>{movie.movie_synopsis}</div>
 						<NavLink to={"/booking/" + movie.movieid} style={{ textDecoration: 'none' }}><Button type="primary">Book tickets now</Button></NavLink>
 
-					
+
 
 					</div>
 				</div>
@@ -432,6 +460,7 @@ function Navbar(props) {
 	let navbutton1;
 	let navbutton2;
 	let navbutton3 = <></>
+	let navbutton4;
 	// Uncomment when schema is actually complete
 	/*onValue(userRef, (snapshot) => {
 		const data = snapshot.val();
@@ -449,9 +478,11 @@ function Navbar(props) {
 
 
 	if (props.state.login) {
+		navbutton4 = <NavLink to="/orderhistory" style={{ textDecoration: 'none' }}><div class="navbutton">Order History</div></NavLink>
 		navbutton1 = <NavLink to="/editprofile" style={{ textDecoration: 'none' }}><div class="navbutton">Edit Profile</div></NavLink>
 		navbutton2 = <NavLink to="/" style={{ textDecoration: 'none' }}><div onClick={props.logoutfunc} class="navbutton">Logout</div></NavLink>
 	} else {
+		navbutton4 = <></>
 		navbutton1 = <NavLink to="/register" style={{ textDecoration: 'none' }}><div class="navbutton">Register</div></NavLink>;
 		navbutton2 = <NavLink to="/login" style={{ textDecoration: 'none' }}><div class="navbutton">Login</div></NavLink>;
 	}
@@ -469,6 +500,7 @@ function Navbar(props) {
 			</div>
 			<div class="navbar-sub">
 				{navbutton3}
+				{navbutton4}
 				{navbutton1}
 				{navbutton2}
 			</div>

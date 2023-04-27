@@ -85,7 +85,7 @@ const CheckoutPage = (props) => {
         tickets: [],
         seats: [props.currentOrder.seats],
         pricetotal: 0,
-        userid: cardInfo.userid,
+        userid: props.curUser,
         promocode: "",
         ccn: "",
         ccntype: "",
@@ -101,19 +101,38 @@ const CheckoutPage = (props) => {
     const addChildTicket = (ticket) => {
         order.tickets = [...order.tickets, ticket]
         order.pricetotal += 10
+        //setPrice(price + 10)
     }
     const addTeenTicket = (ticket) => {
         order.tickets = [...order.tickets, ticket]
         order.pricetotal += 12
+        //setPrice(price + 12)
     }
     const addAdultTicket = (ticket) => {
         order.tickets = [...order.tickets, ticket]
         order.pricetotal += 15
+        //setPrice(price + 15)
     }
+    const [price, setPrice] = useState(order.pricetotal);
 
-    var promoAdded = false
+    const [promoAdded, setPromoAdded] = useState(false)
+    var promoSanityCheck = false
     const handlePromo = (values) => {
+        if (promoAdded) return;
 
+        props.promocodes.map((code) => {
+            if (values.promocode == code.promocode) {
+                console.log(code.promocode)
+                order.pricetotal *= (100 - code.promoeffect) / 100
+                setPrice(order.pricetotal * (100 - code.promoeffect) / 100)
+                order.promocode = code.promocode
+                promoSanityCheck = true
+                message.success("Promotion code success for a " + code.promoeffect + "% discount!")
+                setPromoAdded(true);
+                return
+            }
+        })
+        if (!promoAdded && !promoSanityCheck) message.error("Invalid promotional code!") 
     }
 
     const handleCardChange = (e) => {
@@ -223,7 +242,7 @@ const CheckoutPage = (props) => {
                     <Divider orientation="left"></Divider>
                     <div className="section-title-checkout">Seats:</div>
                     <div>{order.seats.toString()}</div>
-                    <div className="section-title-minor">{"Total: $" + order.pricetotal}</div>
+                    <div className="section-title-minor">{promoAdded ? "Total: $" + price : "Total: $" + order.pricetotal}</div>
 
                     <div className="form-row">
                         <Form
@@ -242,8 +261,8 @@ const CheckoutPage = (props) => {
                                         width: 200,
                                     }}
                                 />
-                                <Button type="primary" htmlType="submit">Add promotion</Button>
                             </Form.Item>
+                                <Button type="primary" htmlType="submit">Add promotion</Button>
                         </Form>
                     </div>
 
