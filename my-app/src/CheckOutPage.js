@@ -5,7 +5,7 @@ import React, { Component, useState, useEffect } from "react";
 
 import './index.css';
 import BookMovie from './BookMovie.js'
-
+import BookingConfirmation from './BookingConfirmation';
 
 
 
@@ -37,6 +37,8 @@ const CheckoutPage = (props) => {
             console.log(ticket)
             numTickets++;
         })
+
+
     }
 
     return (
@@ -50,7 +52,7 @@ const CheckoutPage = (props) => {
                         )
                     })}
 
-                    <div>{"Total: " + numTickets * 15}</div>
+                    <div>{"Total: $"+ numTickets * 15}</div>
 
                     <div>
                     </div>

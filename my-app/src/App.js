@@ -42,18 +42,14 @@ class App extends Component {
 		this.state = {
 			login: false,
 			loginid: 0,
-			loginemail: '',
 			userIsAdmin: false,
 
 			movies: [],
 			showtimes: [],
-
-			curOrder: [],
 		};
 		//this.handleLoginClick = this.handleLoginClick.bind(this);
 		this.handleLogoutClick = this.handleLogoutClick.bind(this);
 		this.changeLoginState = this.changeLoginState.bind(this);
-		this.changeCurrentOrder = this.changeCurrentOrder.bind(this);
 	}
 
 	/*handleLoginClick = () => {
@@ -73,7 +69,7 @@ class App extends Component {
 					if (snapshot.exists()) {
 						this.setState((state) => {
 							return {
-								userIsAdmin: snapshot.val().isAdmin,
+								userIsAdmin: snapshot.val().isAdmin
 							}
 						})
 					}
@@ -83,7 +79,6 @@ class App extends Component {
 				this.setState((state) => {
 					return {
 						loginid: uid,
-						loginemail: user.email,
 						login: true
 					}
 				})
@@ -92,7 +87,6 @@ class App extends Component {
 				this.setState((state) => {
 					return {
 						loginid: 0,
-						loginemail: '',
 						login: false
 					}
 				})
@@ -153,14 +147,6 @@ class App extends Component {
 		})
 	}
 
-	changeCurrentOrder = (order) => {
-		this.setState(state => {
-			return {
-				curOrder: order,
-			}
-		})
-	}
-
 	truncate = (str) => {
 		if (str.length >= 500) {
 			return str.substring(0, 500) + "...";
@@ -193,7 +179,7 @@ class App extends Component {
 
 
 
-						<Route path="/booking/:id" element={<BookMovie state={this.state} changeCurrentOrder = {this.changeCurrentOrder} />}>
+						<Route path="/booking/:id" element={<BookMovie state={this.state} />}>
 						</Route>
 						<Route path="/admin/PromotionAdd" element={<PromotionAdd />}>
 						</Route>
@@ -216,7 +202,7 @@ class App extends Component {
 						<Route path="/login/forgotpassword" element={<ForgotPassword />}>
 						</Route>
 
-						<Route path="/CheckOutPage/:id" element={<CheckOutPage currentOrder = {this.state.curOrder}/>}>
+						<Route path="/CheckOutPage" element={<CheckOutPage/>}>
 						</Route>
 
 
