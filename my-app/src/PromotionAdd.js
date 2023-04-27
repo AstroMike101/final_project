@@ -7,10 +7,9 @@ import { database } from './firebase_setup/firebase.js'
 import { ref, push, child, update, set, getDatabase } from "firebase/database";
 import { initializeApp } from 'firebase/app';
 import { message } from 'antd';
-
+import emailjs from 'emailjs-com';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
-
 
 
 import 'firebase/functions';
@@ -47,7 +46,7 @@ import 'firebase/functions';
 
 const sendPromoEmail = firebase.functions().httpsCallable('sendPromotionalEmail');
 */
-function sendPromotionalEmail() {
+//function sendPromotionalEmail() {
     /*sendPromoEmail().then(function (result) {
         console.log(result);
         alert('Promotional email sent successfully');
@@ -55,8 +54,7 @@ function sendPromotionalEmail() {
         console.error(error);
         alert('Error sending promotional email');
     });*/
-}
-
+//}
 
 
 function PromotionAdd() {
@@ -83,6 +81,26 @@ function PromotionAdd() {
 				message.error(error.message)
 			})
     };
+
+    var templateParams = {
+        expirationDate: expirationDate,
+        promoCode: this.promotionName,
+        promoDiscount: this.promotionEffect,
+    };
+        function sendPromoEmail(e) {
+            if (templateParams) {		
+            emailjs.send(
+            "service_7meiuxn", 
+            "template_1tifhnk",
+            templateParams,
+            "IZH6BCzIJ64l2t4mj"
+            ).then(res=>{
+                console.log(res);
+            }) .catch(err=>console.log(err)); 
+        } else {
+            console.error('Template params are not defined');
+        }
+    } // sendPromoEmail
 
     // This needs to be changed to an antd form later -Andrew
     return (
@@ -121,7 +139,7 @@ function PromotionAdd() {
                     />
                 </label>
                 <br />
-                <button onclick={sendPromotionalEmail} sendclassName="add-promotions-button1" type="submit">Submit</button>
+                <button onclick={sendPromoEmail} sendclassName="add-promotions-button1" type="submit">Submit</button>
                 {/* <button className="add-promotions-button1" type="submit">Return to Admin Panel</button> */}
                 {/* <NavLink to="/admin"><button className="add-promotions-button1" type="submit">Return to Admin Panel</button></NavLink> */}
             </form>

@@ -4,15 +4,17 @@ import { FieldTimeOutlined, DownOutlined, MinusCircleOutlined, PlusOutlined } fr
 import React, { Component, useState, useEffect } from "react";
 import './index.css';
 import BookingConfirmation from "./BookingConfirmation.js";
+import App, {templateParams} from './App.js'
+import emailjs from 'emailjs-com';
+import UseEmail from "./useEmail";
 
 const { Option } = Select;
-
 //import flashimg from "./images/flash.jpg"
 const onFinish = (values) => {
 	console.log('Received values of form:', values);
 };
 
-function BookMovie(props) {	
+ 	function bookMovie(props) {		
 	const params = useParams();
 
 	const [value, setValue] = useState(1);
@@ -28,6 +30,47 @@ function BookMovie(props) {
 	//console.log(showtimesFormatted)
 	const [form] = Form.useForm();
 
+	/*
+	const {
+		loading,
+		submitted,
+		error,
+		sendEmail
+	  } = UseEmail('https://public.herotofu.com/v1/824e7e20-e467-11ed-8a44-d1f0173776c3');
+	
+	  const sendExample = () => {
+		// Can be any data, static and dynamic
+		sendEmail({
+		  UserEmail: "Brent.Voyles3@gmail.com",
+		  Movie: "The Flash",
+		  Showtime: new Date().toISOString(),
+		  Seats: "A1, A2, A3, A4",
+		  TotalPaid: "$65.00"
+		});
+	  };
+*/
+	  
+	var templateParams = {
+		movie: "",
+		showtime: "",
+		seats: "",
+		numTickets: '4',
+		cost: '$65'
+	};
+		function sendEmail(e) {
+			if (templateParams) {		
+		emailjs.send(
+			"service_7meiuxn", 
+			"template_iun5622",
+			templateParams,
+			"IZH6BCzIJ64l2t4mj"
+			).then(res=>{
+				console.log(res);
+			}) .catch(err=>console.log(err)); 
+		} else {
+			console.error('Template params are not defined');
+		}
+	} // sendEmail
 
 	return (
 		<div>
@@ -259,7 +302,7 @@ function BookMovie(props) {
 										<div class="booking-display-smallgap">
 											<Form.Item>
 												<NavLink to="/booking/confirmation" style={{ textDecoration: 'none' }}>
-													<Button type="primary" htmlType="submit">
+													<Button type="primary" onClick={sendEmail} htmlType="submit">
 														Book tickets
 													</Button>
 												</NavLink>
@@ -286,9 +329,4 @@ function BookMovie(props) {
 }
 
 
-
-
-
-
-
-export default BookMovie;
+export default bookMovie;

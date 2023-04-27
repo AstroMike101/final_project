@@ -27,6 +27,8 @@ import AdminLoginPage from './adminLoginPage.js';
 import ScheduleShowtimes from './ScheduleShowtimes.js';
 import Header from './header.js';
 import CheckOutPage from './CheckOutPage.js'
+import emailjs from 'emailjs-com';
+
 const { Search } = Input;
 
 // Initialize Firebase Authentication and get a reference to the service
@@ -98,7 +100,7 @@ class App extends Component {
 				})
 				//message.error("DEBUG: Not signed in")
 			}
-		});
+		});	
 
 		onValue(ref(db, 'movies'), (snapshot) => {
 			/*this.setState((state) => {

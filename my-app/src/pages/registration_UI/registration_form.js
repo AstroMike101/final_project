@@ -3,6 +3,7 @@ import { database } from '../../firebase_setup/firebase.js'
 import { ref, push, child, update } from "firebase/database";
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import { message, Form, Input, Checkbox, Button } from 'antd';
+import { BrowserRouter as Router, Route, Switch, Link, useParams, NavLink } from 'react-router-dom';
 import './style.css';
 import '../../index.css';
 // import bcrypt from 'bcryptjs';
@@ -279,9 +280,11 @@ function RegistrationForm() {
                                 Subscribe to promotions
                             </Checkbox>
                         </Form.Item>
+                        <NavLink to="././" style={{ textDecoration: 'none' }}></NavLink>
                         <Button type="primary" htmlType="submit">
                             Register
                         </Button>
+                        <NavLink to="/" style={{ textDecoration: 'none' }}></NavLink>
                     </div>
 
                 </div>
